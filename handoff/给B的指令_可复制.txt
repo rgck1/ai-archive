@@ -1,0 +1,148 @@
+你是 B，与 A 分工完成「投资工作台 v86」前端。A 免费额度吃紧，把可独立交付的两块交给你；你做完后**自行上传到 GitHub 仓库**，A 会从公开 raw 链接读回并集成。
+
+【1. 仓库在哪 / 怎么读】
+仓库：https://github.com/rgck1/ai-archive （public，分支 main，公开只读、不需要 token）
+按顺序读公开 raw 链接，对齐用户协作偏好：
+  https://raw.githubusercontent.com/rgck1/ai-archive/main/README.md
+  .../about-me.md  .../writing-style.md  .../rules.md  .../projects.md
+（把 .../ 补全为 https://raw.githubusercontent.com/rgck1/ai-archive/main/）
+仓库根目录只有 7 个 md 文件，**没有 handoff/ 目录、没有 invest-workbench/**，handoff/ 需要你创建。
+根目录的 sync_ai_archive.py 不能用来传子目录（它只遍历顶层、跳过子目录和 .py），别用。
+完整技术契约在 A 本机 D:/我的工作台/02.输出区/ai-archive/handoff/v86_B_instructions.md；
+若你能读本机路径就读它，读不到就以下面的【4】为准（信息是自包含的）。
+
+【2. 重要现状】
+A 侧 GH_TOKEN 为空、无 git credential helper、本地目录不是 git 仓库 → **A 无法上传**。
+你是唯一写入方；A 只能公开读。A 给你的技术输入已全部写在下面，不依赖仓库里任何待建文件。
+仓库是公开的：禁止写入任何密钥/口令/Cookie/token/服务器地址/第三方网页账号密码。
+
+【3. 分工】
+A 负责（别碰）：3 个视图的面板 HTML 骨架、新建脚本片段并注册 manifest、switchTab 派发、
+构建/契约测试/JS 语法校验、sw.js bump、部署上线、线上核验、合并你的产出、最终总结。
+你负责 3 个文件，都放 handoff/：
+  (B-T1) v86_panels.js     —— 8 个面板的加载/渲染/降级/交互代码（纯 JS，无 html/script 包裹）
+  (B-T2) v86_summary.md    —— 面向用户的《v86 交付总结与待确认事项》初稿
+          STATUS.md         —— 完成时间、3 个文件是否上传成功、自检结果、待 A/用户答复的问题
+  另外请把本指令原文存成 handoff/v86_B_instructions.md，让仓库自带完整契约供 A 读回核对。
+
+【4. 技术契约（严格遵守，否则无法与 A 的 HTML 拼合）】
+4.1 既有全局函数，直接调用、不要重实现：
+  apiGet(path, timeoutMs) / apiPost(path, body) / $(id) / esc(s) / safeUrl(u) / toast(msg)
+  cls(v) → 正数 "up"(红涨) 负数 "down"(绿跌) 0 "flat"
+  fmtPctNum(v) → v 已是百分数数值(1.5 → "+1.50%")
+  state 是全局状态对象，**只读**，不改结构；switchTab(name) 切页。
+4.2 DOM 契约 —— A 会创建这些容器，id 与 data-v86 一一对应，**不许改名**：
+  持仓页 view-hold：  #attrBox[data-v86=attr] 归因 / #riskBox[data-v86=risk] 风控 / #factorBox[data-v86=factor] 因子
+  跟单页 view-recs：  #aiInsightBox[data-v86=ai] AI洞察 / #recsHitBox[data-v86=hit] Top3稳定性
+  情绪页 view-mood 收盘复盘： #mktBreadthBox[data-v86=mkt] 大盘趋势结构 /
+                              #sectorTempBox[data-v86=temp] 行业温度象限 / #newsFeedBox[data-v86=news] 资讯
+  每个面板还有提示行 <div data-v86-sub="同上的 key">。
+4.3 移动端克隆（关键）：切页约 800ms 后会把 #view-* 的 innerHTML 克隆进
+  #mFeature .m-feature-body，导致 **id 重复**。禁止用 getElementById/$() 写容器；
+  必须 document.querySelectorAll('[data-v86="key"]') 遍历所有副本逐个写 innerHTML，
+  提示行同理用 [data-v86-sub="key"]。请实现 _v86Set(key,html) / _v86Sub(key,text) 统一处理。
+  交互按钮禁止 addEventListener 绑单个节点（克隆后失效），改用事件委托：
+  initV86() 里对 document 绑一次 click，用 ev.target.closest('[data-v86-act]') 分发。
+4.4 A 放的交互控件（你只实现委托响应，不改 HTML）：
+  <button data-v86-reload="hold|recs|mood">  → 调对应 load
+  <input data-v86-bl-code> <input data-v86-bl-reason> <button data-v86-bl-add>  → 加黑名单
+  删除按钮由你渲染成 <button data-v86-bl-del="代码">（接口 ?action=del&code=...）
+  <button data-v86-ai-refresh> → /api/ai_insights?refresh=1
+  资讯降级时给 <button data-v86-act="goto-blog"> 调 switchTab("blog")
+4.5 必须导出的全局函数（名字不许改）：
+  initV86() 只绑事件委托、幂等，A 在 boot 里调
+  loadV86Hold(force) / loadV86Recs(force) / loadV86Mood(force)  async、并发请求、失败隔离、
+    有 busy 标志防重入、force 跳过节流；失败给容器写 "[STALE] 本次读取失败，保留上一版"，
+    **不清空已有内容、不编造数据**。
+4.6 八个数据源（字段精确，已上线）：
+  1) /api/trade_attribution → {ok,available,count,closed,open,total_pnl,win_rate,bench_ret_pct,
+     rows:[{code,qty,buy_date,buy_price,sell_date,sell_price,pnl,ret_pct,annual_pct,
+            hold_days,bench_ret_pct,select_pct,open}]}
+     百分数均为数值(如 -3.21 = -3.21%)；open:true 为未平仓(pnl=null)单独分组、不计胜率；
+     select_pct 标「选股超额」；盈亏用 cls() 上色。不可用：{ok:false,available:false,reason,rows:[]}
+  2) /api/risk_control → {ok,available,total_mv,port_daily_vol_pct,var95,
+     stress:[{scenario,loss}], blacklist:[{code,reason,at}], exposure:[{code,name,mv,daily_vol_pct}]}
+     增删：?action=add&code=600519&reason=xxx / ?action=del&code=600519（encodeURIComponent），操作后重载本面板。
+     必须写明口径：VaR95 = 1.645 × 组合日波动率 × 总市值；个股波动率取近60日日线；
+     **假设持仓完全相关(保守上界)、未计分散化**；市值按 买入价×手数×100 估算、非实时市值。
+     不可用：{ok:true,available:false,reason,blacklist,var95:null,stress:[],exposure}
+  3) /api/ai_insights (?refresh=1 强制) → {ok,available,cached,date,items:[{type,title,text}]}
+     不可用 {ok:false,available:false,reason,items:[]}，当前真实 reason=
+     「智谱 LLM 未启用（设置→抖音/信息雷达 配置里的 llm 开关）」→ 显示说明与启用路径，**不显示假洞察**。
+     3 条卡片(量化机会/行为诊断/市场情绪) + cached/日期 + 「LLM 生成，非投资建议」。
+  4) /api/recs_hitrate → {ok,available,runs,stability_pct,
+     latest:{date,top3:[{key,name,score}]},history:[同结构]}
+     样本不足 {ok:true,available:false,reason,runs:[...]}，当前仅 1 次记录 → 优雅降级说明
+     「每月1日自动回测后累积，满2次才能算稳定性」。
+     **术语铁律**：这是「Top3 策略留存率/稳定性」，绝不能写成「命中率/胜率」。
+  5) /api/sector_temperature → {ok,available,date,source,items:[{name,code,signal_pct,flow,status}]}
+     字段真实含义：signal_pct=申万一级行业**当日涨跌幅(%)**，flow=**主力净流入(亿元)**，
+     与情绪页「收盘复盘·行业热力网格」同源(数据宝申万一级)。后端注释「轮动强度」说法不准确，以此条为准。
+     **避免重复实现是硬要求**：不要再做一张涨跌/净额表（热力网格已有）。改做横截面相对位置：
+     对 31 行业分别算 signal_pct 的横截面分位 pctRank 与 flow 的分位 flowRank（升序排名/(n-1)×100），
+     按 50 分位划四象限：量价共振(双高)/价强钱弱(价高钱低,派发风险)/资金潜伏(价低钱高)/量价齐弱(双低)；
+     每行业两条分位条 + 绝对涨跌/净额小字；按象限分组，突出两类背离；status 字段忽略。
+     标注「与热力网格同源，此处为横截面相对位置与量价配合，非重复展示绝对涨跌；不构成趋势判断」。
+     不可用：{ok:false,available:false,reason,items:[]}
+  6) /api/news_feed → {ok,available,items:[{title,time,src}]}
+     不可用 {ok:true,available:false,reason,items:[]}（当前云服务器 IP 被限流）→ 必须给降级说明 +
+     「去看博主情报」按钮(switchTab("blog"))。标题用 esc()，**没有 url 字段，不要编造链接**。
+  7) /api/stock_factors → {ok,available,items:[{code,name,pe_pct,pb,momentum_20d_pct}]}
+     任一字段可能 null → 显示 [暂缺]，**不用 0 填充**；momentum_20d_pct 是百分数数值用 fmtPctNum；
+     注明分位来自 stock_valuation.json、动量来自腾讯前复权日线。
+  8) 大盘趋势结构 —— **零新增请求，直接复用 state.market**：
+     {ok,available,index:{price,ma200,ma60,ma20,dev_pct,above,bars},state,
+      breadth_state:"多头"|"空头",breadth_cross:"golden"|"death"|"hold",
+      position_advice,reason,updated_at,source}
+     若 state.market 不存在或 available:false，回退 apiGet("/api/market_state")。
+     展示 MA20/MA60/MA200 数值 + 现价 + 多空 + 金叉/死叉/延续 + 仓位建议；
+     注明「趋势结构层，腾讯前复权日线；与盘中情绪指数不同源，不可并列比较或相加」；
+     **不要重复今日页已有的「健康/危险」结论**，只补均线数值与交叉状态。
+4.7 前端铁律（违反则 A 无法合并）：
+  CSS 禁裸 hex，颜色一律 var(--token)。可用：--up(涨红)/--down(跌绿)/--flat/--muted/--text/
+  --text-2/--info-bg/--card/--border/--primary/--warn/--warn-text/--warn-bg/--dot/--surface/--amber。
+  涨红跌绿是 A 股惯例，--up/--down 永不覆写，用 cls() 上色。
+  字号只用 --fs-sm/md/lg/2xl，禁裸 px 字号、禁 !important。
+  可复用类：.panel .empty .sub-line .hint .chip .alloc-btn .alloc-tbl .tbl-wrap .tbl-sticky
+            .rec-warn .count .row-between .up .down .flat .muted .num
+  **不存在** .ok-chip/.warn-chip/.cool-chip，不要用。
+  所有服务端文本 esc()；空态 <div class="empty">…</div>。
+  不得输出 <script>/<style> 标签（构建契约 script=4/style=3）；不得新增 view-*、导航项、页签(20 视图固定)；
+  不得改 state 结构、不得覆盖桌面既有 DOM、不得改其它模块函数；文件必须是纯 JS 内容。
+4.8 降级总原则：每个面板独立处理 available:false / 请求异常 / 空数组 / 字段 null，
+  一律「明确原因 + 恢复路径 + 保留上一版」，绝不编数、绝不用 0 或旧值填充。
+
+【5. 怎么上传（重要）】
+需要用户给你一个 GitHub PAT（Contents: read and write）。handoff/ 需你创建。
+方式 A — Contents API（推荐）：
+  PUT https://api.github.com/repos/rgck1/ai-archive/contents/handoff/v86_panels.js
+  Header: Authorization: Bearer <PAT> ; Content-Type: application/json
+  Body: {"message":"v86: B panels","branch":"main","content":"<文件内容的 base64>"}
+  文件已存在时先 GET 拿 sha，请求体带 "sha":"..." 才能覆盖。三个文件分别 PUT。
+方式 B — git：
+  git clone https://github.com/rgck1/ai-archive.git
+  mkdir -p handoff && 写入文件
+  git add handoff/ && git commit -m "v86: B deliverables" && git push origin main
+若没有写权限，先把文件写本地并明确告诉用户「需要 PAT 才能上传」，**不要假装已上传**。
+A 会通过这些公开 raw 链接读你的产出：
+  https://raw.githubusercontent.com/rgck1/ai-archive/main/handoff/v86_panels.js
+  https://raw.githubusercontent.com/rgck1/ai-archive/main/handoff/v86_summary.md
+  https://raw.githubusercontent.com/rgck1/ai-archive/main/handoff/STATUS.md
+
+【6. B-T2 总结文档要求（面向用户，中文）】
+写 v86_summary.md，只含三部分：
+ 1) 已实现清单：按「保留借鉴 / 可合并复用 / 明确不做」分类，每条注明落在哪个已有视图(不新增导航)，
+    区分「后端已上线」与「前端待 A 集成」。
+ 2) 数据降级说明：智谱 LLM 未启用、资讯源云 IP 限流、Top3 稳定性样本不足、
+    行业快照日期与口径、黑名单/VaR 的估算口径与局限。
+ 3) 需要用户拍板的决策项：列选项与影响，**不替用户决定**。至少覆盖：
+    是否启用智谱 LLM(密钥放哪/每日缓存是否可接受)；资讯源是否换源/加代理/下线该面板；
+    「行业温度」保留独立面板还是并入收盘复盘热力网格；Top3 稳定性累积周期是否维持每月；
+    范式边界确认(打板/2:30入场/预判买卖价/模拟盘/成长体系/留言板等个股短线范式**不做**，
+    与用户「跟组合+回测」路线冲突)；未单独接线的 /api/* 接口是否保留。
+只写可明确识别的事实，不臆测、不新增用户没提过的维度；区分「已实现」与「待确认」；不喊单。
+
+【7. 完成后】
+在 STATUS.md 写：完成时间、3 个文件是否都已上传成功(或卡在哪一步)、
+自检结果(4.7 铁律是否全遵守、8 个面板是否都有降级分支)、需 A 或用户答复的问题。
+A 读回产出后先本地合并跑全套契约测试，通过才部署；有问题会由用户转达。
