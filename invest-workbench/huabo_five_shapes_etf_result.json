@@ -1,0 +1,327 @@
+{
+ "meta": {
+  "generated": "2026-11-16 21:04:16",
+  "start": "2016-05-09",
+  "end": "2026-11-11",
+  "T": 2553,
+  "N": 48,
+  "is_end": "2022-01-04",
+  "sample_step": 5,
+  "universe": "48 只 ETF（index_etf/etf_hfq_*.csv，后复权/各自内部一致）",
+  "note": "与股票版同形态定义、同 t+1/H=20,60/冷却60日/IS-OOS 2022 分界；流动性门槛降至 500 万（ETF 成交额中位数 156 万）；安慰剂为「当日全部可交易 ETF 等权」（池子仅 48 只，抽样噪声过大）。"
+ },
+ "definitions": {
+  "G1_鱼尾顶_回避": "120日涨幅≥30% & 位于120日高点90%分位以上 & 5日量/20日量≥1.3 & 近5日涨幅≤2% & 跌破5日高点2%",
+  "G2a_平台回踩下沿": "120日涨幅≥20% & 20日振幅≤12% & 收盘≤20日低点×1.02",
+  "G2b_平台放量突破": "120日涨幅≥20% & 20日振幅≤12% & 收盘≥20日高点×0.995 & 5日量/20日量≥1.2",
+  "G3_低位放量拐点": "120日区间位置≤0.2 & 收盘站上MA20 & 近5日涨幅≥3% & 5日量/20日量≥1.3 & 20日量/120日量≤2.0",
+  "G4_下跌反弹_不扎实": "60日跌幅≤-25% & 近10日反弹≥10% & 收盘<MA60且<MA120",
+  "G5_扎实底_V反转": "120日涨幅10%~60% & 近60日回踩120日低点附近≥3天 & 近60日最低≥120日低点×0.97 & 收盘>MA60 & 20日量/120日量≤2.0"
+ },
+ "results": {
+  "G1_鱼尾顶_回避": {
+   "main_H": 20,
+   "H20": null,
+   "H60": null
+  },
+  "G2a_平台回踩下沿": {
+   "main_H": 60,
+   "H20": {
+    "H": 20,
+    "events": 52,
+    "avg_cells_per_day": 1.09,
+    "avg_universe_per_day": 13.55,
+    "mean_ret": 0.0077,
+    "win_rate": 0.5455,
+    "edge_bp": 5.0,
+    "ci95_bp": [
+     -316.2,
+     272.7
+    ],
+    "all": {
+     "edge_bp": 5.0,
+     "win_day_rate": 0.545,
+     "n_days": 11
+    },
+    "is": {
+     "edge_bp": 91.8,
+     "win_day_rate": 0.571,
+     "n_days": 7
+    },
+    "oos": {
+     "edge_bp": -147.0,
+     "win_day_rate": 0.5,
+     "n_days": 4
+    },
+    "by_year_edge_bp": {
+     "2019": -84.2,
+     "2020": -70.6,
+     "2021": 511.3,
+     "2025": -147.0
+    },
+    "edge_after_20bp": -35.0,
+    "edge_after_50bp": -95.0
+   },
+   "H60": {
+    "H": 60,
+    "events": 52,
+    "avg_cells_per_day": 1.09,
+    "avg_universe_per_day": 13.55,
+    "mean_ret": -0.0064,
+    "win_rate": 0.3636,
+    "edge_bp": -67.4,
+    "ci95_bp": [
+     -480.3,
+     458.1
+    ],
+    "all": {
+     "edge_bp": -67.4,
+     "win_day_rate": 0.273,
+     "n_days": 11
+    },
+    "is": {
+     "edge_bp": -165.3,
+     "win_day_rate": 0.286,
+     "n_days": 7
+    },
+    "oos": {
+     "edge_bp": 103.8,
+     "win_day_rate": 0.25,
+     "n_days": 4
+    },
+    "by_year_edge_bp": {
+     "2019": -246.7,
+     "2020": 12.3,
+     "2021": -350.2,
+     "2025": 103.8
+    },
+    "edge_after_20bp": -107.4,
+    "edge_after_50bp": -167.4
+   }
+  },
+  "G2b_平台放量突破": {
+   "main_H": 60,
+   "H20": {
+    "H": 20,
+    "events": 23,
+    "avg_cells_per_day": 1.0,
+    "avg_universe_per_day": 20.83,
+    "mean_ret": 0.0229,
+    "win_rate": 0.6667,
+    "edge_bp": -15.8,
+    "ci95_bp": [
+     -469.5,
+     497.0
+    ],
+    "all": {
+     "edge_bp": -15.8,
+     "win_day_rate": 0.333,
+     "n_days": 6
+    },
+    "is": {
+     "edge_bp": -175.3,
+     "win_day_rate": 0.0,
+     "n_days": 1
+    },
+    "oos": {
+     "edge_bp": 16.1,
+     "win_day_rate": 0.4,
+     "n_days": 5
+    },
+    "by_year_edge_bp": {
+     "2020": -175.3,
+     "2025": 16.1
+    },
+    "edge_after_20bp": -55.8,
+    "edge_after_50bp": -115.8
+   },
+   "H60": {
+    "H": 60,
+    "events": 23,
+    "avg_cells_per_day": 1.0,
+    "avg_universe_per_day": 20.83,
+    "mean_ret": 0.0106,
+    "win_rate": 0.6667,
+    "edge_bp": -272.3,
+    "ci95_bp": [
+     -889.7,
+     280.7
+    ],
+    "all": {
+     "edge_bp": -272.3,
+     "win_day_rate": 0.667,
+     "n_days": 6
+    },
+    "is": {
+     "edge_bp": 140.7,
+     "win_day_rate": 1.0,
+     "n_days": 1
+    },
+    "oos": {
+     "edge_bp": -355.0,
+     "win_day_rate": 0.6,
+     "n_days": 5
+    },
+    "by_year_edge_bp": {
+     "2020": 140.7,
+     "2025": -355.0
+    },
+    "edge_after_20bp": -312.3,
+    "edge_after_50bp": -372.3
+   }
+  },
+  "G3_低位放量拐点": {
+   "main_H": 60,
+   "H20": {
+    "H": 20,
+    "events": 8,
+    "avg_cells_per_day": 1.5,
+    "avg_universe_per_day": 17.5,
+    "mean_ret": -0.0192,
+    "win_rate": 0.0,
+    "edge_bp": 264.1,
+    "ci95_bp": [
+     null,
+     null
+    ],
+    "all": {
+     "edge_bp": 264.1,
+     "win_day_rate": 1.0,
+     "n_days": 2
+    },
+    "is": {
+     "edge_bp": null,
+     "win_day_rate": null,
+     "n_days": 0
+    },
+    "oos": {
+     "edge_bp": 264.1,
+     "win_day_rate": 1.0,
+     "n_days": 2
+    },
+    "by_year_edge_bp": {
+     "2022": 10.2,
+     "2026": 517.9
+    },
+    "edge_after_20bp": 224.1,
+    "edge_after_50bp": 164.1
+   },
+   "H60": {
+    "H": 60,
+    "events": 8,
+    "avg_cells_per_day": 1.5,
+    "avg_universe_per_day": 17.5,
+    "mean_ret": -0.1558,
+    "win_rate": 0.0,
+    "edge_bp": -624.6,
+    "ci95_bp": [
+     null,
+     null
+    ],
+    "all": {
+     "edge_bp": -624.6,
+     "win_day_rate": 0.0,
+     "n_days": 2
+    },
+    "is": {
+     "edge_bp": null,
+     "win_day_rate": null,
+     "n_days": 0
+    },
+    "oos": {
+     "edge_bp": -624.6,
+     "win_day_rate": 0.0,
+     "n_days": 2
+    },
+    "by_year_edge_bp": {
+     "2022": -1163.8,
+     "2026": -85.4
+    },
+    "edge_after_20bp": -664.6,
+    "edge_after_50bp": -724.6
+   }
+  },
+  "G4_下跌反弹_不扎实": {
+   "main_H": 20,
+   "H20": null,
+   "H60": null
+  },
+  "G5_扎实底_V反转": {
+   "main_H": 60,
+   "H20": {
+    "H": 20,
+    "events": 53,
+    "avg_cells_per_day": 1.2,
+    "avg_universe_per_day": 18.4,
+    "mean_ret": -0.0232,
+    "win_rate": 0.4,
+    "edge_bp": -334.7,
+    "ci95_bp": [
+     -635.8,
+     18.6
+    ],
+    "all": {
+     "edge_bp": -334.7,
+     "win_day_rate": 0.2,
+     "n_days": 5
+    },
+    "is": {
+     "edge_bp": null,
+     "win_day_rate": null,
+     "n_days": 0
+    },
+    "oos": {
+     "edge_bp": -334.7,
+     "win_day_rate": 0.2,
+     "n_days": 5
+    },
+    "by_year_edge_bp": {
+     "2022": -842.3,
+     "2025": -350.1,
+     "2026": 218.9
+    },
+    "edge_after_20bp": -374.7,
+    "edge_after_50bp": -434.7
+   },
+   "H60": {
+    "H": 60,
+    "events": 53,
+    "avg_cells_per_day": 1.2,
+    "avg_universe_per_day": 18.4,
+    "mean_ret": -0.0413,
+    "win_rate": 0.2,
+    "edge_bp": -982.9,
+    "ci95_bp": [
+     -1734.4,
+     -63.9
+    ],
+    "all": {
+     "edge_bp": -982.9,
+     "win_day_rate": 0.2,
+     "n_days": 5
+    },
+    "is": {
+     "edge_bp": null,
+     "win_day_rate": null,
+     "n_days": 0
+    },
+    "oos": {
+     "edge_bp": -982.9,
+     "win_day_rate": 0.2,
+     "n_days": 5
+    },
+    "by_year_edge_bp": {
+     "2022": -1659.2,
+     "2025": -1330.5,
+     "2026": 736.2
+    },
+    "edge_after_20bp": -1022.9,
+    "edge_after_50bp": -1082.9
+   }
+  }
+ },
+ "g5_vs_g4": {
+  "H20": null,
+  "H60": null
+ }
+}
