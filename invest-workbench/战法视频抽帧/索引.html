@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>博主战法视频 · 原始画面抽帧索引</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#1a1d24;--muted:#6b7280;--border:#e3e6eb;--accent:#c0392b;--link:#1d5fbf}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;padding:24px}
+.wrap{max-width:1080px;margin:0 auto}h1{font-size:24px;margin:0 0 6px}.sub{color:var(--muted);margin-bottom:22px;font-size:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px}
+.card h2{font-size:18px;margin:0 0 4px}.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:12px;background:#fdecea;color:var(--accent);margin-left:8px}
+.meta{color:var(--muted);font-size:13px;margin-bottom:12px}
+a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}
+img{width:100%;border:1px solid var(--border);border-radius:6px;display:block;margin:10px 0}
+.note{background:#fff8e6;border-left:3px solid #e0a800;padding:10px 14px;border-radius:4px;font-size:13px;color:#6b5b1a;margin:10px 0}
+.ok{background:#eaf7ee;border-left:3px solid #2e9e5b;padding:10px 14px;border-radius:4px;font-size:13px;color:#1e6b3a;margin:10px 0}
+code{background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}th,td{border:1px solid var(--border);padding:6px 9px;text-align:left}th{background:#fafbfc}
+small{color:var(--muted)}
+</style></head><body><div class="wrap">
+<h1>博主战法视频 · 原始画面抽帧索引</h1>
+<div class="sub">生成于 2026-11-16 · 绕开"主页最近 30 条"限制，按视频 ID 直接打开单条详情页取直链 → 下载 → ffmpeg 抽帧 · 涨红跌绿口径</div>
+
+<div class="ok"><strong>关键结论：</strong>凯心讲 N 字的口播共 37 条，其中 <strong>18 条在主页抓取范围（21 条）之外</strong>。用单条详情页方法，范围外的视频（如 N 字第九集 7702721386103632271）已实测能完整下载并抽帧——你要的"30 条以外也能下"完全成立，且已固化为常驻脚本 <code>dy_video_frames.py</code>。</div>
+
+<div class="card">
+<h2>① 凯心 · N 字战法白板手绘图解 <span class="tag">范围外视频</span></h2>
+<div class="meta">视频 ID <code>7702721386103632271</code>（N 字系统第九集）· 时长 429 秒 · <a href="https://www.douyin.com/video/7702721386103632271" target="_blank">打开原视频 ↗</a></div>
+<p>从 120/150/180/210 秒抽的高清帧。白板上手绘 N 字三笔结构，可清楚看到：</p>
+<ul>
+<li>第一笔长阳标注 <code>H</code>（顶）<code>L</code>（底），中间回踩，右侧第 <code>678</code> 笔再起</li>
+<li>公式 <code>H − L = D</code>（第一笔振幅），<code>上沿 1/2 ↔ 1/3</code>，价格标尺 14.3 / 13.5 / 13.39 / 13.26</li>
+<li>中文标注 <strong>"观察"</strong>、<strong>"这个区间的止跌和承接"</strong> —— 正是回测里"必须出现止跌证据才下单"那条规则</li>
+</ul>
+<img src="N字战法_手绘图解_高清.jpg" alt="N字白板图解">
+<p class="note">这张原始图解印证了此前回测的定义方向是对的：<code>H−L=D</code>、六七八买点 = L+0.2/0.3/0.4D、"止跌承接"前提。因此 N 字回测"全变体负 edge"的结论建立在正确定义上，可信度更高。分时刻画（零轴、黄线承接、下影收敛）日 K 仍无法量化，属已知边界。</p>
+</div>
+
+<div class="card">
+<h2>② 凯心 · N 字战法第八集时间轴 <span class="tag">范围外视频</span></h2>
+<div class="meta">视频 ID <code>7701981781351770979</code> · 时长 587 秒 · <a href="https://www.douyin.com/video/7701981781351770979" target="_blank">打开原视频 ↗</a> · 每 12 秒一帧</div>
+<img src="7701981781351770979.jpg" alt="N字第八集时间轴">
+</div>
+
+<div class="card">
+<h2>③ 花臂博士 · 5 张图讲义画面</h2>
+<div class="meta">视频 ID <code>7708707422357032207</code>（底部区域，结构和节奏）· 时长 433 秒 · <a href="https://www.douyin.com/video/7708707422357032207" target="_blank">打开原视频 ↗</a></div>
+<p>讲义电子版分条列出"图形一～图形五"，每种形态配红/蓝 K 线小图 + 红圈标注重点；末几帧出现"图形二 · 平台战法"的锯齿形示意。讲义在视频里是拍屏拍摄，小字未对焦，靠抽帧无法完全还原文字，但形态小图与编号清晰可见。</p>
+<img src="hb_part1.jpg" alt="花博讲义中段">
+<img src="hb_part2.jpg" alt="花博讲义后段">
+<div class="meta">另一条相关视频 <code>7707237226137734434</code> · <a href="https://www.douyin.com/video/7707237226137734434" target="_blank">打开原视频 ↗</a></div>
+<img src="7707237226137734434.jpg" alt="花博讲义另一条">
+</div>
+
+<div class="card">
+<h2>④ 复用工具与产出清单</h2>
+<table>
+<tr><th>项目</th><th>说明</th></tr>
+<tr><td>抽帧脚本</td><td><code>投资工作台_full/src/dy_video_frames.py</code>（已部署服务器）。用法：<code>python3 dy_video_frames.py --ids ID1,ID2 --out 目录 --step 12</code>，自动取直链+下载+抽帧+manifest</td></tr>
+<tr><td>取直链原理</td><td>Playwright 带 Cookie 打开 <code>douyin.com/video/{id}</code>，拦 <code>aweme/detail</code> 接口拿 play_addr；与"最近 30 条"无关</td></tr>
+<tr><td>看视频按钮</td><td>已加到线上博主情报每条视频（v95，sw 缓存已 bump），永久链接 <code>douyin.com/video/{aweme_id}</code></td></tr>
+<tr><td>口播原文</td><td>凯心 14 条 + 花博 8 条原始素材在 <code>02.输出区/*口播原始素材*.json</code>；全量 382 条在 <code>全博主战法_口播全量导出_2026-11-16.json</code></td></tr>
+</table>
+<p class="note">边界：抽帧是教学视频画面，仅供你核对形态定义；不构成投资建议。此前 23 战法 + 5 张图 + N 字 + ETF 的回测结论不变，详见各研究报告。</p>
+</div>
+
+</div></body></html>
