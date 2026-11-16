@@ -1,0 +1,16 @@
+{
+  "database_id": "pjPw6jNMu6SPgj1fZFaAGW",
+  "records": [
+    {
+      "任务标题": {"text": "【A→B 委托·用户已拍板】v86 前端 8 面板 JS 渲染/加载/降级 + 交付总结初稿"},
+      "任务内容": {"text": "用户 2026-11-15 01:56 拍板追加本行。B 需独立交付 3 个文件：① v86_B_panels.js —— 8 个面板（持仓归因 / 风险控制 / 个股因子 / AI洞察 / Top3稳定性 / 大盘趋势结构 / 行业温度象限 / 资讯流）的加载、渲染、降级、事件委托代码，纯 JS（不含 script 标签），导出 initV86() / loadV86Hold(force) / loadV86Recs(force) / loadV86Mood(force)；② v86_B_summary.md —— 面向用户的《v86 交付总结与待确认事项》初稿（已实现清单 / 数据降级说明 / 需用户拍板决策项）；③ v86_B_STATUS.md —— 完成时间、上传是否成功、自检结果、阻塞与待答复问题。完整技术契约（8 个接口精确字段、DOM id 与 data-v86 对应、前端铁律、降级要求）自包含在任务包节点 cSfH6tmJ4DTbOb7hkTA6at，该节点已投递到本空间，请按 node-id 直读；不要用空间搜索（B 环境该通道已退化返回空）。产出上传回本空间 5iiIl59Q0AuGgnaXA2wDnu，文件名统一带 v86_B_ 前缀；若上传工具支持 parent_id 请显式指定，避免落到用户默认空间。"},
+      "相关上下文": {"text": "v86 后端 7 个新接口 + api_market_state 增强已由 A 部署上线并逐接口核验通过；A 保留 3 个视图 HTML 骨架、脚本片段 manifest 注册、switchTab 派发、构建与 29 项契约测试、JS 语法校验、sw.js bump、部署上线、线上核验、合并 B 产出与最终总结，B 不碰这些。分工原因：A 免费额度紧张，用户要求把可独立交付的活分给 B。⚠️ 2026-11-15 01:41 已修复投递通道：A 前 6 次上传未指定 parent_id，全部落到用户默认个人空间 YSxEX5lCX9M08I7shkWITk，而本看板与 B 的巡检在「投资工作台」协作空间 5iiIl59Q0AuGgnaXA2wDnu，故 B 先前判「无 B 职责内新任务」属正确。现任务包、给 B 的 v3 指令、A 状态留言均已用 parent_id 投到本空间。今晚不用 GitHub（A 侧无写凭据），明天再补。"},
+      "协助类型": {"select": "其他"},
+      "委托方": {"select": "A"},
+      "目标智能体": {"select": "B"},
+      "状态": {"select": "待认领"},
+      "结果_状态更新": {"text": "2026-11-15 01:56 用户拍板追加本行，由 A 登记：状态=待认领、认领方留空，待 B 自行认领，A 不代认领、不重复派发。B 认领后请在本列回填进度，并同步更新 v86_B_STATUS.md；A 的每小时自动化会跨两个空间检索 B 的产出并回投状态留言到本空间。术语铁律：/api/recs_hitrate 是「Top3 策略留存率／稳定性」，不是命中率／胜率。"},
+      "关联节点": {"text": "cSfH6tmJ4DTbOb7hkTA6at(v86_B任务包_投递到B空间_v3); 5zjPC4D2jW9AtQZTv5yTts(v86_给B的指令_v3); 3jU0xnvad2JZGB6Q8lBKcg(v86_A_STATUS_投递到B空间); zwGhhW2CdgdE7RPZTFLz3K(v2任务包/A默认空间)"}
+    }
+  ]
+}
