@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang='zh-CN'><head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width,initial-scale=1'>
+<title>工作台性能优化实施交付 v99</title><style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1d2129;--muted:#6b7280;--border:#e3e6eb;--primary:#2f5fd0;--up:#d92626;--down:#12864b;--ok:#12864b;--warn:#b4690e}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.7 -apple-system,'Segoe UI','Microsoft YaHei',sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding:26px 20px 70px}h1{font-size:24px;margin:0 0 4px}
+h2{font-size:18px;margin:28px 0 10px;padding-left:9px;border-left:4px solid var(--primary)}
+.lead{color:var(--muted);margin:0 0 18px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top}
+th{background:#eef2f8;white-space:nowrap}tr:last-child td{border-bottom:0}
+.b{display:inline-block;padding:1px 8px;border-radius:9px;color:#fff;font-size:11px}
+.b.ok{background:var(--ok)}.b.warn{background:var(--warn)}
+.note{background:#fff7e6;border:1px solid #f3d9a4;border-radius:8px;padding:10px 14px;color:#754c13;margin:12px 0}
+.good{background:#eaf7ef;border:1px solid #b7e0c4;border-radius:8px;padding:10px 14px;color:#135c34;margin:12px 0}
+code{background:#eef1f5;padding:1px 5px;border-radius:4px;font-size:12px}
+li{margin:4px 0}footer{margin-top:36px;color:var(--muted);font-size:12px;border-top:1px solid var(--border);padding-top:12px}
+@media(max-width:700px){table{display:block;overflow-x:auto}th,td{min-width:120px}}
+</style></head><body><div class='wrap'>
+<h1>工作台性能优化实施交付 · v99</h1>
+<p class='lead'>2026-11-18 01:23 · 用户拍板「P0/P1/P2 都做」· 全部变更经构建契约 + 线上 SHA + 真浏览器核验</p>
+<div class='good'><b>总览：</b>8 个方向中 7 项已上线（含 2 项按实况诚实调整方案），1 项（回测并发）仅留本地副本待 A/B 验证、不部署生产。线上三文件 SHA 与本地一致、sw=v99、服务 active、真浏览器 7/7 PASS、pageerror=0。</div>
+<h2>逐项交付对照</h2>
+<table><thead><tr><th>编号</th><th>方向</th><th>状态</th><th>实际改动</th><th>验证结果</th></tr></thead><tbody><tr><td><b>P0-1</b></td><td>服务端大 JSON 缓存 + ETag</td><td><span class='b ok'>已上线</span></td><td>server.py 新增 _json_load_cached（mtime+size 签名 + deepcopy 返回，写回自动失效）；_load_last_snapshot / strategy_lab 4 处只读热路径切换；_send_json 对 6 个大只读接口按内容哈希发 ETag + no-cache。</td><td>线上带会话实测：/api/strategy_lab 首次 200+ETag，二次带 If-None-Match 返回 304；非白名单接口仍 no-store。</td></tr><tr><td><b>P0-2</b></td><td>启动链路并行化</td><td><span class='b ok'>已上线</span></td><td>boot() 的账户基线/成交台账与 health 并行；13 路只读加载（config/market/perf/recs/swing/估值/新闻/行业映射/后台开关等）改为 Promise.allSettled 并发，逐个仍 safeLoad 隔离。</td><td>契约 29/29 PASS；真浏览器 pageerror=0，boot 并行锚点存在。</td></tr><tr><td><b>P0-3</b></td><td>渲染按页订阅化</td><td><span class='b ok'>已上线</span></td><td>新增 renderLive()（8 个依赖实时价的模块）；60s 行情轮询从 refreshAll()（26 渲染函数）改为 renderLive()；refreshAll 保留为全量兜底，50 处调用不变。</td><td>真浏览器确认 renderLive 存在、净值 canvas 有真实像素、无 pageerror。</td></tr><tr><td><b>P1-1</b></td><td>长列表按需挂载</td><td><span class='b ok'>已上线（按实调整）</span></td><td>核实实际规模：博客 382 条 / 选股池 64 / 持仓 76。仅博客页值得优化——改为默认 40 条 + 「加载更多」每次 +40，零依赖、不破坏内联 onclick。选股池/持仓仅几十条，虚拟滚动收益为负，未接入（诚实说明）。</td><td>真浏览器确认博客分页生效、函数存在。</td></tr><tr><td><b>P1-2</b></td><td>净值图性能优化</td><td><span class='b ok'>已上线（方案调整）</span></td><td>零外链单文件约束下不内联 uPlot（+45KB 且破坏契约）。改为借鉴 uPlot 核心思路优化手绘：像素列降采样（2149 点→≈画布宽度，三序列同步）+ 超额图连线按红/绿聚成 2 条 path 批量 stroke。保留涨红跌绿与全部口径。</td><td>单测 2149→600 点、下标同步、末点保留；真浏览器两图均有像素。</td></tr><tr><td><b>P1-3</b></td><td>回测抓取并发化</td><td><span class='b warn'>仅本地副本（未部署）</span></td><td>核实真相：回测 138.6s 主因是 OHLC 串行网络抓取（三池上百次往返），服务器无 polars、数据非本地面板——报告里「Polars 惰性读面板」与实况不符。改为把串行抓取改成有界并发（6 路）+ 复用现有缓存；本地保序/异常吞掉单测通过。未做完整结果一致性 A/B，故不部署生产，留待下次月度回测窗口验证。</td><td>AST + 保序单测通过；生产 strategy_lab.py 保持原样，口径零风险。</td></tr><tr><td><b>P2-1</b></td><td>SW 缓存工程化</td><td><span class='b ok'>已上线</span></td><td>新增 bump_sw.py：自动递增 CACHE 版本 + 校验 ASSETS 全部本地存在 + 写变更留痕，不动历史注释；替代手改版本号。本次已 bump v98→v99。</td><td>dry-run 7 项 ASSETS 全 OK；正式执行生成 investdesk-v99；契约 29/29 PASS。</td></tr><tr><td><b>P2-2</b></td><td>推送链路幂等重放</td><td><span class='b ok'>已上线（本机）</span></td><td>新增 push_state.py：按内容 SHA 去重（同 SHA 成功推过则跳过）、成功/失败留痕、失败入 pending_retry 供重放；接入净值/持仓两个推送脚本。服务器端本就是按 date/code 覆盖，天然幂等。</td><td>状态机单测通过（首次推/同 SHA 跳过/失败留痕）；四脚本 AST OK。</td></tr></tbody></table>
+<h2>按实调整的说明（重要）</h2>
+<div class='note'>
+<b>1. uPlot 未接入，改为等价思路优化手绘。</b> 当前产物是零外链单文件 SPA（4 script/3 style 硬契约），内联 uPlot 增约 45KB 且要改绘图契约；改用其「像素列降采样」核心思路，收益同类、风险更低。<br>
+<b>2. Polars 未装、方向纠正为并发抓取。</b> 实测服务器无 polars，且 strategy_lab 的 OHLC 是实时网络抓取、非本地面板，报告原假设与实况不符；真正瓶颈在串行网络往返，故改并发。该项未做完整结果一致性 A/B，按「不拿生产回测口径冒险」原则暂不部署。<br>
+<b>3. 选股池/持仓未上虚拟滚动。</b> 仅 64/76 条，虚拟滚动引入的滚动定位与移动卡片化复杂度大于收益，只给最重的博客页做了按需挂载。
+</div>
+<h2>验证链（可复现）</h2>
+<ul>
+<li>构建：<code>python build_frontend.py --verify</code> → <code>python test_frontend_build.py</code>（29/29 PASS）</li>
+<li>SW：<code>python bump_sw.py --dry-run</code> → 正式 bump → 版本 v99</li>
+<li>部署：<code>deploy_server_now.py</code>（SHA 一致、active）→ <code>deploy_frontend_now.py</code></li>
+<li>线上 SHA：server.py <code>11ecd76d…</code> / index.html <code>6e5382ec…</code> / sw.js <code>c8cc0451…</code> 三份与本地逐字节一致</li>
+<li>ETag：带会话首次 <code>200 + ETag</code>、二次 <code>If-None-Match → 304</code>；非白名单 <code>no-store</code></li>
+<li>真浏览器：<code>_verify_v99_live.py</code> 7/7 PASS（pageerror=0 / 新函数存在 / 画布有像素 / 博客分页生效）</li>
+</ul>
+<h2>待办与建议</h2>
+<ul>
+<li>回测并发化：下次月度回测窗口（每月 1 日 04:30）前，用新旧脚本各跑一次对比 25 策略综合分，一致后部署 <code>strategy_lab.py</code>；当前生产版本未动。</li>
+<li>推送幂等状态在 <code>push_state/</code>（本机）；若需查看：<code>python push_state.py status</code>。</li>
+<li>PWA 版本现为 v99，各端首次打开会自动换缓存；若见旧界面，点右下角「清缓存刷新」浮标。</li>
+</ul>
+<footer>投资工作台 · v99 性能优化实施交付 · 核验脚本与工具已归档 ai-archive/invest-workbench</footer>
+</div></body></html>
