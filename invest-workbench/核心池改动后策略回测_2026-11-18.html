@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>核心池改动后 · 策略回测对比 20261118</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#1f2430;--muted:#6b7280;--border:#e5e7eb;
+--up:#d92626;--down:#12864b;--accent:#2457d6;--accent-bg:#eef3ff;--sel-bg:#fff8e6;--sel-bd:#f0c24b;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Microsoft YaHei",sans-serif;
+font-size:14px;line-height:1.65;padding:24px 16px 60px}
+.wrap{max-width:1000px;margin:0 auto}
+h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+h2{font-size:17px;font-weight:650;margin:28px 0 12px;padding-left:10px;border-left:3px solid var(--accent)}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:16px}
+.hero{background:linear-gradient(135deg,#eef3ff,#f7faff);border-color:#d5e2ff}
+.hero b{color:var(--accent)}
+.up{color:var(--up)}.down{color:var(--down)}.flat{color:var(--muted)}.hi{color:var(--accent)}
+.cards{display:flex;gap:14px;flex-wrap:wrap}
+.card{flex:1;min-width:280px;background:var(--card);border:1px solid var(--sel-bd);border-radius:10px;overflow:hidden}
+.card-h{background:var(--sel-bg);padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--sel-bd)}
+.card-rk{color:var(--muted);font-size:12px}.card-nm{font-weight:700;font-size:15px}
+.badge{font-size:11px;padding:1px 7px;border-radius:10px;white-space:nowrap}
+.badge.sel{background:var(--sel-bd);color:#5a4300;font-weight:600}
+.card-body{padding:8px 14px}
+.kv{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--border)}
+.kv:last-child{border-bottom:0}.kv span{color:var(--muted)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 8px;text-align:left;border-bottom:1px solid var(--border)}
+th{background:#f0f2f6;color:var(--muted);font-weight:600;font-size:12px;white-space:nowrap}
+tr.sel{background:var(--sel-bg)}
+td.rk{color:var(--muted);width:34px}td.nm{font-weight:600}td.sc{font-variant-numeric:tabular-nums;font-weight:700;color:var(--accent)}
+.note{color:var(--muted);font-size:12px;margin-top:8px}
+ul{margin:0;padding-left:20px}li{margin:5px 0;color:var(--muted);font-size:13px}
+.diff{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.diff code{background:#f0f2f6;padding:3px 8px;border-radius:5px;font-size:12px}
+.diff .add code{background:#fdeaea;color:var(--up)}
+.diff .rm code{background:#e6f4ec;color:var(--down)}
+@media(max-width:640px){body{padding:16px 10px 40px}h1{font-size:19px}.panel{padding:14px}th,td{padding:6px 5px;font-size:12px}}
+</style></head><body><div class="wrap">
+<h1>核心池改动后 · 策略回测对比</h1>
+<div class="sub">回测时间 2026-11-18 00:23:54 ｜ 耗时 111.7 秒 ｜ 数据源：东财前复权日线 ｜ 窗口 1250 交易日（约5年）· 每 20 日再平衡</div>
+
+<div class="panel hero">
+<b>结论：哪个策略最好 → 波动率倒数（invvol）</b><br>
+25 个策略跨 3 个页面标的池同口径回测，<b>波动率倒数</b>以综合分 <b>0.8528</b> 排名第一，
+<b>风险平价</b>（0.8347）第二。两者是仅有的「入选」策略——跨池夏普全为正、样本外 3/3 池全部通过；
+第三名 RSI均值回归（0.7806）样本外仅 2/3 池通过，未达入选线，只列候选。
+</div>
+
+<h2>入选策略（可直接在「配置方案」应用）</h2>
+<div class="cards"><div class='card'><div class='card-h'><span class='card-rk'>#1</span><span class='card-nm'>波动率倒数</span><span class='badge sel'>入选</span></div><div class='card-body'><div class='kv'><span>跨池综合分</span><b class='hi'>0.8528</b></div><div class='kv'><span>全期均收益</span><b class='up'>+93.9%</b></div><div class='kv'><span>样本外均收益</span><b class='up'>+40.7%</b></div><div class='kv'><span>样本外均夏普</span><b>0.97</b></div><div class='kv'><span>平均最大回撤</span><b class='down'>+24.8%</b></div><div class='kv'><span>样本外通过池</span><b>3/3</b></div></div></div><div class='card'><div class='card-h'><span class='card-rk'>#2</span><span class='card-nm'>风险平价</span><span class='badge sel'>入选</span></div><div class='card-body'><div class='kv'><span>跨池综合分</span><b class='hi'>0.8347</b></div><div class='kv'><span>全期均收益</span><b class='up'>+88.7%</b></div><div class='kv'><span>样本外均收益</span><b class='up'>+38.6%</b></div><div class='kv'><span>样本外均夏普</span><b>0.94</b></div><div class='kv'><span>平均最大回撤</span><b class='down'>+25.8%</b></div><div class='kv'><span>样本外通过池</span><b>3/3</b></div></div></div></div>
+
+<h2>核心池改动如何传导到回测</h2>
+<div class="panel">
+「跟单推荐池」取自核心池∪观察池组合的可买持仓。核心池由 5 只改为 6 只（新增 ZH3613115、ZH1236871，去掉 ZH3553296）后，
+本次 recs 池代码由上一版 10 只更新为当前 10 只：
+<div class="diff"><div class="add">新增：<code>000333 002081 002261 515080</code></div><div class="rm">移出：<code>002167 002602 600825 601975</code></div></div>
+<div class="note">三池均正常回测成功：王文选股 20 只 / 我的持仓 7 只 / 跟单推荐 10 只。recs 池变动会改变策略在同区间的相对排名，故需要重跑。</div>
+</div>
+
+<h2>全策略排名（Top 25）</h2>
+<div class="panel" style="overflow-x:auto">
+<table>
+<thead><tr><th>#</th><th>策略</th><th>综合分</th><th>全期均收益</th><th>平均回撤</th><th>样本外夏普</th><th>样本外通过</th><th>最弱池分</th></tr></thead>
+<tbody><tr class='sel'><td class='rk'>1</td><td class='nm'>波动率倒数 <span class="badge sel">入选</span></td><td class='sc'>0.8528</td><td>+93.9%</td><td>+24.8%</td><td>0.97</td><td class='up'>3/3</td><td>0.7542</td></tr><tr class='sel'><td class='rk'>2</td><td class='nm'>风险平价 <span class="badge sel">入选</span></td><td class='sc'>0.8347</td><td>+88.7%</td><td>+25.8%</td><td>0.94</td><td class='up'>3/3</td><td>0.8000</td></tr><tr class=''><td class='rk'>3</td><td class='nm'>RSI均值回归 </td><td class='sc'>0.7806</td><td>+26.7%</td><td>+11.2%</td><td>0.90</td><td class='flat'>2/3</td><td>0.6625</td></tr><tr class=''><td class='rk'>4</td><td class='nm'>等权 </td><td class='sc'>0.7306</td><td>+101.7%</td><td>+30.4%</td><td>0.81</td><td class='up'>3/3</td><td>0.5708</td></tr><tr class=''><td class='rk'>5</td><td class='nm'>核心-卫星 </td><td class='sc'>0.7125</td><td>+67.4%</td><td>+27.0%</td><td>1.00</td><td class='up'>3/3</td><td>0.5958</td></tr><tr class=''><td class='rk'>6</td><td class='nm'>等比缩放 </td><td class='sc'>0.6764</td><td>+74.4%</td><td>+28.0%</td><td>0.84</td><td class='up'>3/3</td><td>0.5708</td></tr><tr class=''><td class='rk'>7</td><td class='nm'>目标波动率 </td><td class='sc'>0.6458</td><td>+32.3%</td><td>+15.0%</td><td>1.03</td><td class='up'>3/3</td><td>0.4792</td></tr><tr class=''><td class='rk'>8</td><td class='nm'>均值回归 </td><td class='sc'>0.5986</td><td>+71.9%</td><td>+25.9%</td><td>0.42</td><td class='flat'>1/3</td><td>0.3500</td></tr><tr class=''><td class='rk'>9</td><td class='nm'>MACD金叉 </td><td class='sc'>0.5653</td><td>+62.9%</td><td>+35.1%</td><td>0.84</td><td class='up'>3/3</td><td>0.3917</td></tr><tr class=''><td class='rk'>10</td><td class='nm'>买入持有 </td><td class='sc'>0.5583</td><td>+75.2%</td><td>+35.1%</td><td>0.61</td><td class='up'>3/3</td><td>0.4625</td></tr><tr class=''><td class='rk'>11</td><td class='nm'>低波动异象 </td><td class='sc'>0.5319</td><td>+34.1%</td><td>+19.1%</td><td>0.62</td><td class='flat'>2/3</td><td>0.4250</td></tr><tr class=''><td class='rk'>12</td><td class='nm'>唐奇安突破 </td><td class='sc'>0.5236</td><td>+15.6%</td><td>+16.8%</td><td>0.75</td><td class='flat'>2/3</td><td>0.2000</td></tr><tr class=''><td class='rk'>13</td><td class='nm'>回撤预算 </td><td class='sc'>0.5028</td><td>+31.8%</td><td>+31.1%</td><td>0.88</td><td class='up'>3/3</td><td>0.1125</td></tr><tr class=''><td class='rk'>14</td><td class='nm'>信号强度 </td><td class='sc'>0.4806</td><td>+44.6%</td><td>+31.9%</td><td>0.82</td><td class='up'>3/3</td><td>0.3042</td></tr><tr class=''><td class='rk'>15</td><td class='nm'>布林带反转 </td><td class='sc'>0.4722</td><td>+15.0%</td><td>+13.9%</td><td>0.56</td><td class='up'>3/3</td><td>0.2042</td></tr><tr class=''><td class='rk'>16</td><td class='nm'>动量轮动Top5 </td><td class='sc'>0.4139</td><td>+49.0%</td><td>+38.2%</td><td>0.68</td><td class='flat'>2/3</td><td>0.2667</td></tr><tr class=''><td class='rk'>17</td><td class='nm'>55日通道突破 </td><td class='sc'>0.3722</td><td>+4.6%</td><td>+19.0%</td><td>0.63</td><td class='flat'>2/3</td><td>0.2000</td></tr><tr class=''><td class='rk'>18</td><td class='nm'>相对强度 </td><td class='sc'>0.3014</td><td>+42.2%</td><td>+38.3%</td><td>0.50</td><td class='up'>3/3</td><td>0.1750</td></tr><tr class=''><td class='rk'>19</td><td class='nm'>10月均线择时 </td><td class='sc'>0.2903</td><td>+16.0%</td><td>+27.2%</td><td>0.54</td><td class='up'>3/3</td><td>0.2375</td></tr><tr class=''><td class='rk'>20</td><td class='nm'>四维打分 </td><td class='sc'>0.2792</td><td>+31.9%</td><td>+35.6%</td><td>0.53</td><td class='up'>3/3</td><td>0.1250</td></tr><tr class=''><td class='rk'>21</td><td class='nm'>12月动量 </td><td class='sc'>0.2750</td><td>+27.6%</td><td>+34.6%</td><td>0.61</td><td class='up'>3/3</td><td>0.0792</td></tr><tr class=''><td class='rk'>22</td><td class='nm'>趋势过滤+等权 </td><td class='sc'>0.2750</td><td>+24.2%</td><td>+33.1%</td><td>0.62</td><td class='flat'>2/3</td><td>0.0167</td></tr><tr class=''><td class='rk'>23</td><td class='nm'>动量加权 </td><td class='sc'>0.2542</td><td>+35.0%</td><td>+34.4%</td><td>0.74</td><td class='up'>3/3</td><td>0.0833</td></tr><tr class=''><td class='rk'>24</td><td class='nm'>双动量 </td><td class='sc'>0.2417</td><td>-2.5%</td><td>+21.8%</td><td>0.25</td><td class='flat'>1/3</td><td>0.1000</td></tr><tr class=''><td class='rk'>25</td><td class='nm'>均线金叉 </td><td class='sc'>0.2139</td><td>+26.6%</td><td>+38.6%</td><td>0.32</td><td class='up'>3/3</td><td>0.0542</td></tr></tbody></table>
+<div class="note">综合分 = 池内夏普50% + 总收益30% + 回撤反向20% 的排名百分位，再对可用池取平均；红涨绿跌。金色底=入选。</div>
+</div>
+
+<h2>口径与免责</h2>
+<div class="panel"><ul><li>王文选股 Top20 与跟单推荐候选池是当前时点筛出的名单，用它回测过去 250 个交易日存在前视偏差，结果偏乐观，只能用于同区间策略之间的相对比较。</li><li>已计入真实交易成本：佣金万 2.5（单笔最低 5 元）+ 过户费、印花税（仅卖方万 5）、滑点（双边各 0.1%）；并建模涨跌停封板无法成交（封板涨停买不进、封板跌停卖不出）与停牌（当日无成交则维持原仓位、差额留现金）。换手高的策略成本拖累更明显。</li><li>已做样本外验证：前 60% 交易日用于择优，后段（至少 250 天）作为样本外（OOS）验证；入选要求样本外在多数回测池仍盈利，以抑制过拟合。</li><li>信号强度/等比缩放的外部源（共识权重快照、真实持仓市值）是采集时点的快照，用于回测整段历史存在前视偏差；信号强度已尽量改用当期可得技术信号，等比缩放按其定义本来就是复制固定目标权重，两者只作同区间相对比较。</li><li>现金部分按 0 收益计算，未计货币基金或国债利息。</li><li>10 月均线用可得窗口近似 200 日；目标波动率用成分股平均日波动近似组合波动，均未估计协方差矩阵；科创板(688)/创业板(300/301) 按 20% 涨跌停、其余按 10% 判定，ST（±5%）无法从代码识别，按普通板处理。</li><li>三个池按各自成分股的交易日并集对齐并前向填充（停牌日沿用最近收盘价），回测起止日可能不同；跨池比较采用池内排名百分位，不对绝对收益做直接横比。</li><li>结果为历史模拟，不代表未来收益，不构成投资建议。</li></ul>
+<div class="note">报告由 strategy_lab.json 现场派生生成；前端「配置方案 · 回测优选」展示的数据同源，无需改前端即自动显示本次最新结果。</div>
+</div>
+</div></body></html>
