@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>情报源调研与整合方案 · 组合与策略跟踪 · 2026-11-18</title>
+<style>
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#1f2430; --ink2:#4a5160; --muted:#7a8290;
+  --line:#e3e7ed; --brand:#2f6fed; --brand-bg:#eef4ff; --ok:#c0392b; --ok-bg:#fdf0ee;
+  --no:#1f9d63; --no-bg:#edf9f3; --warn:#b8860b; --warn-bg:#fff8e6;
+  --chip:#eef1f5;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  line-height:1.7;font-size:14px}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 22px 80px}
+header.top{background:linear-gradient(135deg,#2f6fed 0%,#5b8def 100%);color:#fff;border-radius:16px;padding:30px 32px;margin-bottom:26px;box-shadow:0 8px 24px rgba(47,111,237,.18)}
+header.top h1{margin:0 0 8px;font-size:25px;letter-spacing:.3px}
+header.top .sub{opacity:.92;font-size:13.5px}
+header.top .meta{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+header.top .meta span{background:rgba(255,255,255,.18);padding:4px 11px;border-radius:20px;font-size:12px}
+section{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:24px 26px;margin-bottom:20px;box-shadow:0 2px 8px rgba(30,40,60,.03)}
+h2{margin:0 0 16px;font-size:19px;display:flex;align-items:center;gap:10px}
+h2 .no{display:inline-flex;width:28px;height:28px;border-radius:8px;background:var(--brand-bg);color:var(--brand);align-items:center;justify-content:center;font-size:14px;font-weight:700}
+h3{margin:22px 0 10px;font-size:15.5px;color:var(--ink);border-left:3px solid var(--brand);padding-left:10px}
+p{margin:8px 0;color:var(--ink2)}
+.tldr{background:var(--brand-bg);border:1px solid #d5e3ff;border-radius:10px;padding:16px 18px;margin-bottom:4px}
+.tldr b{color:var(--brand)}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+th{background:#f3f5f8;color:var(--ink);font-weight:600;white-space:nowrap}
+tr:nth-child(even) td{background:#fbfcfd}
+td code, p code, li code{background:var(--chip);padding:1px 5px;border-radius:4px;font-size:12px;color:#33415c}
+.tag{display:inline-block;padding:2px 8px;border-radius:12px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.t-ok{background:var(--ok-bg);color:var(--ok)}
+.t-no{background:var(--no-bg);color:var(--no)}
+.t-warn{background:var(--warn-bg);color:var(--warn)}
+.t-gray{background:var(--chip);color:var(--muted)}
+ul,ol{margin:8px 0;padding-left:22px;color:var(--ink2)}
+li{margin:5px 0}
+.note{border-left:4px solid var(--warn);background:var(--warn-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;color:#6b5410}
+.danger{border-left:4px solid var(--ok);background:var(--ok-bg);padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;color:#7d2b20}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:12px}
+.card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:#fcfdfe}
+.card h4{margin:0 0 8px;font-size:14px}
+.card .k{font-size:12px;color:var(--muted)}
+.pill{display:inline-block;border-radius:6px;padding:1px 7px;font-size:11.5px;background:var(--chip);margin:2px 4px 2px 0;color:var(--ink2)}
+.src{font-size:11.5px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:10px 0 0}
+.small{font-size:12.5px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>情报源调研与整合方案</h1>
+  <div class="sub">组合 / 策略跟踪 · 雪球开源对标 · 非雪球来源排查 · 现有工作台情报源盘点</div>
+  <div class="meta">
+    <span>2026-11-18</span><span>任务 5/5 完成</span><span>来源 3 类 · 20+ 项</span><span>仅调研出方案 · 未改生产代码</span>
+  </div>
+</header>
+
+<section>
+<h2><span class="no">0</span>一句话结论</h2>
+<div class="tldr">
+<b>没有发现"必须立刻接入"的新组合跟踪源，但找到了 3 项低成本可借鉴机制 + 3 个真实数据缺口。</b><br>
+"跟踪他人组合调仓"这件事，靠谱的国内来源只有雪球和东财模拟组合，而后者接口未公开、且与用户"不做模拟盘"方向冲突；真正值得做的是：<b>①</b> 借鉴 snowball-monitor 的"调仓 ID+状态去重"和 xueqiu-mcp 的"限流熔断"，加固现有抓取链路；<b>②</b> 用腾讯行情作盯盘主通道、东财作独家数据补充并加熔断降级；<b>③</b> 补上"数据新鲜度探针"，修掉行业轮动停更等假新鲜问题。<b>以上均需拍板后实施，本次未动生产代码。</b>
+</div>
+</section>
+
+<section>
+<h2><span class="no">1</span>任务清单（本次全部完成）</h2>
+<table>
+<thead><tr><th style="width:34px">#</th><th>任务</th><th style="width:92px">状态</th><th>核心产出</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>深挖 snowball-monitor</b> 分时抓取与去重推送机制</td><td><span class="tag t-gray">已完成</span></td><td>源码级拆解：4 条 cron / Upstash 去重 / Bark 推送 / Cookie 告警；给出借鉴与不可照搬清单</td></tr>
+<tr><td>2</td><td><b>深挖 xueqiu-mcp</b> 工具与鉴权机制</td><td><span class="tag t-gray">已完成</span></td><td>32 工具 / 3 个组合工具 / 三级鉴权 / 限流熔断常量；对照 TSP 接入路线</td></tr>
+<tr><td>3</td><td><b>排查非雪球组合/策略来源</b>（东财、集思录等）</td><td><span class="tag t-gray">已完成</span></td><td>11 类来源逐源评估，标明能力边界、限制、并入方式；筛出优先接入 3 名</td></tr>
+<tr><td>4</td><td><b>盘点现有工作台情报源</b></td><td><span class="tag t-gray">已完成</span></td><td>14 项在用数据源 + 定时器清单 + 6 项数据缺口</td></tr>
+<tr><td>5</td><td><b>输出任务 / 来源 / 整合方案</b>（本文档）</td><td><span class="tag t-gray">已完成</span></td><td>本 HTML 报告，落 D:/我的工作台/02.输出区</td></tr>
+</tbody>
+</table>
+<p class="small">说明：第 1、2 项是上一轮"两个值得借鉴点"的深挖落地；第 3、4 项是本次新增的信息源调研与整合。四项调研均为只读，未部署、未改配置、未回显任何密钥/Cookie。</p>
+</section>
+
+<section>
+<h2><span class="no">2</span>来源清单 A · 雪球系开源对标（核实结论）</h2>
+
+<h3>2.1 snowball-monitor — 存在，但GitHub活跃度极低</h3>
+<div class="grid">
+<div class="card"><h4>核实快照 <span class="tag t-warn">仅学习价值</span></h4>
+<div class="k">GitHub REST API：stars 0 / forks 0 / issues 0；创建 2026-02-04，最后 push 2026-03-25（约 8 个月未更新）。MIT，单文件 <code>fetch_rebalancing.py</code> + 一个 workflow。</div></div>
+<div class="card"><h4>它做什么</h4>
+<div class="k">GitHub Actions 云定时抓 <code>/cubes/rebalancing/history.json?cube_symbol=&count=1</code> → Upstash Redis 去重归档 → Bark 推 iPhone。</div></div>
+</div>
+<table>
+<thead><tr><th style="width:120px">机制</th><th>源码确认的细节</th></tr></thead>
+<tbody>
+<tr><td>分时段频率</td><td><code>run.yml</code> 4 条 cron（均 UTC）：<code>7,27,47 * * * 1-5</code>（每20分）；<code>17,37,57 1-7 * * 1-5</code>（亚洲时段加密到10分）；<code>38,43,48,53,58 6,7 * * 1-5</code>（北京14:38起每5分）；<code>7 0,6,12,18 * * 0,6</code>（周末保活）。README 说"14:45 起 5 分钟"，源码实际更早更宽。</td></tr>
+<tr><td>去重</td><td>状态表 <code>xueqiu:status:last_ids</code> 存 <code>{ZH: {id, status}}</code> — <b>id + status 双字段</b>；历史表 <code>xueqiu:history:{symbol}</code> 用 LPUSH + LTRIM 0 199 保留 200 条。</td></tr>
+<tr><td>推送</td><td>逐股 <code>{action} {name}: 5%→6% (+1%)</code>，仅 <code>abs(change)&gt;0.01</code> 入列；created_at/1000 <b>+28800</b> 强制转北京时间；id 变 或 同 id 状态变（pending→success）都触发。</td></tr>
+<tr><td>Cookie 告警</td><td>HTTP 400/401/403 判失效 → Bark 告警，<code>COOKIE_ALERT_INTERVAL=86400</code>（注释写3天，实际1天）冷却 → <code>sys.exit(1)</code> 让 Action 失败。无重试/退避。</td></tr>
+</tbody>
+</table>
+
+<h3>2.2 xueqiu-mcp — 存在，3 个组合工具，鉴权设计值得抄</h3>
+<div class="grid">
+<div class="card"><h4>核实快照 <span class="tag t-warn">很新·低星</span></h4>
+<div class="k">stars 1 / forks 0；创建 2026-08-13，最后 push 2026-09-09。TypeScript / Node ESM（源码要求 Node 20+），32 个工具，LobeHub 收录版本 2.0.0。</div></div>
+<div class="card"><h4>组合相关工具</h4>
+<div class="k"><code>get_user_cubes</code> → /cubes/list.json<br><code>get_cube_holdings</code> → /cubes/rebalancing/current.json<br><code>get_cube_rebalancing</code> → /cubes/rebalancing/history.json<br><span class="src">注：第3个端点与 snowball-monitor 完全相同</span></div></div>
+</div>
+<table>
+<thead><tr><th style="width:120px">机制</th><th>源码确认的细节</th></tr></thead>
+<tbody>
+<tr><td>三级鉴权</td><td>环境变量 <code>XUEQIU_TOKEN</code> → 本地 cookie 文件（<code>~/.config/xueqiu-mcp/cookies.json</code>，扫码登录）→ 内存匿名 token（GET /about 取 Set-Cookie，有效期 23h）。写工具走 <code>requireLogin()</code>；三个组合工具是公开接口，匿名可读。</td></tr>
+<tr><td>登录态判定</td><td>解 <code>xq_id_token</code> JWT 的 payload.uid：匿名 uid=-1 被拒，需正整数 + 未过期 + <code>u===String(uid)</code>。<b>这套判定思路可直接用于排查 TSP 的 MCP 授权问题。</b></td></tr>
+<tr><td>限流/熔断</td><td><code>MIN_REQUEST_INTERVAL_MS=1000</code>+500 抖动；429→30s 起指数退避（封顶120s，尊重 Retry-After）；5xx→5s 起；网络→2s 起；<b>400/401/403 明确不重试</b>；连续失败≥5 次熔断 5 分钟。</td></tr>
+</tbody>
+</table>
+<div class="note"><b>不可照搬：</b>两个项目都可能跑在云端（GitHub Actions / 你的 WorkBuddy 云会话），而你实测雪球云 IP 会被 BLOCKED —— 照搬等于把已知失败的方案再做一遍。任何雪球抓取都必须留在<b>本机住宅 IP</b>，沿用你现有的 gzip+base64 分片 → TAT 推送链路。</div>
+</section>
+
+<section>
+<h2><span class="no">3</span>来源清单 B · 非雪球来源排查</h2>
+<table>
+<thead><tr><th>来源</th><th>能提供什么</th><th>组合/策略跟踪</th><th>主要限制</th><th>并入方式</th></tr></thead>
+<tbody>
+<tr><td><b>腾讯行情</b><br><span class="src">qt.gtimg.cn / ifzq.gtimg.cn</span></td><td>实时快照（GBK，~分隔，含现价/涨跌幅/换手/PE/PB）、前复权日K、分钟K</td><td><span class="tag t-no">无（纯行情）</span></td><td>无官方文档、字段位置可能微调；约 5000+ 次后返回空（限流非封IP，降速恢复）</td><td><span class="tag t-ok">★ 优先接入</span> 直接API，免鉴权、可批量拼请求，作盯盘主通道+雪球降级备胎</td></tr>
+<tr><td><b>东财 push2/push2his</b></td><td>K线、分时、批量行情、<b>主力资金流、龙虎榜、解禁、涨停池</b></td><td><span class="tag t-no">无</span></td><td><b>IP 级封禁</b>：5分钟&gt;300次可封数小时~24h；RemoteDisconnected 频发；需 UA+Referer</td><td><span class="tag t-ok">★ 优先接入</span> 只拉东财独家数据，串行≥1s+抖动，遇断连立即熔断切腾讯，禁止原地重试</td></tr>
+<tr><td><b>东财 group 组合</b><br><span class="src">group.eastmoney.com</span></td><td>组合净值、持仓、买卖明细、收益排行；可关注他人组合接收调仓推送</td><td><span class="tag t-warn">强（但接口未公开）</span></td><td><b>未找到公开 API</b>（待抓包验证）；本质是模拟组合，与"不做模拟盘"冲突</td><td>仅人工观察/交叉验证，<b>不做自动化拉取</b></td></tr>
+<tr><td><b>东财基金接口</b><br><span class="src">fund.eastmoney.com</span></td><td>历史净值、盘中估值、基金持仓</td><td><span class="tag t-no">无（基金维度）</span></td><td>JSONP/HTML 需清洗；有频率限制</td><td>API 拉取，基金标的估值交叉验证</td></tr>
+<tr><td><b>集思录</b><br><span class="src">jisilu.cn</span></td><td>可转债、ETF/LOF/QDII、折溢价、套利、A/H比价</td><td><span class="tag t-no">弱（持仓是自己记账）</span></td><td><b>未登录 API 静默截断到 30 条</b>（全市场500+）；需 cookie 且会过期；会员制</td><td>API(cookie)+人工导出，做套利/折溢价交叉验证；cron 自动化待验证</td></tr>
+<tr><td><b>同花顺 iFinD</b></td><td>全品类行情/财务/宏观 + 自建组合净值分析、实时跟踪</td><td><span class="tag t-warn">中（自建组合）</span></td><td>付费、个人难开通、QPS/额度限制、行情约15分钟延迟</td><td><span class="tag t-ok">★ 优先接入</span> <b>你已接入连接器</b>，边际成本近零，作权威补充/交叉校验</td></tr>
+<tr><td><b>理杏仁</b></td><td>PE/PB/PS/股息率/EV + 历史分位</td><td><span class="tag t-no">无（估值）</span></td><td>付费（约300-500元/年）、token 鉴权</td><td>按需：估值分位交叉验证</td></tr>
+<tr><td><b>量化平台</b><br><span class="src">聚宽/米筐/掘金/BigQuant</span></td><td>策略源码、回测、模拟盘绩效曲线、信号推送</td><td><span class="tag t-warn">中（看他人绩效）</span></td><td><b>全依赖模拟盘</b>，绩效是模拟值；与用户方向冲突</td><td>仅读社区策略逻辑做灵感，不部署不跟单</td></tr>
+<tr><td><b>跟投平台</b><br><span class="src">且慢/帮你投/天天基金/蛋卷</span></td><td>投顾组合净值、调仓历史、归因</td><td><span class="tag t-warn">中（人工观察）</span></td><td>App 内闭环、无公开 API；<b>一键跟投=跟单，方向冲突</b></td><td>人工导出/交叉验证，不自动化</td></tr>
+<tr><td><b>英为财情</b></td><td>全球行情、财经日历、手动 portfolio</td><td><span class="tag t-no">无</span></td><td><b>官方明确不提供公共 API</b></td><td>仅人工看盘，不集成</td></tr>
+<tr><td><b>东财妙想模拟组合</b></td><td>模拟账户持仓/买卖/委托</td><td><span class="tag t-no">模拟盘</span></td><td>需 MX_APIKEY，模拟盘 <b>与用户方向直接冲突</b></td><td><span class="tag t-no">不接入</span></td></tr>
+</tbody>
+</table>
+<div class="note"><b>关键区分：</b>用户说的"跟踪"有三种含义 —— ①跟踪自己的持仓（雪球已承担）、②跟踪他人调仓（仅东财组合/跟投平台，且受限或方向冲突）、③跟踪策略绩效（量化平台，依赖模拟盘）。新来源大多只能做<b>补充行情与交叉验证</b>，不能替代雪球在"自己组合"上的位置。</div>
+</section>
+
+<section>
+<h2><span class="no">4</span>来源清单 C · 现有工作台情报源盘点</h2>
+<table>
+<thead><tr><th>数据源</th><th>入口</th><th>频率</th><th>状态/限制</th></tr></thead>
+<tbody>
+<tr><td>雪球净值</td><td><code>nav_hourly_probe.py</code> / 本机住宅IP + <code>xq_cookie.txt</code></td><td>盘中每小时探测，日推进才全量</td><td><span class="tag t-ok">到 2026-11-17</span>；云 IP 直连被风控，本机方案在跑；nest：本地 <code>auto_refresh.json</code> 开关 on=True 但时间戳停 10-16（状态不一致）</td></tr>
+<tr><td>雪球持仓/调仓</td><td><code>holdings_probe.py</code> / <code>push_holdings_delta.py</code></td><td>core 6 只每小时；watch+other 52 只每天 18:20</td><td>住宅 IP + SHA 幂等推送，正常</td></tr>
+<tr><td>腾讯行情</td><td><code>qt.gtimg.cn</code> / ifzqgtimg</td><td>TTL 1-6h</td><td>/api/quotes、估值、回测在用；雪球限流时兜底</td></tr>
+<tr><td>东方财富</td><td>push2/push2his、datacenter-web、api.fund、simqry2（组合池）</td><td>实时~日频</td><td>资讯默认源、估值/行业/涨停/魔方池；部分接口需 cookie、易限流</td></tr>
+<tr><td>同花顺快讯（备用）</td><td><code>news.10jqka.com.cn</code></td><td>备用</td><td><span class="tag t-no">实测 404，备用失效</span></td></tr>
+<tr><td>抖音博主 ASR</td><td><code>auto_asr.py</code> + SenseVoice + VAD</td><td>每 30 分钟</td><td>正常；风控严格、失败3次停；口播稿为摘要唯一真源</td></tr>
+<tr><td>信息雷达</td><td><code>radar_sync.py</code>（金十/华尔街见闻/财联社/巨潮等 12+ 源）</td><td>同步每 10 分钟</td><td><span class="tag t-ok">radar.sqlite3 更新到 11-18</span>，活跃；这些源尚未直接进工作台 API</td></tr>
+<tr><td>集思录</td><td><code>/api/jisilu</code></td><td>按需</td><td>需 cookie，失败回退缓存</td></tr>
+<tr><td>财务因子面板</td><td><code>fin_panel.pkl</code>（15因子）</td><td>离线批量</td><td>本机无 numpy 无法解析；<b>时点性/更新日待核验</b></td></tr>
+<tr><td>回测引擎</td><td><code>strategy_lab.py</code> / combo_replay</td><td>按需</td><td>源为东财前复权日线；<b>caveats 明确承认前视偏差</b>，仅可相对比较</td></tr>
+<tr><td>行业轮动</td><td><code>sector_rotation_latest.json</code></td><td>名义每日 18:10</td><td><span class="tag t-no">停更：date=2026-11-10，滞后约8个交易日</span>，前端仍在读 → <b>假新鲜高风险</b></td></tr>
+</tbody>
+</table>
+
+<h3>现有情报源的空白 / 缺口</h3>
+<ol>
+<li><b>数据新鲜度监控缺位</b>（最该先补）：行业轮动停在 11-10、auto_refresh 状态不一致、consensus 时点缺口 —— 多处缓存无统一"最后更新时间/停更告警"，页面显示陈旧数据而不自知。</li>
+<li><b>机构级研报/纪要正文、一致预期（forward EPS/目标价/评级变动）完全空白</b>：fin_panel 是历史财务因子，不是预期数据；连接器虽有但工作台内无接入痕迹。</li>
+<li><b>北向/龙虎榜/两融实时细节</b>：仅在停更的行业轮动快照里有历史值，无实时增量源。</li>
+<li><b>资讯源单一</b>：工作台默认东财快讯、同花顺备用 404；财联社/金十等丰富源只在雷达侧，未进工作台 API。</li>
+</ol>
+<div class="danger"><b>现场核实记录（2026-11-18 01:38）：</b><code>sector_rotation_latest.json</code> 的 <code>date=2026-11-10</code> 已亲自打开确认；<code>nav_delta.json</code> 的 <code>until=2026-11-17, fails=0</code> 已确认。<code>pool_daily.json</code> 本地 src/data 下无运行态文件（运行态在服务器），子代理报的"21天"与项目记忆的"2149天"口径不一致 —— <b>此项不作为定论写入方案，需线上核验</b>。</div>
+</section>
+
+<section>
+<h2><span class="no">5</span>整合方案（按优先级，均待拍板后实施）</h2>
+
+<h3>P0 · 先补"别看错数据"（低成本，纯加固）</h3>
+<ol>
+<li><b>统一 freshness 探针</b>：在现有 <code>/api/health</code> 或巡检脚本里，为 sector_rotation / nav / consensus / holdings / pool_daily 各加"最后有效日期 + 落后交易日数"；超过阈值（如行业轮动&gt;2 交易日）在前端顶部黄条提示，并走企微普通提醒（非 P0）。这一步不动任何业务表，纯只读。</li>
+<li><b>行业轮动恢复或明确下线</b>：现有 18:10 管线已停（停更到 11-10）。要么修数据源（东财 push2 三块 RemoteDisconnected）恢复，要么按 v68 已下线处理、从情绪页移除陈旧展示 —— 二选一，需你拍板。</li>
+<li><b>Cookie 失效告警走企微</b>：把 snowball-monitor 的 <code>check_cookie_status</code> 思路（400/401/403 判失效 + 时间戳冷却）加进 <code>nav_hourly_probe.py</code> / <code>holdings_probe.py</code>，告警发企微普通提醒，避免"Cookie 静默过期 → 数据假新鲜"。</li>
+</ol>
+
+<h3>P1 · 抓取链路加固（借鉴两个开源项目，不换架构）</h3>
+<ol>
+<li><b>调仓去重升级为 id+status</b>：现有 <code>push_state.py</code> 是单 SHA 幂等；雪球调仓有 <code>pending→success</code> 状态迁移，内容 SHA 可能不变但状态变了。建议状态键改为 <code>id + status</code>，状态变更也推一次企微（避免漏报"已成交"）。<span class="src">映射自 snowball-monitor 双字段去重</span></li>
+<li><b>限流/熔断内置到采集底座</b>：把 xueqiu-mcp 的 <code>MIN_REQUEST_INTERVAL=1000ms + 500ms 抖动</code>、<code>429 退避</code>、<code>400/401/403 不重试</code>、<code>连续失败5次熔断5分钟</code> 抽成公共函数，供雪球/东财/腾讯三条抓取共用。特别解决东财 <code>RemoteDisconnected</code> 时"越重试封越久"的问题。</li>
+<li><b>腾讯行情升为盯盘主通道</b>：常规快照/K线优先腾讯（免鉴权、批量、限流宽松），东财只拉资金流/龙虎榜/解禁/涨停池等独家数据，请求量压到最低；东财被封时自动切腾讯。沿用现有住宅 IP + TAT 分片链路，不引入新基础设施。</li>
+<li><b>北京时间显式换算</b>：所有推送时间统一 <code>created_at/1000 + 28800</code> 或等价 TZ 处理，避免云/本机时区错位。</li>
+</ol>
+
+<h3>P2 · 按需启用（看你是否需要，不默认做）</h3>
+<ol>
+<li><b>iFinD 连接器深用</b>：已接入、边际成本近零，可做组合净值/财务/宏观的交叉校验源；注意 15 分钟延迟，定位"权威补充"而非高频盯盘。</li>
+<li><b>集思录折溢价数据</b>：若你要看可转债/LOF 套利，需维护 cookie（会过期），且未登录会静默截到 30 条 —— cron 自动化可行性待验证，先人工导出试用。</li>
+<li><b>把雷达的财联社/金十快讯接进工作台 API</b>：它们已在 <code>radar.sqlite3</code> 里，复用即可补强资讯单一问题。</li>
+<li><b>一致预期/研报正文</b>：需付费数据源（如理杏仁/机构接口），先明确预算与用途再评估，不主动推进。</li>
+</ol>
+
+<h3>明确不做（与既定方向冲突）</h3>
+<ul>
+<li><span class="tag t-no">不做</span> 任何模拟盘/跟单：东财妙想、聚宽/米筐/BigQuant 模拟盘、且慢/帮你投一键跟投 —— 你已明确否决。</li>
+<li><span class="tag t-no">不做</span> GitHub Actions / 云端直连雪球抓组合 —— 云 IP 必被风控，且高频加密（5分钟）与你"单轮&gt;16只 BLOCKED"结论冲突。</li>
+<li><span class="tag t-no">不引入</span> Upstash Redis —— 与现有 SHA 幂等/本地 JSON 重复，徒增外部依赖与密钥面。</li>
+<li><span class="tag t-no">不改</span> 现有 gzip+base64 分片、TAT 推送、chown、pool_daily 重建、企微 P0 FIFO、条件单三件套 —— 生产已验证，两个开源项目不涉及这些。</li>
+</ul>
+</section>
+
+<section>
+<h2><span class="no">6</span>待你拍板的事项</h2>
+<ol>
+<li><b>行业轮动</b>：修复数据源恢复每日更新，还是明确下线、从页面移除陈旧展示？（二选一，当前停更在 11-10）</li>
+<li><b>P0/P1 是否全做</b>：freshness 探针 + Cookie 告警 + id/status 去重 + 限流熔断 + 腾讯主通道 —— 是全批实施，还是先只做 P0？</li>
+<li><b>腾讯行情</b>：是否同意把常规盯盘行情从东财/雪球切到腾讯（免费、免鉴权），东财只留独家数据？</li>
+<li><b>P2 取舍</b>：集思录折溢价、雷达快讯进工作台、一致预期付费源 —— 哪些要、哪些不要？</li>
+<li><b>ai-archive 同步</b>：本报告是否按长期约定同步到 <code>rgck1/ai-archive</code>？（本机凭据文件在，可随时推；未获确认前不推）</li>
+</ol>
+<p class="small">本报告所有"来源核实"均基于 GitHub REST API、官网与公开文档的实时抓取；两项目的 star/时间、东财封禁阈值、集思录 30 条截断、iFinD 404 备用源等均已标注核实方式与"待验证"项，未据猜测编造接口。子代理发现但现场未确认的口径（如 pool_daily 天数）未写入方案。</p>
+</section>
+
+<footer>情报源调研与整合方案 · 生成于 2026-11-18 · 存放于 D:/我的工作台/02.输出区</footer>
+</div>
+</body>
+</html>
