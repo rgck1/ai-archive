@@ -71,6 +71,46 @@ def pending(name):
     return _load(name).get("pending_retry")
 
 
+# ---- id+status 双字段去重（P1，映射自 snowball-monitor 双字段）----
+# 雪球调仓有 pending→success 状态迁移：内容 SHA 可能不变，但状态变了，
+# 单 SHA 幂等会漏报「已成交」。这里按 (id, status) 组合键判重，状态变化即放行一次。
+# 与单 SHA 接口并存、互不干扰（独立的 state 文件，键名带 _states 后缀）。
+
+def should_push_state(name, ident, status, force=False):
+    """调仓 id+status 去重。返回 (是否推, 原因)。
+
+    同一 (id,status) 已成功推过则跳过；id 的 status 发生变化（如 pending→success）
+    视为新事件，放行一次。ident 建议用雪球调仓长链数字 ID。
+    """
+    st = _load(name + "_states")
+    key = "%s|%s" % (str(ident)[:64], str(status)[:24])
+    states = st.setdefault("states", {})
+    if (not force) and states.get(key):
+        return False, "该调仓 %s 已推过（%s）" % (key, states.get(key))
+    return True, ""
+
+
+def mark_state_ok(name, ident, status, extra=None):
+    """记录 (id,status) 已成功推送，并留审计。"""
+    st = _load(name + "_states")
+    key = "%s|%s" % (str(ident)[:64], str(status)[:24])
+    st.setdefault("states", {})[key] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    h = st.setdefault("history", [])
+    h.insert(0, {"key": key, "at": st["states"][key], "result": "ok",
+                 "extra": str(extra)[:120] if extra is not None else ""})
+    st["history"] = h[:30]
+    _save(name + "_states", st)
+
+
+def status_changed(name, ident, new_status):
+    """便利函数：该 id 上一次状态是否与 new_status 不同（含首次）。"""
+    st = _load(name + "_states")
+    states = st.get("states") or {}
+    prefix = str(ident)[:64] + "|"
+    prev = [k[len(prefix):] for k in states if k.startswith(prefix)]
+    return (not prev) or (prev[-1] != str(new_status)[:24])
+
+
 if __name__ == "__main__":
     import sys
     if len(sys.argv) >= 2 and sys.argv[1] == "status":
