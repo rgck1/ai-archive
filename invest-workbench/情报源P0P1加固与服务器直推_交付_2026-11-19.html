@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>情报源 P0/P1 加固 + 服务器侧企微直推 · 交付报告 2026-11-19</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--text:#1f2430;--muted:#6b7280;--border:#e3e6ec;--primary:#2563eb;--ok:#15803d;--warn:#b45309;--up:#d92b2b;--down:#16a34a;--code-bg:#f3f4f6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;line-height:1.7;font-size:15px}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 6px}h2{font-size:19px;margin:30px 0 12px;padding-left:10px;border-left:4px solid var(--primary)}
+.sub{color:var(--muted);font-size:14px}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{border:1px solid var(--border);padding:8px 10px;text-align:left;vertical-align:top}th{background:var(--code-bg);font-weight:700}
+.tag{display:inline-block;padding:1px 8px;border-radius:5px;font-size:12px;font-weight:700;color:#fff}.t-ok{background:var(--ok)}.t-warn{background:var(--warn)}.t-blue{background:var(--primary)}
+code{background:var(--code-bg);padding:1px 6px;border-radius:4px;font-size:13px}pre{background:var(--code-bg);padding:12px;border-radius:8px;overflow:auto;font-size:12.5px;margin:8px 0}
+.small{color:var(--muted);font-size:13px}.k{color:var(--primary);font-weight:700}
+ul{margin:8px 0;padding-left:22px}li{margin:5px 0}
+.done{color:var(--ok);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>情报源 P0/P1 加固 + 服务器侧企微直推</h1>
+<div class="sub">交付日期 2026-11-19 · 投资工作台 v108 · 前端契约 20 视图不变 · sw v107→v108</div>
+
+<div class="card">
+<h2 style="margin-top:0">一句话结论</h2>
+<p>用户拍板的三件事全部落地：<b>情报源那套 P0/P1 全做</b>、<b>#194 先不做</b>、<b>#197 走服务器侧企微 webhook 直推</b>。实测服务器带 key POST 企微返回 <code>errcode:0</code>，据此把"关机也会断"的推送能力搬到服务器 7×24；新增统一新鲜度探针（API + 前端黄条 + 企微）、Cookie 失效告警、id+status 去重、限流熔断底座、腾讯行情主通道。全部经线上真浏览器与接口核验通过。</p>
+</div>
+
+<h2>0 · 关键决策与架构</h2>
+<div class="card">
+<table>
+<tr><th>拍板项</th><th>执行结果</th></tr>
+<tr><td>#192 情报源那套 P0/P1</td><td><span class="tag t-ok">全做</span> 见下方 P0/P1 六项，全部落地并核验</td></tr>
+<tr><td>#194 B 报告遗留</td><td><span class="tag t-warn">按指示暂缓</span> 未改动</td></tr>
+<tr><td>#197 交易日不开机兜底</td><td><span class="tag t-ok">服务器侧直推</span> 服务器直连企微成功，关键信号不再依赖本机常驻</td></tr>
+</table>
+<p class="small">推送切分：服务器负责"关机也要到"的 P0 级信号（每日推荐 / 新鲜度异常 / Cookie 失效 / 条件单紧急）；本机 push_bridge 保留实时盯盘。webhook 只存服务器私有文件 <code>data/server_notify_webhook</code>（600 / invest:invest），不入代码库、不回显、不同步 ai-archive。</p>
+</div>
+
+<h2>1 · #197 服务器侧企微直推（核心底座）</h2>
+<div class="card">
+<p><b>决定性验证</b>：在服务器带本机 webhook key POST <code>qyapi.weixin.qq.com</code>，返回 <code>{"errcode":0,"errmsg":"ok"}</code> —— 云服务器出站可达企微，关机也能推送成立。</p>
+<ul>
+<li><span class="k">server_notify.py</span>（SHA <code>745bc48a</code>）：统一发送底座。北京时间显式 UTC+8、内容 SHA 去重（按 kind 独立冷却）、1900 字节分段、首段可选 @all、错误码归一、失败有限重试、退出码恒 0。webhook 环境变量优先、其次私有文件。提供 <code>--test/--daily/--freshness/--text</code> CLI。</li>
+<li><span class="k">服务器定时任务</span>：<code>invest-workbench-v47-daily.service</code> 从 5 个 ExecStart 追加到 <b>6 个</b>（第 6 个 = <code>server_notify.py --daily</code>），timer 一个字没动（仍每天 20:30 / Persistent / AccuracySec=1min）。每天 20:30 自动推"今日推荐 + 新鲜度异常"。</li>
+<li><span class="k">/api/notify</span>：新增受 radar_token 常量时间鉴权 + ±15 分钟时间窗防重放的 POST 接口，供本机探测脚本触发服务器直推；无 token 实测返回 401。</li>
+</ul>
+</div>
+
+<h2>2 · P0（别看错数据）</h2>
+<div class="card">
+<table>
+<tr><th>项</th><th>落地</th><th>核验</th></tr>
+<tr><td>统一 freshness 探针</td><td>后端 <code>api_freshness()</code> 复用 server_notify 的 <code>_freshness_rows()</code> 单一口径；覆盖行业轮动/组合净值/一致预期/持仓/业绩曲线五路，各算最后有效日期+落后交易日数，阈值（行业轮动 2、净值 3、其余 5）。前端顶部黄条 <code>#wbFreshBar</code>，超阈值显示、可关闭（sessionStorage），数据新鲜时隐藏。</td><td>API 返回 5 行、stale_count=0；真浏览器 pageerror=0、wbLoadFresh 存在、黄条 DOM 存在</td></tr>
+<tr><td>行业轮动恢复</td><td>此前已由 A 方案（申万涨跌+东财净额+乐咕家数）恢复，本轮不动</td><td>保留既有 00:42 成功数据</td></tr>
+<tr><td>Cookie 失效告警走企微</td><td>新增 <code>wb_notify_client.py</code>（本机→/api/notify 轻量客户端）；<code>nav_hourly_probe.py</code> 在 NEED_COOKIE/BLOCKED 时告警；<code>holdings_probe.py</code> 在抓取输出含失效标志时告警。服务器侧 kind=cookie 6 小时冷却避免刷屏，@all 提醒。</td><td>本机→服务器→企微全链路 ok=true，测试消息已送达</td></tr>
+</table>
+</div>
+
+<h2>3 · P1（抓取链路加固）</h2>
+<div class="card">
+<table>
+<tr><th>项</th><th>落地</th><th>核验</th></tr>
+<tr><td>调仓去重 id+status</td><td><code>push_state.py</code> 新增 <code>should_push_state/mark_state_ok/status_changed</code>，按 (id,status) 组合键去重：pending→success 状态迁移各推一次；与单 SHA 接口并存、向后兼容。</td><td>自测：pending 首推/重复跳/success 再推/其他 id 放行/legacy SHA API 不受影响，全过</td></tr>
+<tr><td>限流熔断底座</td><td><code>fetch_guard.py</code>（SHA <code>2edee708</code>）：1000ms+500ms 抖动、429 指数退避（≤3 次）、400/401/403 不重试、连续失败 5 次熔断 5 分钟、RemoteDisconnected 立即熔断切源。已接入东财行业资金流（<code>fetch_em_flow</code> 经 <code>FG.get('eastmoney')</code> 守卫，熔断时净额块独立降级不影响涨跌主表）。</td><td>服务器自测：429 退避 2 次成功、403 一次即 HardBlock、连续失败熔断，全过；行业轮动脚本 SHA <code>d768431e</code> 一致</td></tr>
+<tr><td>腾讯行情主通道</td><td>引擎批量行情 <code>fetch_quotes_public</code> 本就"主源腾讯、备源新浪"；本轮把根 server.py 单票兜底 <code>_fetch_public_quote</code> 从"新浪优先"统一为"腾讯优先+守卫，熔断切新浪"。</td><td>线上实测 <code>/api/public_quotes</code>：招商轮船 15.38 / 美的集团 95.01，<code>src=腾讯</code></td></tr>
+<tr><td>北京时间显式换算</td><td>server_notify 用 <code>timezone(timedelta(hours=8))</code>；本机 push_bridge 用本机时区（中国 UTC+8）；wecom.py 用 <code>.astimezone()</code>。无缺口。</td><td>推送时间戳显示正确（巡检 2026-11-19 23:33:05）</td></tr>
+</table>
+</div>
+
+<h2>4 · 部署与核验清单</h2>
+<div class="card">
+<ul>
+<li><span class="tag t-ok">PASS</span> 前端构建 <code>build_frontend.py --verify</code>：20 视图 / 4 script / 3 style / 2 :root 契约保持，sha 3cb94b10</li>
+<li><span class="tag t-ok">PASS</span> 契约测试 29/29；JS 语法 <code>node --check</code> 通过</li>
+<li><span class="tag t-ok">PASS</span> sw.js bump v107→v108，前端部署，含 sim-tracker 等 7 项预缓存存在校验</li>
+<li><span class="tag t-ok">PASS</span> server.py 两次部署（api_freshness → +api_notify → +腾讯主通道），SHA 一致、服务 active</li>
+<li><span class="tag t-ok">PASS</span> 线上真浏览器核验：pageerror=0、freshness API 5 行、黄条 DOM 存在、notify 无 token=401、service 6 ExecStart、timer 20:30、三脚本 SHA 一致</li>
+</ul>
+</div>
+
+<h2>5 · 已知边界与后续</h2>
+<div class="card">
+<ul>
+<li>行业轮动 11-19 18:10 定时任务遇到 akshare 申万源临时返回旧数据（最新 11-09），脚本按既有机制标注 <code>_fetch_error</code> 并保留 00:42 成功版本（31 行业真实值仍在）。这不是本轮改动引入；源恢复后下个交易日自动重算。本轮手动补跑因数据源未恢复未覆盖，未污染数据。</li>
+<li>webhook key 只在服务器私有文件与本机信息雷达 preferences，不进 ai-archive；如需轮换，更新 <code>data/server_notify_webhook</code>（600/invest:invest）即可，代码无需改。</li>
+<li>服务器直推与本机 push_bridge 内容各有分工（P0 级 vs 实时盯盘），且各有独立去重键，正常不重复；若同内容双发，以服务器为准。</li>
+<li>#194 B 报告遗留按指示暂缓，未动。</li>
+</ul>
+</div>
+
+<p class="small">本报告由投资工作台项目生成，存放于 D:/我的工作台/02.输出区，按长期约定同步 rgck1/ai-archive。生成于 2026-11-19。</p>
+</div>
+</body>
+</html>
