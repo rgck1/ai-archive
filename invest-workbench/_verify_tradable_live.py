@@ -31,8 +31,13 @@ try:
     results["api_top_codes"] = [x.get("code") for x in items]
     results["api_all_have_holdings"] = all(isinstance(x.get("tradable_holdings"), list) and x.get("tradable_holdings") for x in items)
     results["api_wangyidao_excluded"] = not any(x.get("code") == "ZH3289755" for x in (d.get("ranking") or []))
-    results["api_method_has_gate"] = "买不了" in (d.get("method") or "")
+    results["api_method_has_gate"] = "≤65元" in (d.get("method") or "") and "高价股" in (d.get("method") or "")
     results["api_min"] = d.get("tradable_min")
+    results["api_price_excluded"] = d.get("price_excluded")
+    results["api_max_price"] = d.get("max_price")
+    results["api_songfa_excluded"] = not any(x.get("code") == "ZH2237465" for x in (d.get("ranking") or []))
+    results["api_all_have_price_field"] = all("price_affordable_ratio" in x for x in items)
+    results["api_top_all_cheap"] = all((x.get("price_affordable_ratio") == 100.0) for x in items)
 except Exception as e:
     results["api_err"] = str(e)[:150]
 # 2) 真浏览器：切到跟单推荐，检查卡片显示可买持仓
@@ -58,7 +63,10 @@ try:
         txt = pg.evaluate("(document.getElementById('recMomBox')||{}).textContent||''")
         results["has_buyable_label"] = "可买持仓" in txt
         results["has_exclude_count"] = "买不了剔除" in txt
-        results["card_has_stock_code"] = "SH603268" in txt or "SH600584" in txt
+        results["has_price_exclude"] = "太贵剔除" in txt
+        results["has_price_line"] = "单价 ≤65元" in txt
+        results["has_etf_exempt"] = "基金免检" in txt
+        results["card_has_stock_code"] = "SH600584" in txt or "SH601058" in txt
         results["sub_snippet"] = txt[:260].replace("\n", " ")
         b.close()
 except Exception as e:
