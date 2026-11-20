@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>近一周领涨组合 · 可交易性过滤交付 2026-11-20</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1f2430;--muted:#6b7280;--border:#e5e7eb;--up:#d64545;--accent:#2563eb;--warn-bg:#fff7ed;--warn:#d97706}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.7 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+.wrap{max-width:920px;margin:0 auto;padding:28px 18px 60px}h1{font-size:24px;margin:0 0 6px}.sub{color:var(--muted);font-size:13px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin:14px 0}
+h2{font-size:17px;margin:0 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid var(--border);padding:7px 9px;text-align:left;vertical-align:top}th{background:#f3f4f6}
+code{background:#f3f4f6;border-radius:4px;padding:1px 5px;font-size:12px}.bad{color:var(--up);font-weight:600}.ok{color:#0a7d4f;font-weight:600}
+.note{background:var(--warn-bg);border:1px solid #fcd9a8;border-radius:9px;padding:12px 14px;font-size:13px}
+ul{margin:6px 0 0;padding-left:20px}li{margin:4px 0}.foot{color:var(--muted);font-size:12px;margin-top:24px}
+</style>
+</head>
+<body><div class="wrap">
+<h1>近一周领涨组合 · 加「买得了」闸门</h1>
+<div class="sub">2026-11-20 ｜ 跟单推荐 · 第二类推荐 ｜ 改动已上线核验</div>
+
+<div class="card">
+<h2>为什么要改</h2>
+<p>原先领涨排名只看组合净值涨幅，没看组合持仓你是不是买得了。实证：11-18 那期第 2 名「王一刀C」<b>98.04% 重仓 SZ300488 恒锋工具（创业板）</b>——没有创业板权限的话，跟了这个组合也下不了单，等于没用。</p>
+</div>
+
+<div class="card">
+<h2>落地的规则</h2>
+<ul>
+<li><b>可交易口径</b>：沪深主板（600/601/603/605、000/001/002/003）+ 场内基金（ETF/LOF，51/15/16/56/58 开头）算「买得了」；创业板 300/301、科创板 688、北交所 8/4/92 算「买不了」。</li>
+<li><b>闸门阈值</b>：组合持仓里可交易权重 <b>≥ 80%</b> 才允许进入领涨排名；不足的直接在排除清单写明「主仓买不了：可交易持仓仅 X%，重仓 Y，跟单无用」。</li>
+<li><b>无持仓明细</b>的组合也排除（无法确认是否买得了），本期 34 个候选全部有持仓数据，没有误伤。</li>
+<li><b>卡片直接列出买入标的</b>：每张三甲卡片显示「可买持仓 X%：股票名 代码 权重%」和持仓截至时间，照着代码就能下单；展开表新增「可买仓位」列；统计行新增「买不了剔除 N 个」。</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>改后效果（11-20 11:48 重算，as_of 2026-11-19）</h2>
+<table>
+<tr><th>名次</th><th>组合</th><th>5日涨幅</th><th>可买持仓</th><th>直接可买的股票</th></tr>
+<tr><td>1</td><td>2023保本出</td><td class="bad">+7.46%</td><td>100%</td><td>松发股份 SH603268 100%</td></tr>
+<tr><td>2</td><td>龙眠大道</td><td class="bad">+5.58%</td><td>100%</td><td>福能股份 SH600483 49.67%、新奥股份 SH600803 49.46%、平安银行 SZ000001 0.09%</td></tr>
+<tr><td>3</td><td>随波逐流</td><td class="bad">+1.87%</td><td>100%</td><td>长电科技 SH600584 100%</td></tr>
+</table>
+<p style="margin-top:10px">剔除 2 个：<b>王一刀C</b>（可交易仅 1.5%，重仓创业板）、<b>长线策略</b>（可交易 69.7%，重仓科创板）。</p>
+</div>
+
+<div class="card">
+<h2>顺带修掉一个隐藏 bug</h2>
+<div class="note">每日快照脚本 <code>recs_momentum_daily.py</code> 原来调用 <code>api_recs_momentum({})</code>，而这个接口默认会<b>优先读回上一版快照</b>。结果每天 20:30 算出来的哈希恒定 → 永远走 dedup，快照正文从 11-18 起就没真正重算过（审计里 11-19 只有一条 dedup）。本次改为调用同一算法真值源的现场计算函数 <code>_calc_recs_momentum({})</code>，跳过快照读取直接算。以后净值推进会真正刷新，不再停在旧结果。</div>
+</div>
+
+<div class="card">
+<h2>改动文件与核验</h2>
+<ul>
+<li><code>server.py</code>：新增市场判定 <code>_recs_mom_bucket()</code>、可买占比 <code>_recs_mom_tradability()</code>，候选循环加闸门，返回字段带 <code>tradable_holdings / tradable_ratio / holdings_asof / tradable_excluded</code>。</li>
+<li><code>parts/30-script/19-p2.html</code>：卡片、统计行、展开表、排除区文案。</li>
+<li><code>recs_momentum_daily.py</code>：修复自循环 + 哈希 keys 纳入新字段。</li>
+<li>备份：<code>_base_server_pre_tradable_20261120.py</code>、<code>_base_19-p2_pre_tradable_20261120.html</code>（均在 src 根目录）。</li>
+</ul>
+<p style="margin-top:8px">核验：市场判定 10/10 单测通过；构建结构 PASS、契约 <b>29/29</b>、JS 语法 OK；sw v108→<b>v109</b>；线上 API 字段齐全、王一刀C 已排除、真浏览器 <b>pageerror=0</b>、3 张卡片均显示可买持仓与代码。</p>
+</div>
+
+<div class="foot">口径提醒：持仓明细取自最近一次抓取（卡片标注了时间），可能滞后于组合实时调仓；历史涨幅不代表未来收益，非投资建议。若要调整「可买市场」或 80% 阈值，改 <code>_RECS_MOM_TRADABLE_BUCKETS</code> / <code>_RECS_MOM_TRADABLE_MIN</code> 后重新部署并强制重算快照即可。</div>
+</div></body></html>
