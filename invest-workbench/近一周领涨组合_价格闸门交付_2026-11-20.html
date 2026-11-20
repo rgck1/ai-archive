@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>近一周领涨组合 · 价格闸门交付 2026-11-20</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--text:#1a1d21;--muted:#6b7280;--border:#e3e6ea;--up:#d92b2b;--down:#0a9d5a;--accent:#2f6fed;--warn:#c77700;--warn-bg:#fff6e6}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.65;padding:28px 20px}
+.wrap{max-width:940px;margin:0 auto}h1{font-size:24px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 10px;padding-left:10px;border-left:4px solid var(--accent)}
+.sub{color:var(--muted);font-size:13px;margin-bottom:20px}.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin:12px 0}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border:1px solid var(--border);padding:8px 10px;text-align:left}th{background:#f0f3f7}
+.tag{display:inline-block;padding:1px 8px;border-radius:5px;font-size:12px;background:var(--info-bg,#eaf1ff);color:var(--accent);margin-right:6px}
+.ok{color:var(--down);font-weight:700}.no{color:var(--up);font-weight:700}.note{background:var(--warn-bg);border:1px solid var(--warn);border-radius:8px;padding:10px 14px;font-size:13px;margin:12px 0}
+code{background:#f0f2f5;padding:1px 5px;border-radius:4px;font-size:12px}.foot{color:var(--muted);font-size:12px;margin-top:30px;border-top:1px solid var(--border);padding-top:12px}
+</style></head><body><div class="wrap">
+<h1>近一周领涨组合 · 加「买不买得起」价格闸门</h1>
+<div class="sub">交付时间 2026-11-20 14:30 CST ｜ 承接上一轮「可交易性闸门」，本轮追加价格维度 ｜ sw v109→v110</div>
+
+<div class="card">
+<b>你的诉求</b>：股票价格也要限制——如果组合里的股票全都是 65 元以上的，10 万资金一手就 6500+，跟了也没用。
+<div class="note">实证：上一轮 TOP1「2023保本出」100% 持仓 <b>松发股份 SH603268，172.2 元/股，一手 1.72 万</b>；TOP1 换成龙眠大道后更贴合你的账户。本轮把这类高价组合直接挡在排名之外。</div>
+</div>
+
+<h2>一、规则口径</h2>
+<div class="card"><table>
+<tr><th>维度</th><th>规则</th><th>理由</th></tr>
+<tr><td>价格上限</td><td>个股单价 <b>≤ 65 元</b>（一手 100 股 = 6500 元内）</td><td>10 万级账户，单票一手占比可控</td></tr>
+<tr><td>闸门阈值</td><td>可买个股中「≤65 元」的<b>权重占比 ≥ 80%</b></td><td>与上一轮市场闸门口径一致，主仓买不起才剔除</td></tr>
+<tr><td>ETF / LOF</td><td><b>豁免价格检查</b>（标"基金免检"）</td><td>ETF 单价天然高（如银华日利 101 元）、一手 100 份，定价逻辑与个股不同</td></tr>
+<tr><td>取价失败</td><td><b>降级放行</b>，前端标"价—"</td><td>行情接口抖动不能误杀组合</td></tr>
+<tr><td>检查时点</td><td>每日 20:30 快照重算时批量取现价（腾讯主通道）</td><td>一次批量取全部候选标的，不逐只打接口</td></tr>
+</table>
+<div class="note">两道闸门串联：先过「市场可交易」（沪深主板 / 场内 ETF ≥80%，创业板 / 科创板 / 北交所剔除），再过「价格买得起」（≤65 元权重 ≥80%）。任一不过即剔除，涨幅再高也不推荐。</div>
+</div>
+
+<h2>二、改后效果（as_of 2026-11-19，已强制重算）</h2>
+<div class="card">
+<table>
+<tr><th>名次</th><th>组合</th><th>5日涨幅</th><th>≤65 元占比</th><th>可买持仓与现价</th></tr>
+<tr><td>1</td><td>龙眠大道</td><td class="ok">+5.58%</td><td>100%</td><td>福能股份 SH600483 12.02 元 · 新奥股份 SH600803 22.35 元 · 平安银行 SZ000001 12.1 元</td></tr>
+<tr><td>2</td><td>随波逐流</td><td class="ok">+1.87%</td><td>100%</td><td>长电科技 SH600584 50.5 元</td></tr>
+<tr><td>3</td><td>忍者神龟</td><td class="ok">+0.82%</td><td>100%</td><td>赛轮轮胎 SH601058 12.6 元 · 银华日利ETF SH511880（基金免检）</td></tr>
+</table>
+<p><b>本期剔除（34 候选中）：</b>市场买不了 2 个 + 股价太贵 2 个 = 共 4 个。</p>
+<table>
+<tr><th>被剔除组合</th><th>原因</th></tr>
+<tr><td>2023保本出</td><td class="no">股价太贵：可买个股中 ≤65 元仅 0%，重仓松发股份 173.4 元</td></tr>
+<tr><td>成长价值</td><td class="no">股价太贵：≤65 元仅 21.7%，重仓东山精密 68.7 元等</td></tr>
+</table>
+</div>
+
+<h2>三、改动清单</h2>
+<div class="card">
+<p><b>后端 <code>server.py</code></b>（备份 <code>_base_server_pre_price_20261120.py</code>）</p>
+<ul>
+<li>新增常量 <code>_RECS_MOM_MAX_PRICE=65.0</code> / <code>_RECS_MOM_PRICE_MIN_RATIO=80.0</code>、批量取价函数 <code>_recs_mom_quote_map()</code></li>
+<li><code>_recs_mom_tradability()</code> 增 quotes 入参，每只可买持仓带 <code>price / price_state</code>（affordable / too_high / exempt / unknown），算 <code>price_affordable_ratio</code></li>
+<li>候选循环加价格闸门剔除分支；items / excluded / method / note / 统计字段（price_excluded / max_price / price_min_ratio）全部带价格口径</li>
+</ul>
+<p><b>每日脚本 <code>recs_momentum_daily.py</code></b>（备份 <code>_base_rmd_pre_price_20261120.py</code>）：哈希 keys 纳入 price_excluded / max_price / price_min_ratio，确保价格闸门导致的排名变化不被去重吞掉。仍走 <code>_calc_recs_momentum()</code> 现场计算（上一轮已修自循环 bug）。</p>
+<p><b>前端 <code>parts/30-script/19-p2.html</code></b>（备份 <code>_base_19p2_pre_price_20261120.html</code>）：卡片列每只股票现价（超 65 标红、ETF 标"基金免检"、取价失败标"价—"）与「单价 ≤65 元可买权重」；统计行加「太贵剔除 N」；展开表加「≤65元占比」列；排除区与空状态文案纳入价格口径。</p>
+</div>
+
+<h2>四、核验结果</h2>
+<div class="card">
+<ul>
+<li class="ok">✓ 价格判定单测：纯高价 0% / 半高价 50% / 全便宜 100% / ETF 豁免 / 取价失败降级 —— 5/5 符合预期</li>
+<li class="ok">✓ 构建结构检查 PASS、契约测试 29/29、JS 语法通过、sw v109→v110</li>
+<li class="ok">✓ 强制重算 as_of 11-19，太贵剔除 2 个，松发股份组合已出排名</li>
+<li class="ok">✓ 线上真浏览器 pageerror=0、3 卡显示现价与"基金免检"、API 价格字段齐全、method 含价格口径 —— 全 PASS</li>
+</ul>
+</div>
+
+<div class="foot">口径可调：改 <code>server.py</code> 的 <code>_RECS_MOM_MAX_PRICE</code>（价格上限）与 <code>_RECS_MOM_PRICE_MIN_RATIO</code>（占比阈值）即可，改后需 bump sw + 部署 + <code>--force</code> 重算。回退：用三个 <code>_base_*_pre_price_20261120</code> 备份还原。提醒：持仓明细是最近一次抓取快照（卡片标 asof），现价是快照重算时点价格；"买得起"不等于"值得买"，历史涨幅不代表未来收益。</div>
+</div></body></html>
