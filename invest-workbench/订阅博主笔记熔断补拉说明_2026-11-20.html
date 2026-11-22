@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二大脑 · 博主笔记熔断补拉交付</title>
+<style>
+  body{font-family:-apple-system,"Microsoft YaHei",sans-serif;max-width:900px;margin:40px auto;padding:0 20px;color:#1a1a1a;line-height:1.7;background:#fafafa}
+  .card{background:#fff;border:1px solid #e8e8e8;border-radius:12px;padding:24px 28px;margin:16px 0;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+  h1{font-size:24px;margin:0 0 6px} h2{font-size:18px;margin:0 0 14px;color:#0b6}
+  .sub{color:#888;font-size:13px;margin-bottom:24px}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin:10px 0}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #eee}
+  th{background:#f5f5f5;font-weight:600} td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .hi{color:#c33;font-weight:700} .ok{color:#0a0} .tag{display:inline-block;background:#e6f7ef;color:#0a7;padding:2px 9px;border-radius:10px;font-size:12px;margin:2px}
+  code{background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:13px}
+  .big{font-size:32px;font-weight:800;color:#0b6}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>第二大脑 · 订阅博主笔记熔断补拉</h1>
+  <div class="sub">2026-11-20 · 无需用户重新登录，全自动补齐 · 数据从 892 条 → 4110 条</div>
+  <p>针对此前因接口熔断导致的博主笔记缺失，本次通过逆向得到大脑前端的 token 续期机制，实现了全自动补拉，<b>无需用户重新扫码登录</b>。13 位博主全部拉满，并修复了导入去重缺陷。</p>
+</div>
+
+<div class="card">
+  <h2>一、熔断根因</h2>
+  <ul>
+    <li><b>token 中途过期</b>：JWT 仅 30 分钟有效，全量拉取到一半时过期，返回 401/403；</li>
+    <li><b>错误处理不当</b>：旧脚本把 401 当普通失败，固定 2 秒后重试同样请求，触发风控；</li>
+    <li>连续失败 5 次即熔断放弃 → 6 位博主为空、3 位只有部分（892 条）。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>二、自动续期方案（关键突破）</h2>
+  <p>从前端 bundle 逆向出：登录时浏览器 localStorage 里存的 <code>refresh_token</code> 有效期约 <b>90 天</b>（远长于 JWT 的 30 分钟），可静默换新 token。</p>
+  <ul>
+    <li>新增 <code>token_refresh.py</code>：用 refresh_token 调 <code>POST notes-api.biji.com/account/v2/web/user/auth/refresh</code>，原地更新本地凭据；</li>
+    <li>改造 <code>sync_blogger_notes.py</code>：启动前自动检查有效期（不足 600s 续期）、遇 401 立即刷新重试、失败指数退避 3/6/12/24s、6 次才熔断；</li>
+    <li>失败页不记入断点进度，下次可续传，绝不丢数据。</li>
+  </ul>
+  <p class="ok">✅ 全程无需用户重新登录。仅当 refresh_token 90 天后过期才需重跑 capture_web_token.py。</p>
+</div>
+
+<div class="card">
+  <h2>三、补拉结果：13 位博主全部拉满</h2>
+  <table>
+    <tr><th>博主</th><th style="text-align:right">笔记数</th><th>博主</th><th style="text-align:right">笔记数</th></tr>
+    <tr><td>全能的野人</td><td class="num">1381</td><td>斌哥 Bg</td><td class="num">240</td></tr>
+    <tr><td>主力行为学（杨宁）</td><td class="num">490</td><td>阿华（机构一手调研）</td><td class="num">168</td></tr>
+    <tr><td>凯心</td><td class="num">455</td><td>量化投资邢不行啊</td><td class="num">130</td></tr>
+    <tr><td>熊猫有财</td><td class="num">407</td><td>独行者李明</td><td class="num">127</td></tr>
+    <tr><td>猫眼儿观世界</td><td class="num">282</td><td>量化躺平佟掌柜</td><td class="num">58</td></tr>
+    <tr><td>付鹏的财经世界</td><td class="num">268</td><td>葫芦军师</td><td class="num">54</td></tr>
+    <tr><td></td><td></td><td>房子（新允珩）</td><td class="num">50</td></tr>
+  </table>
+  <p style="font-size:20px">合计 <span class="big">4110</span> 条（补拉前 892 条）</p>
+</div>
+
+<div class="card">
+  <h2>四、顺带修复的导入去重缺陷</h2>
+  <p>发现应用导入时 <code>source_url LIKE '%post_id%'</code> 去重失效——URL 里是抖音视频 ID（7709…）而非 post_id（1927…），永远匹配不上，导致重复插入（一度膨胀到 8220 条）。</p>
+  <ul>
+    <li>改为 <code>source_url = ?</code> 精确匹配（URL 空时退回 content_hash）；</li>
+    <li>坑：改 db.py 后<b>必须重启 app 服务</b>，否则旧代码残留（曾因此二次导入又全新增）；</li>
+    <li>清空重导后干净 4110 条；二次导入 <b class="ok">新增 0 / 跳过 4110</b>，幂等验证通过。</li>
+  </ul>
+</div>
+
+<div class="card">
+  <h2>五、当前状态</h2>
+  <p>
+    <span class="tag">应用 4110 条笔记</span>
+    <span class="tag">16 个标签</span>
+    <span class="tag">13 位博主齐全</span>
+    <span class="tag">全文搜索正常</span>
+    <span class="tag">去重幂等</span>
+  </p>
+  <p>应用运行中：<code>http://127.0.0.1:8765</code>；启动脚本 <code>D:/Software/second-brain-app/启动第二大脑.bat</code>。</p>
+  <p>本地凭据 <code>C:/Users/RG/.getnote/web_token.json</code>（vault 外、git 不可见）；工具目录 <code>D:/Software/second-brain-tools/</code>（README 已更新续期说明）。</p>
+</div>
+</body>
+</html>
