@@ -24,6 +24,8 @@
    https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume/files/skills/task-resume/scripts/fetch_task.py
    保存到本机后执行：
    python "<脚本本机路径>" "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume" "<本机目标目录>"
+   若 raw 域名被网络策略拦截，改用 API 回退版本：
+   python "<脚本本机路径>" "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume" "<本机目标目录>" --repo rgck1/ai-archive --bundle "task-archives/20261123-task-archive-resume" --branch main
    看到 ALL_MATCH = True 才表示完整拉取。
 
 4. 依次读 CONTEXT.md、STATUS.md、TASKS.md、DESIGN.md，按 TASKS.md 重建待办及状态。
