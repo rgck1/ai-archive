@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>财经45位对接 · P0 落地交付 · 2026-11-21</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2329;--sub:#646a73;--line:#e5e6eb;--accent:#2563eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:28px 20px 60px}
+.wrap{max-width:1180px;margin:0 auto}
+header{background:linear-gradient(135deg,#065f46,#0f9d58);color:#fff;border-radius:14px;padding:26px 30px;margin-bottom:20px}
+header h1{margin:0 0 8px;font-size:24px}header p{margin:4px 0;opacity:.92;font-size:13px}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+h2{font-size:17px;margin:0 0 8px;padding-left:11px;border-left:4px solid var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:12.8px}th,td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+th{background:#f2f5fb;font-weight:600;color:#334155;white-space:nowrap}tr:nth-child(even) td{background:#fafbfc}
+.hint{color:var(--sub);font-size:12.5px;margin:6px 0 14px}
+.ok{background:#ecfdf5;border-left:4px solid #10b981;padding:12px 16px;border-radius:6px;font-size:13px;color:#065f46}
+.warn{background:#fffbeb;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:6px;font-size:13px;color:#78350f;margin-top:12px}
+code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12px}
+ul{margin:5px 0;padding-left:18px}li{margin:4px 0}
+.done{color:#047857;font-weight:600}.no{color:#b91c1c}
+</style></head><body><div class="wrap">
+<header><h1>财经 45 位对接 · P0 落地交付</h1>
+<p>执行依据：《财经投资45位_第二大脑对接评估》中的 P0 建议顺序 · 用户授权「按你想的办」</p>
+<p>执行时间：2026-11-21 09:25　|　原则：只做能用现有真实数据完成、且不依赖抖音抓取的部分；未拍板事项不动</p></header>
+<section><h2>一、本轮已完成（3 项）</h2>
+<table><thead><tr><th style="width:40px">#</th><th style="width:180px">交付物</th><th>内容</th><th style="width:120px">落地位置</th></tr></thead><tbody>
+<tr><td>1</td><td><b>接入规则配置文件</b></td><td>把评估结论固化为机器可读 JSON：8 位白名单（含分级/用途/数据库源）、16 位条件项、21 位黑名单及原因归类、福总双号合并、已落库 12 位不重复建链路、P0-P3 执行顺序</td><td><code>second-brain-tools/finance_intake_rules.json</code></td></tr>
+<tr><td>2</td><td><b>ETF 交易检查清单</b></td><td>从熊猫有财 407 条真实笔记提炼 14 条「条件→动作」规则：折溢价闸门、五只配置、攻守组合、定投止盈线、红利偏离率、做 T 纪律等，每条标注原笔记 ID</td><td>vault <code>02-知识库/</code> + 数据库 #17284</td></tr>
+<tr><td>3</td><td><b>财报案例库 + 方法论对照表</b></td><td>猫眼儿观世界 282 条 → 6 个识别框架 + 3 张真实案例卡；邢不行 130 条 → 8 条方法论校验清单，并与你既有回测结论逐条对照</td><td>vault <code>02-知识库/</code> + 数据库 #17285/#17286</td></tr>
+</tbody></table>
+<div class="ok"><b>验证结果</b>：规则 JSON 校验通过（8+16+21=45，黑名单 21 个全部归类）；3 份笔记已导入数据库（4110→4113），全文搜索命中正常（「折溢价」「财报异动」「前视偏差」），Wiki 双向链接已重建并互相连通。</div>
+</section>
+<section><h2>二、本轮未做（有意为之）</h2>
+<table><thead><tr><th style="width:200px">事项</th><th>原因</th></tr></thead><tbody>
+<tr><td><b>未抓取小Lin说/温义飞/牧哥研报</b></td><td>这 3 位是抖音端新增源（数据库 0 条笔记），报告里定的是「先验样本」；而抖音视频内容接口此前验证不稳定。需要先由你提供实际口播样本，才能验证提炼质量，不宜本轮硬做。</td></tr>
+<tr><td><b>未新增任何抓取任务/同步链路</b></td><td>评估明确「是否接入由你拍板」，本轮只固化规则与用已有笔记做成品，不擅自改导入范围。</td></tr>
+<tr><td><b>未碰被判 C 级的 21 位</b></td><td>黑名单只写进规则文件的 policy 字段（不提炼、不作荐股依据），未删除其已落库笔记（野人/凯心/房子仍保留在库，只是不再新增）。</td></tr>
+<tr><td><b>未推送 GitHub 远端</b></td><td>本次未提供 token；本地归档已更新，远端等你给 token 再推。</td></tr>
+</tbody></table>
+</section>
+<section><h2>三、下一步（等你拍板）</h2>
+<ul>
+<li><b>验证提炼流程</b>：翻一翻 3 份成品笔记，若格式/粒度合适，以后新源按同一模板沉淀；不满意可让我调整。</li>
+<li><b>新增源样本</b>：若要把小Lin说/温义飞接进来，给我 1-2 条他们视频的口播稿或链接，我按现有模板验证提炼质量。</li>
+<li><b>接入投资工作台</b>：检查清单里 #1 折溢价闸门、#10 定投止盈、#12 红利偏离率、#14 做 T 纪律是明确的条件→动作，可考虑做进「模拟炒股·策略盯盘」页——这属于新功能，需你单独拍板。</li>
+</ul>
+<div class="warn"><b>边界</b>：所有规则与案例来自公开资料和已落库笔记，不构成投资建议；案例中的个股（含科创板标的）不进你的「仅主板」候选池，仅作识别框架学习。</div>
+</section>
+</div></body></html>
