@@ -3,14 +3,14 @@
   "task_id": "20261123-task-archive-resume",
   "title": "任务归档与跨机器恢复命令",
   "created_at": "2026-11-23T00:29:11+08:00",
-  "updated_at": "2026-11-23T00:29:11+08:00",
+  "updated_at": "2026-11-23T00:33:03+08:00",
   "source_workspace": "D:/量化/W储存备份/2026-11-23-00-15-34",
   "github_repo": "rgck1/ai-archive",
   "github_branch": "main",
   "bundle_path": "task-archives/20261123-task-archive-resume",
   "raw_base": "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume",
   "file_count": 18,
-  "total_bytes": 43190,
+  "total_bytes": 46029,
   "files": [
     {
       "path": "CONTEXT.md",
@@ -19,13 +19,13 @@
     },
     {
       "path": "DESIGN.md",
-      "sha256": "c9be2f363088ed6f149c404d1a9f2db1ba815bbdaa985707546d64892dd80921",
-      "bytes": 2971
+      "sha256": "b24be9a467541c34b1e89860abb6201c171a7c4f630d6a3334b8c7a4761c81e2",
+      "bytes": 3210
     },
     {
       "path": "RECOVER.md",
-      "sha256": "6e7d22885d3edfe803d61f78ed52459a819b71d773eff421b6c9e79a77b03e00",
-      "bytes": 2790
+      "sha256": "c2ff34262a80d2988a43461417bb0d161855d29c297ba45dbce42e004c4da2a3",
+      "bytes": 3107
     },
     {
       "path": "SKIPPED.md",
@@ -54,8 +54,8 @@
     },
     {
       "path": "files/outputs/恢复命令_20261123-task-archive-resume.md",
-      "sha256": "0ad691f3829d6d4859506984d491a535ed10720909b17741c4321f8b0a151be0",
-      "bytes": 4584
+      "sha256": "db617fcef2f8c4c8fff783dc07051262321f1254a055ce93113c60f5215c7e15",
+      "bytes": 4959
     },
     {
       "path": "files/skills/task-archive/SKILL.md",
@@ -89,13 +89,13 @@
     },
     {
       "path": "files/skills/task-resume/SKILL.md",
-      "sha256": "911a60b5365e2dc7154305fcf0c422f774d6d995fc149f75f03dc4f058f8d24a",
-      "bytes": 3390
+      "sha256": "8af857563bbd67af3912a059d2a1fb10c197ac20cd131966da5a96d947ebeadb",
+      "bytes": 3553
     },
     {
       "path": "files/skills/task-resume/scripts/fetch_task.py",
-      "sha256": "0d6296a4b05ea972925f270db203a8692a1fc6076b2c37a6d839df1e6cc43cf9",
-      "bytes": 2563
+      "sha256": "82a0d85897ff7565efe39f1b1368dae0cd5629d7953e29f6edcfbabace5b88fd",
+      "bytes": 4308
     },
     {
       "path": "materials/README.md",
