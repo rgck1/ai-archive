@@ -42,7 +42,7 @@ python -c "import urllib.request;u='https://raw.githubusercontent.com/rgck1/ai-a
 python "fetch_task.py" "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/<任务ID>" "<本机目标目录>"
 ```
 
-必须看到 `ALL_MATCH = True`。出现 `MISMATCH` 时停止，不要基于残缺内容续接。若本机没有 Python，改为按 MANIFEST.json 中的 path 列表逐个读取 raw 链接并落盘，保持相对路径不变。
+必须看到 `ALL_MATCH = True`。出现 `MISMATCH` 时停止，不要基于残缺内容续接。若 raw 域名被网络策略拦截，在同一命令末尾追加 API 回退参数：`--repo rgck1/ai-archive --bundle "task-archives/<任务ID>" --branch main`。若本机没有 Python，改为按 MANIFEST.json 中的 path 列表逐个读取 raw 链接并落盘，保持相对路径不变。
 
 ### 第 4 步：重建任务现场
 
