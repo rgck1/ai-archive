@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>得到关注核查与接续指引 2026-11-21</title>
+<style>
+:root{--ink:#1f2733;--sub:#5b6675;--line:#e3e8ef;--bg:#f6f8fb;--card:#fff;--accent:#2f6df6;--ok:#0a8f5b;--warn:#c77700;--bad:#c0392b;--chip:#eef3fc}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.7 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px 60px}
+h1{font-size:26px;margin:0 0 4px}
+.sub{color:var(--sub);font-size:13px;margin-bottom:22px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:16px 0;box-shadow:0 2px 10px rgba(20,40,80,.04)}
+h2{font-size:19px;margin:0 0 12px;padding-left:10px;border-left:4px solid var(--accent)}
+h3{font-size:15px;margin:18px 0 8px;color:var(--sub)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 4px}
+.stat{background:var(--chip);border-radius:10px;padding:14px 8px;text-align:center}
+.stat b{display:block;font-size:24px;color:var(--accent)}
+.stat span{font-size:12px;color:var(--sub)}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+th{background:var(--chip);font-weight:600}
+td.c,th.c{text-align:center}
+.tag{display:inline-block;padding:1px 8px;border-radius:10px;font-size:12px;font-weight:600}
+.t-ok{background:#e3f6ed;color:var(--ok)}.t-warn{background:#fff2d9;color:var(--warn)}.t-bad{background:#fdecea;color:var(--bad)}
+.flow{display:flex;align-items:stretch;gap:8px;flex-wrap:wrap;margin:14px 0}
+.step{flex:1;min-width:150px;background:var(--chip);border-radius:10px;padding:12px;text-align:center;position:relative}
+.step b{display:block;color:var(--accent);font-size:14px;margin-bottom:4px}
+.step small{color:var(--sub);font-size:12px}
+.step.done{border:2px solid var(--ok)}.step.todo{border:2px dashed var(--warn)}
+.arrow{align-self:center;color:var(--sub);font-size:20px}
+ol,ul{padding-left:22px;margin:8px 0}
+li{margin:6px 0}
+.box{background:#fff8e9;border:1px solid #f0d9a0;border-radius:10px;padding:14px 18px;margin:12px 0}
+.box.ok{background:#edf9f2;border-color:#b8e6cf}
+code{background:#eef1f5;border-radius:4px;padding:1px 6px;font-size:12px}
+.mono{white-space:pre-wrap;background:#f2f5f9;border:1px solid var(--line);border-radius:8px;padding:12px;font-size:12.5px;line-height:1.6}
+.foot{color:var(--sub);font-size:12px;margin-top:24px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>得到关注核查与接续指引</h1>
+<div class="sub">生成时间：2026-11-21 ｜ 触发：用户手动加满 30 位关注后要求接续 ｜ 数据源：得到账号接口（只读核查）</div>
+
+<div class="card">
+<h2>一、核查结论：加满了，但没进可抽取的库</h2>
+<div class="stats">
+<div class="stat"><b>30/30</b><span>关注额度（已满）</span></div>
+<div class="stat"><b>23</b><span>「日常收集」库博主</span></div>
+<div class="stat"><b>0</b><span>本轮新增可抽</span></div>
+<div class="stat"><b>11162</b><span>第二大脑现有笔记</span></div>
+</div>
+<p>我按上次的流程去核查，发现一个关键错位：</p>
+<ul>
+<li><b>你的关注确实加满了</b>——账号接口显示「已订 30 个 / 共 30 个」，说明优先博主你已经在得到 App 里关注了。</li>
+<li><b>但「日常收集」库仍是 23 位，且全是上一批老面孔</b>——S/A 优先名单（无穷小亮、罗翔、李善友、混知、冯唐等）<span class="tag t-bad">一位都没进来</span>。</li>
+<li>相比上一轮还<b>少了 3 位</b>：一分钟看懂XWLB、金融说、全能的野人（应是腾位置时被取消）。</li>
+</ul>
+<div class="box"><b>结论</b>：本轮没有新博主可抽，所以我没有做抽取（不能凭空造数据）。问题出在得到大脑的<b>两步机制</b>上——见下一节。</div>
+</div>
+
+<div class="card">
+<h2>二、根因：得到大脑是「关注 → 连库 → 聚合」三步，你只做了第一步</h2>
+<p>我从得到网页前端代码里挖到了真实机制：<code>关注博主(watch/add)</code> 和 <code>加入知识库(connect_topic)</code> 是<b>两个独立动作</b>。只有博主被"连到某个知识库"，平台才会为它聚合 AI 笔记，我才能抽取。</p>
+<div class="flow">
+<div class="step done"><b>① 关注博主</b><small>watch/add · 占 30 个名额<br>你已完成 ✅</small></div>
+<div class="arrow">→</div>
+<div class="step todo"><b>② 加入知识库</b><small>connect_topic<br>选「日常收集」· 待你确认 ⚠️</small></div>
+<div class="arrow">→</div>
+<div class="step todo"><b>③ 平台聚合笔记</b><small>AI 生成摘要<br>通常需 1–2 天</small></div>
+<div class="arrow">→</div>
+<div class="step todo"><b>④ 我抽取入库</b><small>告诉我，跑同一套脚本</small></div>
+</div>
+<div class="box ok"><b>上一轮为什么成功</b>：上次你关注的是在知识库页面操作的，等于同时做了①+②，所以「日常收集」库立刻从 13 涨到 26，我当天就抽到了 7015 条。<br><b>这一轮为什么没动静</b>：这次多半是在"关注"页关注的（只做了①），没有"加入知识库"，所以库里没变化。</div>
+</div>
+
+<div class="card">
+<h2>三、你该怎么弄（在得到 App / 网页操作）</h2>
+<ol>
+<li><b>打开得到大脑 →「我的关注 / 关注列表」</b>，找到刚加的优先博主（无穷小亮、罗翔、李善友、混知、冯唐、黄执中等）。</li>
+<li><b>逐个点进博主 → 选「加入知识库」</b>（有的版本叫"添加到知识库""关联笔记本"），目标库选<b>「日常收集」</b>。<span class="tag t-warn">这一步是关键</span></li>
+<li><b>30 个上限已满怎么办</b>：先取消几个已抽完、价值低的关注腾位置。建议优先取消 ⟶ <code>东风速探(281条/泛资讯)</code>、<code>一分钟看懂XWLB(10条)</code>、<code>全能的野人(低分已落库)</code>、<code>金融说(0条未聚合)</code>；已抽过笔记的取消不影响第二大脑里已有的内容。</li>
+<li><b>加完等 1–2 天</b>让平台聚合出笔记，然后回来跟我说一声"加好了"，我用同一套脚本核查 → 抽取 → 入库，你不用重复讲背景。</li>
+</ol>
+<div class="box"><b>如果你在 App 里找不到"加入知识库"入口</b>：把得到 App 的版本号或该页面的截图发我，我帮你定位；接口层面我试过 <code>watch/blogger/list</code> 一直报"服务异常"，拿不到你的 30 位完整名单，所以只能靠你在界面上确认这一步。</div>
+</div>
+
+<div class="card">
+<h2>四、优先博主名单（供你对照，S/A 级共 24 位）</h2>
+<h3>S 级 · 优先加（7 位）</h3>
+<div class="mono">无穷小亮的科普日常
+厚大.罗翔说刑法
+赵玉平老师讲国学
+陈石（营养，挨揍，撸铁）
+粗人(力量矩阵营养学)
+黄执中
+李善友</div>
+<h3>A 级 · 建议加（17 位）</h3>
+<div class="mono">混知　名郑言顺　程前朋友圈　冯唐　金枪大叔　李潇 格家网络CEO
+心理力量　十三邀　42号星球　徐和郑　白朴　历历在用
+Q姐和老6　老雷瘦　小黑子健身　皮肤科叶医生　王勇 洪文律所</div>
+<p class="sub">另有「张雪峰老师」在得到「高考志愿填报」公开库已有 65+68 条现成摘要，随时可直抽、不用加关注（但属教育类，与投资/健康主线弱相关）。</p>
+</div>
+
+<div class="card">
+<h2>五、我这边"接着走"做到哪了</h2>
+<ul>
+<li>✅ 只读核查完成：确认关注 30/30、库内 23 位无新增、定位到"关注≠连库"的根因（附接口与前端代码证据）。</li>
+<li>✅ 本轮无新增可抽，<b>没有做抽取</b>——避免编造或重复入库；第二大脑保持 11162 条不变。</li>
+<li>✅ 接续流程已固化：下次你说"加好了"，我按 <code>核查库following → 比对已入库26位 → 抽取 → 幂等导入 → 报告</code> 一条龙执行，无需重新讲背景。</li>
+<li>⏸ 未做（等你拍板）：没有擅自调用"加入知识库"(connect_topic) 写接口、没有取消你的任何关注——这些都属配置变更。</li>
+</ul>
+</div>
+
+<div class="foot">本报告为客观核查结果，得到博主观点的投资参考仍需经你既有的七维自查 · 归档：ai-archive/invest-workbench/</div>
+</div>
+</body>
+</html>
