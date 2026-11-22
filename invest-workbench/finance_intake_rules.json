@@ -1,0 +1,85 @@
+{
+  "_meta": {
+    "name": "抖音财经投资账号 · 第二大脑接入规则",
+    "version": "1.0",
+    "created": "2026-11-21",
+    "source_eval": "D:/我的工作台/02.输出区/财经投资45位_第二大脑对接评估_2026-11-21.html",
+    "principle": "仅依据公开资料与已落库笔记；未获取视频/直播内容，不编造；是否接入需用户拍板，本文件为规则固化，不自动改导入范围",
+    "user_constraint": "账户10万级/仅主板/可做场内ETF；个股量化无可靠优势、ETF动量较干净；荐股需七维自查"
+  },
+
+  "whitelist_direct": [
+    {"name": "熊猫有财",   "grade": "S", "group": "G1", "use": "ETF规则→交易检查清单", "db_source": "blogger:熊猫有财", "db_count": 407, "reuse": true},
+    {"name": "猫眼儿观世界","grade": "S", "group": "G4", "use": "财报/商业案例库", "db_source": "blogger:猫眼儿观世界", "db_count": 282, "reuse": true},
+    {"name": "阿华（机构一手调研）","grade":"A","group":"G2","use":"产业链一手信息补消息面","db_source":"blogger:阿华（机构一手调研）","db_count":168,"reuse":true,"filter":"涉科创板标的按仅主板过滤"},
+    {"name": "量化投资邢不行啊","grade":"A","group":"G1","use":"数据实证方法论对照","db_source":"blogger:量化投资邢不行啊","db_count":130,"reuse":true},
+    {"name": "付鹏的财经世界","grade":"A","group":"G3","use":"宏观框架做仓位过滤","db_source":"blogger:付鹏的财经世界","db_count":268,"reuse":true},
+    {"name": "小Lin说",       "grade": "A", "group": "G4", "use": "商业财经通识案例库", "db_source": "", "db_count": 0, "reuse": false, "need_sample": true},
+    {"name": "温义飞的急救财经","grade":"A","group":"G4","use":"热点逻辑拆解案例","db_source":"","db_count":0,"reuse":false,"need_sample":true},
+    {"name": "牧哥研报解读", "grade": "A", "group": "G2", "use": "外文研报信息差素材池", "db_source": "", "db_count": 0, "reuse": false, "need_sample": true, "filter": "需核验外文研报可核验性"}
+  ],
+
+  "conditional": [
+    {"name": "福总说实话", "group": "G2", "action": "merge", "merge_into": "机构一手调研（福总）", "reason": "与大号实为同一人"},
+    {"name": "机构一手调研（福总）", "group": "G2", "action": "keep_one", "reason": "保留大号作为唯一来源"},
+    {"name": "葫芦军师", "group": "G1", "action": "static_only", "reason": "近30天停更，仅做静态底稿"},
+    {"name": "独行者李明", "group": "G3", "action": "limited", "reason": "宏观对冲专题补充，可验证细节少"},
+    {"name": "量化躺平佟掌柜", "group": "G1", "action": "template_only", "reason": "仅做策略迭代模板参考"},
+    {"name": "卢麒元视角", "group": "G3", "action": "limited", "reason": "观点型，需与事实底稿分离"},
+    {"name": "太学TAIXUE", "group": "G4", "action": "browse_only", "reason": "知识付费平台属性，内容偏汇编"},
+    {"name": "林笙燃", "group": "G4", "action": "browse_only", "reason": "轻内容，深度有限"},
+    {"name": "财才说", "group": "G4", "action": "browse_only", "reason": "泛商业叙事，与投资主线关联中等"},
+    {"name": "BRTV 天下财经", "group": "G6", "action": "fact_only", "reason": "官方资讯底稿，不建知识笔记"},
+    {"name": "一分钟看懂XWLB", "group": "G6", "action": "fact_only", "reason": "时政背景底稿"},
+    {"name": "质子黄金", "group": "G7", "action": "limited", "reason": "黄金垂类，与ETF主线关联中等"},
+    {"name": "主力行为学（杨宁）", "group": "G5", "action": "sentiment_only", "db_source": "blogger:主力行为学（杨宁）", "db_count": 490, "reason": "仅当日情绪采样，不进知识笔记"},
+    {"name": "老何学院", "group": "G5", "action": "pending_verify", "reason": "方法论表述待看实际口播再定"},
+    {"name": "易睦修-PYTA交易实讲", "group": "G5", "action": "pending_verify", "reason": "培训属性强，需甄别是否有实证"},
+    {"name": "金融说", "group": "G5", "action": "pending_verify", "reason": "签名较泛，信息密度待验证"}
+  ],
+
+  "reuse_no_rebuild": {
+    "rule": "已在得到笔记库落库的同源账号，不重复建抖音抓取链路，只复用既有笔记做增量核验",
+    "accounts": [
+      {"name": "熊猫有财", "db_source": "blogger:熊猫有财", "count": 407},
+      {"name": "猫眼儿观世界", "db_source": "blogger:猫眼儿观世界", "count": 282},
+      {"name": "付鹏的财经世界", "db_source": "blogger:付鹏的财经世界", "count": 268},
+      {"name": "阿华（机构一手调研）", "db_source": "blogger:阿华（机构一手调研）", "count": 168},
+      {"name": "量化投资邢不行啊", "db_source": "blogger:量化投资邢不行啊", "count": 130},
+      {"name": "独行者李明", "db_source": "blogger:独行者李明", "count": 127},
+      {"name": "量化躺平佟掌柜", "db_source": "blogger:量化躺平佟掌柜", "count": 58},
+      {"name": "葫芦军师", "db_source": "blogger:葫芦军师", "count": 54},
+      {"name": "主力行为学（杨宁）", "db_source": "blogger:主力行为学（杨宁）", "count": 490},
+      {"name": "凯心", "db_source": "blogger:凯心", "count": 455, "note": "C级不接入，仅已在库，不再新增"},
+      {"name": "全能的野人", "db_source": "blogger:全能的野人", "count": 1381, "note": "C级不接入，仅已在库"},
+      {"name": "房子(新允珩)", "db_source": "blogger:房子(新允珩)", "count": 50, "note": "C级不接入，仅已在库"}
+    ]
+  },
+
+  "blacklist": {
+    "count": 21,
+    "names": [
+      "投资最前线", "钱说", "李一恩", "晓非观察", "全能的野人", "凯心", "房子(新允珩)",
+      "翻倍鳄鱼姐", "机油手", "陆陆陆姐", "小张小张吃饭用缸（21号直播安排手机）", "叶荣添传媒",
+      "投资不焦绿", "财富晚高峰", "花博财经", "林姐财经", "源哥言商", "奶爸财经",
+      "子皮商论", "期之道", "六贤-产业信息差MAX"
+    ],
+    "reason_categories": {
+      "资料不足或口号化": ["投资最前线", "翻倍鳄鱼姐", "机油手", "叶荣添传媒", "投资不焦绿", "财富晚高峰", "花博财经", "子皮商论", "六贤-产业信息差MAX"],
+      "导流卖课带货": ["钱说", "源哥言商", "小张小张吃饭用缸（21号直播安排手机）", "林姐财经"],
+      "强时效或主观无实证": ["全能的野人", "凯心", "房子(新允珩)"],
+      "作品数0或定位模糊": ["陆陆陆姐", "奶爸财经", "李一恩", "晓非观察"],
+      "与约束冲突": ["期之道"]
+    },
+    "policy": "不进入笔记提炼流程，不作为荐股自查依据；可保留在抖音关注供浏览"
+  },
+
+  "priority_order": [
+    {"priority": "P0", "group": "G1+G4", "action": "复用已落库笔记，产出ETF检查清单与案例库；小Lin说/温义飞先验样本"},
+    {"priority": "P1", "group": "G2+G3", "action": "接消息面与宏观，福总合并后接大号"},
+    {"priority": "P2", "group": "G6", "action": "资讯源按需，仅事实底稿"},
+    {"priority": "P3", "group": "G5+G7", "action": "只采样不沉淀，或完全不接入"}
+  ],
+
+  "totals": {"all": 45, "direct": 8, "conditional": 16, "blacklist": 21, "reuse_no_rebuild": 12}
+}
