@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>第二大脑应用交付报告 · 2026-11-20</title>
+<style>
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;max-width:960px;margin:40px auto;padding:0 24px;color:#1f2733;line-height:1.75;background:#fafbfc}
+h1{font-size:28px;border-bottom:3px solid #4f6ef7;padding-bottom:12px}
+h2{font-size:20px;margin-top:34px;color:#2b3a55;border-left:4px solid #4f6ef7;padding-left:12px}
+table{border-collapse:collapse;width:100%;margin:16px 0;background:#fff}
+th,td{border:1px solid #dde3ec;padding:9px 12px;text-align:left;font-size:14px}
+th{background:#eef1ff}
+code{background:#f0f2f6;padding:2px 6px;border-radius:4px;font-size:13px}
+.ok{color:#1a9c5b;font-weight:600}.tag{background:#eef1ff;color:#4f6ef7;padding:2px 9px;border-radius:10px;font-size:12px}
+.note{background:#fff8e6;border-left:4px solid #f5a623;padding:12px 16px;margin:14px 0;border-radius:6px}
+.meta{color:#7a8595;font-size:13px}
+</style>
+</head>
+<body>
+<h1>第二大脑应用 · 交付报告</h1>
+<p class="meta">交付日期：2026-11-20　|　项目路径：<code>D:/Software/second-brain-app/</code>　|　状态：<span class="ok">已运行验证通过</span></p>
+
+<h2>一、需求与结论</h2>
+<p>按用户要求完成三件事：① 搜索整理制作第二大脑所需信息；② 确认并安装程序依赖；③ 制作功能完整、可直接运行的第二大脑应用。应用已实现知识收集、笔记管理、标签分类、全文搜索、内容关联、数据保存六大功能，并以 838 条真实博主笔记数据完成端到端验证。</p>
+
+<h2>二、调研结论与技术选型（基于 WebSearch 一手结果）</h2>
+<p>检索了业界主流本地知识库方案（Personal_knowledge_base、Silicon Notes、secondbrain、Zettelkasten AI、cyber-brain），结论高度一致：本地优先 + SQLite 单文件 + FTS5 全文搜索 + Wiki 双向链接。关键决策：</p>
+<table>
+<tr><th>层</th><th>选型</th><th>理由</th></tr>
+<tr><td>后端</td><td>Python 标准库 <code>http.server</code></td><td>零 Web 框架依赖，双击即跑，规避 Flask 未安装问题</td></tr>
+<tr><td>存储</td><td>SQLite 单文件 + WAL</td><td>可移植、可备份，业界本地知识库通用做法</td></tr>
+<tr><td>全文搜索</td><td>FTS5 <code>tokenize='trigram'</code> + LIKE 兜底</td><td>实测 unicode61 对中文分词差；trigram 支持中文子串，但要求≥3字符，故短词用 LIKE 兜底（本项目实测修复）</td></tr>
+<tr><td>Markdown</td><td>mistune 3.4（已装）+ 内置降级</td><td>渲染结构化摘要；缺失时不影响运行</td></tr>
+<tr><td>前端</td><td>原生 HTML/CSS/JS</td><td>无构建、无 npm 依赖，含明暗主题</td></tr>
+<tr><td>内容关联</td><td>[[Wiki链接]] + 反向链接 + 共享标签推荐</td><td>与 secondbrain / Personal_knowledge_base 同款成熟模型</td></tr>
+</table>
+
+<h2>三、依赖与环境（已完成）</h2>
+<table>
+<tr><th>依赖</th><th>状态</th><th>说明</th></tr>
+<tr><td>Python 3.13.14</td><td class="ok">✓ 已就绪</td><td>系统 Python 与 venv 均为 3.13.14</td></tr>
+<tr><td>SQLite 3.53.1 + FTS5 trigram</td><td class="ok">✓ 已验证</td><td>中文子串搜索实测命中</td></tr>
+<tr><td>mistune 3.4.0</td><td class="ok">✓ 已安装</td><td>装于 <code>D:/Software/second-brain-venv</code>，清华镜像</td></tr>
+<tr><td>Web 框架 / npm</td><td class="ok">✓ 无需安装</td><td>标准库 + 原生前端，零额外依赖</td></tr>
+</table>
+
+<h2>四、项目结构</h2>
+<pre style="background:#fff;padding:14px;border-radius:8px;border:1px solid #dde3ec">
+D:/Software/second-brain-app/
+├── app.py              # 后端服务器（标准库 http.server）
+├── db.py               # 数据层（SQLite + FTS5 + Wiki 链接 + 导入导出）
+├── 启动第二大脑.bat     # 一键启动
+├── README.md           # 使用说明
+├── static/
+│   ├── index.html      # 单页应用外壳
+│   ├── style.css       # 界面 + 明暗主题
+│   └── app.js          # 全部交互逻辑
+└── data/
+    └── second_brain.db # 唯一真源（838 条笔记，备份即复制它）
+</pre>
+
+<h2>五、六大功能实现与验证</h2>
+<table>
+<tr><th>功能</th><th>实现</th><th>验证结果</th></tr>
+<tr><td>知识收集</td><td>快速收集弹窗 + 博主笔记批量导入（按 post_id 去重）</td><td class="ok">✓ 导入 838 条</td></tr>
+<tr><td>笔记管理</td><td>新建/编辑/星标/归档/删除完整 CRUD</td><td class="ok">✓ API + 浏览器验证</td></tr>
+<tr><td>标签分类</td><td>多标签、侧栏筛选、自动统计</td><td class="ok">✓ 11 标签（股票479…）</td></tr>
+<tr><td>全文搜索</td><td>FTS5 trigram + LIKE，标题加权、关键词高亮</td><td class="ok">✓ 红利34/量化50/止损50</td></tr>
+<tr><td>内容关联</td><td>[[Wiki]] 出链 + 反链 + 共享标签相关推荐</td><td class="ok">✓ 双向链接实测通过</td></tr>
+<tr><td>数据保存</td><td>SQLite 单文件 + 一键导出 JSON + 全量恢复</td><td class="ok">✓ 导出接口验证</td></tr>
+</table>
+
+<h2>六、实测发现并修复的问题</h2>
+<div class="note">
+<strong>中文短词搜索失效</strong>：FTS5 trigram 要求查询词≥3字符，搜"红利"（2字）命中 0。修复：<code>search()</code> 改为 MATCH（≥3字）+ LIKE（任意长度）结果并集去重，标题命中加权；<code>list_notes()</code> 内搜索统一改 LIKE。修复后"红利"命中 34 条。<br>
+<strong>摘要高亮转义</strong>：后端 <code>&lt;mark&gt;</code> 标签被前端二次转义显示为文本。修复 <code>cardHtml()</code> 保留 mark 标签。<br>
+<strong>Wiki 链接测试数据</strong>：初测用四层嵌套 <code>[[[[...]]]]</code> 导致匹配失败，规范写法复测双向链接正常（非代码问题）。
+</div>
+
+<h2>七、数据来源说明</h2>
+<p>应用内 838 条笔记来自用户「日常收集」知识库订阅的得到大脑博主正文，通过 <code>capture_web_token.py</code> 捕获本人网页登录 token → <code>sniff_loggedin.py</code> 逆向内部接口 → <code>sync_blogger_notes.py</code> 同步。已入库博主：主力行为学（杨宁）300、付鹏的财经世界268、量化投资邢不行啊130、独行者李明60、房子50、量化躺平佟掌柜30。其余 7 位因接口限流熔断暂为 0，可待 token 有效期内重跑同步补拉。</p>
+
+<h2>八、启动方式</h2>
+<p>双击 <code>D:/Software/second-brain-app/启动第二大脑.bat</code>，浏览器自动打开 <code>http://127.0.0.1:8765</code>。停止按 Ctrl+C。应用仅监听本机，不含任何联网凭据。</p>
+</body>
+</html>
