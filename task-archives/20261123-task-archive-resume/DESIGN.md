@@ -29,6 +29,7 @@
 | R8 | 中文路径编码失败 | 上传报错 | 复用已验证的 quote 编码同步脚本；raw 清单里的 path 逐项编码 | sync_ai_archive_auto.py、fetch_task.py |
 | R9 | 配置文件夹带密钥 | 隐性泄露 | 不自动复制 mcp 配置，只写脱敏后的约定文档 | config/README.md |
 | R10 | GitHub API 限流或写入失败 | 误报成功 | 必须核对 `ALL_MATCH = True` 才算完成 | STATUS.md 下一步、SKILL.md 第 5 步 |
+| R11 | 恢复机器无法直连 raw 域名（本机实测 SSL 握手失败） | 无法拉取清单与文件 | 恢复脚本内置 Contents API 回退，公开读无需令牌；命令附回退参数 | fetch_task.py、RECOVER.md 第 3 步 |
 
 ## 三、结论
 
