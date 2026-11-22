@@ -53,7 +53,13 @@ python -c "import urllib.request;u='https://raw.githubusercontent.com/rgck1/ai-a
 python "fetch_task.py" "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume" "D:/恢复的任务归档/20261123-task-archive-resume"
 ```
 
-两条命令的输出都要看到 `ALL_MATCH = True`。出现 `MISMATCH` 就停止，不要基于残缺内容续接。
+第 3 条，若 raw 域名被网络策略拦截，改用 API 回退版本：
+
+```bash
+python "fetch_task.py" "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume" "D:/恢复的任务归档/20261123-task-archive-resume" --repo rgck1/ai-archive --bundle "task-archives/20261123-task-archive-resume" --branch main
+```
+
+三条命令中实际执行的那条要看到 `ALL_MATCH = True`。出现 `MISMATCH` 就停止，不要基于残缺内容续接。
 
 ## 必须保存与恢复的关键内容
 
