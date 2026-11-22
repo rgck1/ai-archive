@@ -7,18 +7,23 @@
 
 ## 如何使用
 - 把本仓库的地址（如 `https://github.com/rgck1/ai-archive`）发给 AI。
-- 让 AI 按这个顺序读：`README.md` → `about-me.md` → `writing-style.md` → `rules.md` → `projects.md`。
+- 让 AI 先读 `MASTER_INDEX.md`（全量索引与场景导航），再按里面的指引跳到具体文件。
+- 只需快速对齐偏好时，按顺序读这 5 件：`about-me.md` → `writing-style.md` → `rules.md` → `projects.md` → `MASTER_INDEX.md`。
 - 内容会随协作经验持续更新；更新时遵循文末「维护约定」。
 
 ## 文件导航
 | 文件 | 内容 |
 | --- | --- |
+| `MASTER_INDEX.md` | **总入口**：按「我现在要解决什么问题」导航到全仓 90+ 个文件，含全量清单 |
 | `about-me.md` | 我是谁：身份、工作背景、个人环境、健康与训练约束 |
 | `writing-style.md` | 协作与沟通偏好：AI 应如何与我配合 |
 | `rules.md` | 硬性规则与红线：AI 必须遵守、不可违背的约束 |
 | `projects.md` | 当前在做的项目：投资工作台、TSP 等 |
-| `发布说明.md` | 首次发布到 GitHub 的步骤与排错记录（本地参考） |
 | `接入指南.md` | 如何让任意 AI 智能体读取本仓库并与你协作 |
+| `生成全量索引.py` | 重建 `MASTER_INDEX.md` 的脚本，新增文件后运行一次 |
+| `发布说明.md` | 首次发布到 GitHub 的步骤与排错记录（本地参考） |
+
+> 完整的文件清单与场景导航以 `MASTER_INDEX.md` 为准，本表只列根目录核心档案。
 
 ## 维护约定
 - 只记录「可明确识别的规则」，不臆测、不替我新增没提过的维度。
