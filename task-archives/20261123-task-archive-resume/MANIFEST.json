@@ -1,0 +1,106 @@
+{
+  "schema": "workbuddy-task-archive/1",
+  "task_id": "20261123-task-archive-resume",
+  "title": "任务归档与跨机器恢复命令",
+  "created_at": "2026-11-23T00:29:11+08:00",
+  "updated_at": "2026-11-23T00:29:11+08:00",
+  "source_workspace": "D:/量化/W储存备份/2026-11-23-00-15-34",
+  "github_repo": "rgck1/ai-archive",
+  "github_branch": "main",
+  "bundle_path": "task-archives/20261123-task-archive-resume",
+  "raw_base": "https://raw.githubusercontent.com/rgck1/ai-archive/main/task-archives/20261123-task-archive-resume",
+  "file_count": 18,
+  "total_bytes": 43190,
+  "files": [
+    {
+      "path": "CONTEXT.md",
+      "sha256": "9fa85289476c7f93966ae1a1649fba35258450a76a17c1c0beb1c3d7adaac66b",
+      "bytes": 3805
+    },
+    {
+      "path": "DESIGN.md",
+      "sha256": "c9be2f363088ed6f149c404d1a9f2db1ba815bbdaa985707546d64892dd80921",
+      "bytes": 2971
+    },
+    {
+      "path": "RECOVER.md",
+      "sha256": "6e7d22885d3edfe803d61f78ed52459a819b71d773eff421b6c9e79a77b03e00",
+      "bytes": 2790
+    },
+    {
+      "path": "SKIPPED.md",
+      "sha256": "ab276c31ad166cbe9327af916a4e3faa499f89ebd52b17c86ca1c0d36297c44c",
+      "bytes": 941
+    },
+    {
+      "path": "STATUS.md",
+      "sha256": "9aa8f540fa9cac1937f28e0d3e218389693f5a9f94b21f93df91ce286ff9c2dc",
+      "bytes": 2347
+    },
+    {
+      "path": "TASKS.md",
+      "sha256": "ab7906adba81e5a61a02d09d463d9e189e99870809fe60543d8d746e643496f2",
+      "bytes": 1182
+    },
+    {
+      "path": "config/README.md",
+      "sha256": "7809452026894458e7c997436ab2bdd73a476596f785027315a7945ffad6be66",
+      "bytes": 1476
+    },
+    {
+      "path": "files/memory/2026-11-23.md",
+      "sha256": "21d8b7b2abdd4628836a44454a084955e840825998a9a0bdd805f2f57bb7b6ec",
+      "bytes": 1103
+    },
+    {
+      "path": "files/outputs/恢复命令_20261123-task-archive-resume.md",
+      "sha256": "0ad691f3829d6d4859506984d491a535ed10720909b17741c4321f8b0a151be0",
+      "bytes": 4584
+    },
+    {
+      "path": "files/skills/task-archive/SKILL.md",
+      "sha256": "f359bfef4c8a4499db7b14fdecb4f399e911691fc92dd9bdd9ddf054b22ed597",
+      "bytes": 5501
+    },
+    {
+      "path": "files/skills/task-archive/assets/CONTEXT_TEMPLATE.md",
+      "sha256": "5cc0c598340f72f511e6e9c12bed455f80f9e114c2d9bfdd3d5915a9b5980a4f",
+      "bytes": 1502
+    },
+    {
+      "path": "files/skills/task-archive/assets/RECOVER_TEMPLATE.md",
+      "sha256": "a37f05725bd19fbfa65274c4df86e183379b08dbbf5cd3e57bfe982209507a54",
+      "bytes": 2643
+    },
+    {
+      "path": "files/skills/task-archive/assets/STATUS_TEMPLATE.md",
+      "sha256": "d941957e6968b410cfebebc136acf75e6e3e7de4922e9658e6d2137f3b434c7b",
+      "bytes": 903
+    },
+    {
+      "path": "files/skills/task-archive/assets/TASKS_TEMPLATE.md",
+      "sha256": "c8837e32c24a0b7d1b0ad18f494a5be3fd2a4fe50db5b8fb315bc91105fc4319",
+      "bytes": 500
+    },
+    {
+      "path": "files/skills/task-archive/scripts/pack_task.py",
+      "sha256": "9a6743ea98207769690eb2cc08ab76b96bfbf6a49bb49ed0405668f9ed298183",
+      "bytes": 3424
+    },
+    {
+      "path": "files/skills/task-resume/SKILL.md",
+      "sha256": "911a60b5365e2dc7154305fcf0c422f774d6d995fc149f75f03dc4f058f8d24a",
+      "bytes": 3390
+    },
+    {
+      "path": "files/skills/task-resume/scripts/fetch_task.py",
+      "sha256": "0d6296a4b05ea972925f270db203a8692a1fc6076b2c37a6d839df1e6cc43cf9",
+      "bytes": 2563
+    },
+    {
+      "path": "materials/README.md",
+      "sha256": "419b54c0f336a3a41e92f43bbe00bebfdd2de38448076ba763112248ea9a6aa8",
+      "bytes": 1565
+    }
+  ]
+}
