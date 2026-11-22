@@ -1,0 +1,61 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>得到大脑中转抽取 · 可行性探查 · 2026-11-21</title>
+<style>
+:root{--bg:#f7f8fa;--card:#fff;--ink:#1f2329;--sub:#646a73;--line:#e5e6eb;--accent:#2563eb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.65 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;padding:28px 20px 60px}
+.wrap{max-width:1160px;margin:0 auto}
+header{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:14px;padding:26px 30px;margin-bottom:20px}
+header h1{margin:0 0 8px;font-size:24px}header p{margin:4px 0;opacity:.92;font-size:13px}
+.verdict{background:#ecfdf5;border:2px solid #10b981;border-radius:12px;padding:18px 22px;margin-bottom:20px;font-size:15px;color:#065f46}
+.verdict b{font-size:17px}
+section{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:18px}
+h2{font-size:17px;margin:0 0 8px;padding-left:11px;border-left:4px solid var(--accent)}
+table{border-collapse:collapse;width:100%;font-size:12.8px}th,td{border:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+th{background:#f2f5fb;font-weight:600;color:#334155;white-space:nowrap}tr:nth-child(even) td{background:#fafbfc}
+.hint{color:var(--sub);font-size:12.5px;margin:6px 0 14px}
+.yes{color:#047857;font-weight:600}.no{color:#b91c1c;font-weight:600}.warn-c{color:#b45309;font-weight:600}
+code{background:#f1f5f9;padding:1px 5px;border-radius:4px;font-size:12px}
+ul{margin:5px 0;padding-left:18px}li{margin:4px 0}
+.note{background:#fffbeb;border-left:4px solid #f59e0b;padding:12px 16px;border-radius:6px;font-size:13px;color:#78350f;margin-top:12px}
+</style></head><body><div class="wrap">
+<header><h1>得到大脑中转抽取 · 可行性探查</h1>
+<p>起因：抖音视频接口不稳定；设想——先把博主接到得到资料库，再从得到抽取笔记</p>
+<p>探查时间：2026-11-21 09:36　|　方式：只读实测，未加订阅、未建库、未写入任何数据</p></header>
+<div class="verdict"><b>结论：这条路可行，但不是"把博主接进去"，而是"在得到现成公开库里找已被聚合的博主，直接抽取"。</b><br>
+3 位新增源里，<b>小Lin说已在「商业素材库」找到并可正常抽取（34 条 AI 结构化摘要，平均 744 字）</b>；温义飞、牧哥研报在全部 43 个公开库里都没有。你自己的账号没建库，所以"接进去"需要先建库+得到平台聚合（慢且不可控），不如直接抽现成的。</div>
+<section><h2>一、关键机制澄清（为什么不能直接"接进去"）</h2><ul>
+<li>得到大脑的「订阅博主笔记」是<b>得到平台自己用 AI 聚合</b>的结构化笔记，不是原始视频口播。给博主的"笔记"来自得到对博主公开内容的再加工。</li>
+<li>你现在订阅的「日常收集」库（topic <code>YvEVmZDn</code>）是 <b>Get达人创建的公开分享库</b>，你的账号只是订阅者（页面显示"已订阅"），无法往里加博主。</li>
+<li>前端代码里确实有加订阅/建库接口（<code>/v1/web/follow/create</code>、<code>/v1/web/topic/create</code> 等），但即使加上，得到要多久聚合出笔记、是否聚合，由平台决定，不可控。</li>
+<li><b>更优路径</b>：得到有 43 个公开知识库，里面已经聚合了大量博主。直接在里面找目标博主，用现成正文接口抽取——稳定、即时、不用等平台。</li>
+</ul></section>
+<section><h2>二、3 位目标博主的实测结果</h2>
+<table><thead><tr><th>博主</th><th>得到库中是否有</th><th>所在库 / topic_id</th><th>笔记数</th><th>摘要质量</th><th>时效</th></tr></thead><tbody>
+<tr><td><b>小Lin说</b></td><td class="yes">✅ 已找到</td><td>商业素材库 / <code>pYLEkN04</code>（id 58674），follow_id 80055</td><td>34 条</td><td>平均 744 字，最长 1654 字，结构化良好</td><td class="warn-c">2024-12 ~ 2025-07（静态快照，不随抖音更新）</td></tr>
+<tr><td><b>温义飞的急救财经</b></td><td class="no">❌ 43 库全扫未找到</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+<tr><td><b>牧哥研报解读</b></td><td class="no">❌ 43 库全扫未找到</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+</tbody></table>
+<p class="hint">扫描方法：拉全部 43 个公开库 → 逐库调 share/following 接口取订阅博主名录 → 匹配目标名。已存 <code>_debug_archive/target_blogger_found.json</code>。</p>
+</section>
+<section><h2>三、小Lin说抽取验证（已实测成功）</h2>
+<ul>
+<li>正文接口 <code>POST knowledge-api.trytalks.com/v1/web/follow/account/posts</code>，参数 <code>{topic_id:58674, follow_id:80055, page, page_size}</code>，返回 <code>total=34</code>。</li>
+<li>每条含 <code>post_title</code> + <code>post_cleaned_summary</code>（AI 结构化摘要）+ <code>post_url</code>，与现有 13 位博主的格式完全一致。</li>
+<li>样例标题：一口气了解稳定币 / 特朗普打算怎么干美联储 / AI在医疗领域能干嘛 / 机械表的商业逻辑 / 中美德新韩日怎么赚钱。</li>
+<li>可复用现成脚本 <code>sync_blogger_notes.py</code> 的解析与入库逻辑，只需改 topic_id 与 follow_id。</li>
+</ul>
+<div class="note"><b>时效局限</b>：这 34 条停在 2025-07-15，是得到平台当时的聚合快照，不会自动更新。作为"案例库/通识素材"够用，但不能当实时情报源。</div>
+</section>
+<section><h2>四、两条可选路径（需你拍板）</h2>
+<table><thead><tr><th style="width:60px">路径</th><th>做法</th><th>优点</th><th>缺点</th></tr></thead><tbody>
+<tr><td><b>A</b></td><td>直接抽现成公开库（本次验证的路）：写个小脚本把「商业素材库」里小Lin说 34 条抽出来，导入第二大脑</td><td>立刻可做、稳定、零配置、不依赖抖音</td><td>只有小Lin说；内容是 2025-07 前的静态快照</td></tr>
+<tr><td><b>B</b></td><td>你自己用得到 App 关注温义飞/牧哥研报 → 等得到聚合出笔记 → 再从你的库抽取</td><td>理论上能覆盖这两位</td><td>需要你在 App 真机操作；得到是否聚合、多久聚合不可控；你账号目前笔记为空</td></tr>
+</tbody></table>
+<div class="note"><b>建议</b>：先走 A 把小Lin说落地（立即可得）；温义飞和牧哥研报若确实想要，走 B 需要你在得到 App 里手动关注，等有笔记了我再抽——或者继续用抖音口播抓取那条路（待接口恢复）。</div>
+</section>
+<section><h2>五、边界</h2><ul>
+<li>全程只读探查，未加订阅、未建库、未写入得到大脑任何数据；token 自动续期属维持登录态的必要操作。</li>
+<li>未输出任何 Cookie、Token、手机号或登录凭据；报告只含接口结构与博主公开信息。</li>
+<li>得到笔记是平台 AI 聚合的二手内容，观点需经你的七维自查；静态快照不构成实时投资建议。</li>
+</ul></section>
+</div></body></html>
