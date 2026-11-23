@@ -79,4 +79,5 @@ cd "D:/我的工作台/02.输出区"
 "C:/Users/RG/miniconda3/python.exe" -u topn_sensitivity_newcal_20261122.py > run_topn_newcal_20261122.log 2>&1
 ```
 
-依赖：本机 `C:/Users/RG/miniconda3/python.exe`（含 numpy/pandas），数据 `panel_v3.pkl`、`fin_panel.pkl` 在 02.输出区（体积大，未纳入本交付包，接手时需从本机工作区获取）。
+依赖：本机 `C:/Users/RG/miniconda3/python.exe`（含 numpy/pandas）。数据 `panel_v3.pkl`、`fin_panel.pkl` 在 02.输出区（体积大，未纳入本交付包，接手时需从本机工作区获取）。
+第三口径脚本额外依赖 `st_pit_intervals.json`（570KB，iFinD 时点化 ST/退市区间），未纳入本交付包；如需完整复现，从本机 02.输出区获取该文件，或用同目录的 `fetch_st_pit_ifind.py`（需 iFinD 授权）重新拉取。区间语义见 `st_pit_ifind_拉取结果_2026-11-22.md`。
