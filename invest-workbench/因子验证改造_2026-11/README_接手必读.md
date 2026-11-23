@@ -59,17 +59,36 @@
 ### 可复现脚本
 - mtm_engine.py、xbx_engine.py、v3_s02_deepdive.py、v3_perm.py（引擎）
 - champion_verify_fairplacebo_20261122.py、champion_verify_timestamppit_20261122.py、topn_sensitivity_newcal_20261122.py、f2_backtest.py、轮动验证_退市压力测试.py（回测）
+- daily_sequences_export_20261123.py（日序列导出）、dsr_pbo_check_2026-11-23.py（DSR/PBO，v2 已修 λ 方向）、bh_fdr_check_2026-11-23.py（BH-FDR）、walk_forward_2026-11-23.py（WF）、年份集中度提取_2026-11-23.py
 
 ### 结果数据
 - champion_verify_result_fairplacebo_20261122.json（main/pit 双口径最终版）
 - champion_verify_result_timestamppit_20261122.json（第三口径）
 - topn_sensitivity_result_newcal_20261122.json（topn 敏感性）
+- daily_sequences_2026-11-23.npz（78 条逐日收益序列，自检全过，含导出说明）
+- _dsr_pbo_result_2026-11-23.json、walk_forward_result_2026-11-23.json
+
+## 五b、路径 A+B 验证结论（2026-11-23 收口，经 E 独立复核）
+
+**最终判定：三类检验一致 + PBO 无增量负面证据 + 2024 单年主导，维持「三候选因子证据不足以支持对外宣称有效」。**
+
+| 检验 | 关键数字 | 判定 |
+|---|---|---|
+| 试验台账 | 全量 N=118（正式 66 + 探索 52） | 校正分母 |
+| 年份集中度 | 2024 主导 27/39 组；冠军A 剔除后 0.9732 | 单年驱动坐实 |
+| BH-FDR | full 端 39 族 BH 与 Bonferroni 均 0 通过 | 3 组常规 PASS 不采信 |
+| DSR | 9 条 0.650 至 0.804，全未过 0.95 线 | 夏普校正后不显著 |
+| PBO | 标准口径 11.28%，未超 30% 脆弱线 | 未显示脆弱 |
+| walk-forward | 选择版拼接 OOS 1.4393，低于单点 1.9911 | 单点 OOS 过乐观（仅冠军A 成立） |
+
+重要修正记录：PBO 初版 88.17% 是脚本 λ 方向写反的产物（88.17% 与 11.28% 互补），E 用决定性抽查抓出，v2 已修正并经 E 交叉验证。接手者引用 PBO 时必须用 v2 数字。
 
 ## 六、当前待办（用户尚未决定）
 
 1. 上传：本轮仅 GitHub，百度网盘暂停。已归档本目录并同步。
 2. 上线：冻结，等用户批准。
-3. 诊断报告路径 A（试验台账 + 年份集中度）与路径 B（DSR/PBO/FDR/walk-forward 升级，需重跑导出日序列）尚未执行。
+3. 路径 A（试验台账 + 年份集中度）与路径 B（DSR/PBO/FDR/walk-forward）已于 2026-11-23 完成并经 E 复核，见五b节。
+4. 路径 C（延长样本/跨市场确认）与路径 D（宽基定投 + 股债金配置）未启动，待用户决定。
 
 ## 七、复现命令
 
