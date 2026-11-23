@@ -1,0 +1,956 @@
+{
+ "meta": {
+  "date": "2026-11-23",
+  "scheme": "walk-forward 3年训练/1年测试，训练段锁参数只做信号三选一，测试段不回头调",
+  "test_years": [
+   2022,
+   2023,
+   2024,
+   2025,
+   2026
+  ],
+  "train_rule": "测试年 Y 训练段 = Y 前推 3 个日历年（cs_flex end_i1 限定，不改引擎）",
+  "select_rule": "训练段内三信号各跑 cs_flex，取全期倍数（metrics.total_multiple）最高；并列(1e-9)选夏普高者。规则写死于脚本",
+  "metrics_caliber": "xbx_engine.metrics（TRADING_DAYS=244），与权威 JSON champion_verify_result_fairplacebo_20261122.json 同口径",
+  "spec": "topn=20 hold=20 liq=5e7",
+  "cost_bp": 24.826,
+  "mask": "main = tradeable_mask(p.codes)，纯板块过滤无静态前视，n=3391",
+  "data_range": [
+   "2018-01-02",
+   "2026-10-08"
+  ],
+  "seg_impl": "每个测试年独立起跑 start=Y-01-01，end_i1=min(年末索引, T-hold-2)；各段按日期拼接，空档填 0",
+  "note_2026": "2026 数据截至 10-08 且末段受 hold 限制提前停止开仓，属不完整年，指标仅供参考",
+  "n_cs_flex_calls": 30,
+  "elapsed_sec": 12.9
+ },
+ "selection_records": [
+  {
+   "test_year": 2022,
+   "train_start": "2019-01-02",
+   "train_end": "2021-12-31",
+   "train_years": "2019-2021",
+   "train_days": 730,
+   "train_total_multiple": {
+    "冠军A_神奇公式": 1.3177,
+    "冠军B_经营现金净余率": 1.8819,
+    "冠军C_价值现金合成": 1.3471
+   },
+   "train_sharpe": {
+    "冠军A_神奇公式": 0.4778,
+    "冠军B_经营现金净余率": 0.9106,
+    "冠军C_价值现金合成": 0.5295
+   },
+   "train_n_days": {
+    "冠军A_神奇公式": 730,
+    "冠军B_经营现金净余率": 730,
+    "冠军C_价值现金合成": 730
+   },
+   "selected": "冠军B_经营现金净余率",
+   "tied": [
+    "冠军B_经营现金净余率"
+   ],
+   "test_seg_days": 242,
+   "test_seg_multiple": 0.8438,
+   "test_year_complete": true
+  },
+  {
+   "test_year": 2023,
+   "train_start": "2020-01-02",
+   "train_end": "2022-12-30",
+   "train_years": "2020-2022",
+   "train_days": 728,
+   "train_total_multiple": {
+    "冠军A_神奇公式": 0.7996,
+    "冠军B_经营现金净余率": 0.9829,
+    "冠军C_价值现金合成": 0.966
+   },
+   "train_sharpe": {
+    "冠军A_神奇公式": -0.1349,
+    "冠军B_经营现金净余率": 0.105,
+    "冠军C_价值现金合成": 0.0713
+   },
+   "train_n_days": {
+    "冠军A_神奇公式": 728,
+    "冠军B_经营现金净余率": 728,
+    "冠军C_价值现金合成": 728
+   },
+   "selected": "冠军B_经营现金净余率",
+   "tied": [
+    "冠军B_经营现金净余率"
+   ],
+   "test_seg_days": 242,
+   "test_seg_multiple": 0.9945,
+   "test_year_complete": true
+  },
+  {
+   "test_year": 2024,
+   "train_start": "2021-01-04",
+   "train_end": "2023-12-29",
+   "train_years": "2021-2023",
+   "train_days": 727,
+   "train_total_multiple": {
+    "冠军A_神奇公式": 0.9904,
+    "冠军B_经营现金净余率": 0.8271,
+    "冠军C_价值现金合成": 0.9038
+   },
+   "train_sharpe": {
+    "冠军A_神奇公式": 0.1101,
+    "冠军B_经营现金净余率": -0.2394,
+    "冠军C_价值现金合成": -0.072
+   },
+   "train_n_days": {
+    "冠军A_神奇公式": 727,
+    "冠军B_经营现金净余率": 727,
+    "冠军C_价值现金合成": 727
+   },
+   "selected": "冠军A_神奇公式",
+   "tied": [
+    "冠军A_神奇公式"
+   ],
+   "test_seg_days": 242,
+   "test_seg_multiple": 1.4688,
+   "test_year_complete": true
+  },
+  {
+   "test_year": 2025,
+   "train_start": "2022-01-04",
+   "train_end": "2024-12-31",
+   "train_years": "2022-2024",
+   "train_days": 726,
+   "train_total_multiple": {
+    "冠军A_神奇公式": 1.45,
+    "冠军B_经营现金净余率": 1.152,
+    "冠军C_价值现金合成": 1.3304
+   },
+   "train_sharpe": {
+    "冠军A_神奇公式": 0.6274,
+    "冠军B_经营现金净余率": 0.3322,
+    "冠军C_价值现金合成": 0.5592
+   },
+   "train_n_days": {
+    "冠军A_神奇公式": 726,
+    "冠军B_经营现金净余率": 726,
+    "冠军C_价值现金合成": 726
+   },
+   "selected": "冠军A_神奇公式",
+   "tied": [
+    "冠军A_神奇公式"
+   ],
+   "test_seg_days": 243,
+   "test_seg_multiple": 1.1951,
+   "test_year_complete": true
+  },
+  {
+   "test_year": 2026,
+   "train_start": "2023-01-03",
+   "train_end": "2025-12-31",
+   "train_years": "2023-2025",
+   "train_days": 727,
+   "train_total_multiple": {
+    "冠军A_神奇公式": 2.0191,
+    "冠军B_经营现金净余率": 1.4204,
+    "冠军C_价值现金合成": 1.5622
+   },
+   "train_sharpe": {
+    "冠军A_神奇公式": 1.3285,
+    "冠军B_经营现金净余率": 0.6795,
+    "冠军C_价值现金合成": 0.9001
+   },
+   "train_n_days": {
+    "冠军A_神奇公式": 727,
+    "冠军B_经营现金净余率": 727,
+    "冠军C_价值现金合成": 727
+   },
+   "selected": "冠军A_神奇公式",
+   "tied": [
+    "冠军A_神奇公式"
+   ],
+   "test_seg_days": 161,
+   "test_seg_multiple": 0.9771,
+   "test_year_complete": false
+  }
+ ],
+ "curves": {
+  "WF选择版": {
+   "metrics": {
+    "total_multiple": 1.4393,
+    "cagr": 0.081802,
+    "mdd": -0.20368,
+    "sharpe": 0.5086,
+    "daily_winrate": 0.4965,
+    "n_days": 1130,
+    "years": 4.63
+   },
+   "yearly": {
+    "2022": -0.1562,
+    "2023": -0.0055,
+    "2024": 0.4688,
+    "2025": 0.1951,
+    "2026": -0.0229
+   },
+   "yearly_days": {
+    "2022": 242,
+    "2023": 242,
+    "2024": 242,
+    "2025": 243,
+    "2026": 161
+   },
+   "mdd_span": {
+    "peak": "2022-01-12",
+    "trough": "2022-10-28",
+    "mdd": -0.2037,
+    "recover": "2024-05-10",
+    "drawdown_days": 190,
+    "underwater_months": 9.0
+   },
+   "seg_multiples": {
+    "2022": 0.8438,
+    "2023": 0.9945,
+    "2024": 1.4688,
+    "2025": 1.1951,
+    "2026": 0.9771
+   }
+  },
+  "WF固定A_神奇公式": {
+   "metrics": {
+    "total_multiple": 1.7804,
+    "cagr": 0.132652,
+    "mdd": -0.192909,
+    "sharpe": 0.6806,
+    "daily_winrate": 0.5009,
+    "n_days": 1130,
+    "years": 4.63
+   },
+   "yearly": {
+    "2022": -0.0481,
+    "2023": 0.0905,
+    "2024": 0.4688,
+    "2025": 0.1951,
+    "2026": -0.0229
+   },
+   "yearly_days": {
+    "2022": 242,
+    "2023": 242,
+    "2024": 242,
+    "2025": 243,
+    "2026": 161
+   },
+   "mdd_span": {
+    "peak": "2022-03-03",
+    "trough": "2022-05-12",
+    "mdd": -0.1929,
+    "recover": "2023-09-14",
+    "drawdown_days": 45,
+    "underwater_months": 2.1
+   },
+   "seg_multiples": {
+    "2022": 0.9519,
+    "2023": 1.0905,
+    "2024": 1.4688,
+    "2025": 1.1951,
+    "2026": 0.9771
+   }
+  },
+  "WF固定B_经营现金净余率": {
+   "metrics": {
+    "total_multiple": 1.2735,
+    "cagr": 0.053584,
+    "mdd": -0.20368,
+    "sharpe": 0.362,
+    "daily_winrate": 0.4903,
+    "n_days": 1130,
+    "years": 4.63
+   },
+   "yearly": {
+    "2022": -0.1562,
+    "2023": -0.0055,
+    "2024": 0.3113,
+    "2025": 0.171,
+    "2026": -0.0117
+   },
+   "yearly_days": {
+    "2022": 242,
+    "2023": 242,
+    "2024": 242,
+    "2025": 243,
+    "2026": 161
+   },
+   "mdd_span": {
+    "peak": "2022-01-12",
+    "trough": "2022-10-28",
+    "mdd": -0.2037,
+    "recover": "2024-05-16",
+    "drawdown_days": 190,
+    "underwater_months": 9.0
+   },
+   "seg_multiples": {
+    "2022": 0.8438,
+    "2023": 0.9945,
+    "2024": 1.3113,
+    "2025": 1.171,
+    "2026": 0.9883
+   }
+  },
+  "WF固定C_价值现金合成": {
+   "metrics": {
+    "total_multiple": 1.5994,
+    "cagr": 0.106722,
+    "mdd": -0.211042,
+    "sharpe": 0.6229,
+    "daily_winrate": 0.4973,
+    "n_days": 1130,
+    "years": 4.63
+   },
+   "yearly": {
+    "2022": -0.0141,
+    "2023": -0.0775,
+    "2024": 0.484,
+    "2025": 0.164,
+    "2026": 0.018
+   },
+   "yearly_days": {
+    "2022": 242,
+    "2023": 242,
+    "2024": 242,
+    "2025": 243,
+    "2026": 161
+   },
+   "mdd_span": {
+    "peak": "2022-04-06",
+    "trough": "2023-12-26",
+    "mdd": -0.211,
+    "recover": "2024-05-13",
+    "drawdown_days": 421,
+    "underwater_months": 20.0
+   },
+   "seg_multiples": {
+    "2022": 0.9859,
+    "2023": 0.9225,
+    "2024": 1.484,
+    "2025": 1.164,
+    "2026": 1.018
+   }
+  }
+ },
+ "selfcheck": {
+  "slice_same_start": [
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2018,
+    "repro": 0.7963,
+    "npz": 0.7963,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2019,
+    "repro": 1.2036,
+    "npz": 1.2036,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2020,
+    "repro": 0.9041,
+    "npz": 0.9041,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2021,
+    "repro": 0.9922,
+    "npz": 0.9922,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2022,
+    "repro": 0.913,
+    "npz": 0.913,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2023,
+    "repro": 1.0604,
+    "npz": 1.0604,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2024,
+    "repro": 1.5425,
+    "npz": 1.5425,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2025,
+    "repro": 1.1469,
+    "npz": 1.1469,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "full2018 vs npz main",
+    "year": 2026,
+    "repro": 1.0193,
+    "npz": 1.0193,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2023,
+    "repro": 1.0878,
+    "npz": 1.0878,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2024,
+    "repro": 1.5107,
+    "npz": 1.5107,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2025,
+    "repro": 1.2189,
+    "npz": 1.2189,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军A_神奇公式",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2026,
+    "repro": 0.9941,
+    "npz": 0.9941,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2018,
+    "repro": 0.8228,
+    "npz": 0.8228,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2019,
+    "repro": 1.454,
+    "npz": 1.454,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2020,
+    "repro": 1.1398,
+    "npz": 1.1398,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2021,
+    "repro": 1.0737,
+    "npz": 1.0737,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2022,
+    "repro": 0.8742,
+    "npz": 0.8742,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2023,
+    "repro": 0.9813,
+    "npz": 0.9813,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2024,
+    "repro": 1.363,
+    "npz": 1.363,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2025,
+    "repro": 1.0595,
+    "npz": 1.0595,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "full2018 vs npz main",
+    "year": 2026,
+    "repro": 1.0272,
+    "npz": 1.0272,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2023,
+    "repro": 0.992,
+    "npz": 0.992,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2024,
+    "repro": 1.365,
+    "npz": 1.365,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2025,
+    "repro": 1.0433,
+    "npz": 1.0433,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2026,
+    "repro": 0.9941,
+    "npz": 0.9941,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2018,
+    "repro": 0.8448,
+    "npz": 0.8448,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2019,
+    "repro": 1.258,
+    "npz": 1.258,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2020,
+    "repro": 0.9681,
+    "npz": 0.9681,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2021,
+    "repro": 0.9827,
+    "npz": 0.9827,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2022,
+    "repro": 1.0193,
+    "npz": 1.0193,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2023,
+    "repro": 0.928,
+    "npz": 0.928,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2024,
+    "repro": 1.5459,
+    "npz": 1.5459,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2025,
+    "repro": 1.1073,
+    "npz": 1.1073,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "full2018 vs npz main",
+    "year": 2026,
+    "repro": 1.055,
+    "npz": 1.055,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2023,
+    "repro": 0.9202,
+    "npz": 0.9202,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2024,
+    "repro": 1.4837,
+    "npz": 1.4837,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2025,
+    "repro": 1.1472,
+    "npz": 1.1472,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "series": "oos2023 vs npz main__oos",
+    "year": 2026,
+    "repro": 1.0583,
+    "npz": 1.0583,
+    "diff": 0.0,
+    "pass_001": true
+   }
+  ],
+  "slice_same_start_pass": "39/39",
+  "oos2023_vs_authority": [
+   {
+    "signal": "冠军A_神奇公式",
+    "repro": 1.9911,
+    "authority": 1.9911,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军B_经营现金净余率",
+    "repro": 1.4045,
+    "authority": 1.4045,
+    "diff": 0.0,
+    "pass_001": true
+   },
+   {
+    "signal": "冠军C_价值现金合成",
+    "repro": 1.6576,
+    "authority": 1.6576,
+    "diff": 0.0,
+    "pass_001": true
+   }
+  ],
+  "wf_fixed_vs_npz": [
+   {
+    "year": 2022,
+    "signal": "冠军A_神奇公式",
+    "wf_seg_mult": 0.9519,
+    "npz_ref_mult": 0.913,
+    "npz_ref_key": "magic__main",
+    "diff": 0.0389,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2018 起跑连续持仓，WF 为 2022 独立空仓起跑"
+   },
+   {
+    "year": 2022,
+    "signal": "冠军B_经营现金净余率",
+    "wf_seg_mult": 0.8438,
+    "npz_ref_mult": 0.8742,
+    "npz_ref_key": "cash__main",
+    "diff": -0.0304,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2018 起跑连续持仓，WF 为 2022 独立空仓起跑"
+   },
+   {
+    "year": 2022,
+    "signal": "冠军C_价值现金合成",
+    "wf_seg_mult": 0.9859,
+    "npz_ref_mult": 1.0193,
+    "npz_ref_key": "combo__main",
+    "diff": -0.0335,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2018 起跑连续持仓，WF 为 2022 独立空仓起跑"
+   },
+   {
+    "year": 2023,
+    "signal": "冠军A_神奇公式",
+    "wf_seg_mult": 1.0905,
+    "npz_ref_mult": 1.0878,
+    "npz_ref_key": "magic__main__oos",
+    "diff": 0.0027,
+    "pass_001": true,
+    "note": "同起点 2023-01-01，应一致"
+   },
+   {
+    "year": 2023,
+    "signal": "冠军B_经营现金净余率",
+    "wf_seg_mult": 0.9945,
+    "npz_ref_mult": 0.992,
+    "npz_ref_key": "cash__main__oos",
+    "diff": 0.0025,
+    "pass_001": true,
+    "note": "同起点 2023-01-01，应一致"
+   },
+   {
+    "year": 2023,
+    "signal": "冠军C_价值现金合成",
+    "wf_seg_mult": 0.9225,
+    "npz_ref_mult": 0.9202,
+    "npz_ref_key": "combo__main__oos",
+    "diff": 0.0023,
+    "pass_001": true,
+    "note": "同起点 2023-01-01，应一致"
+   },
+   {
+    "year": 2024,
+    "signal": "冠军A_神奇公式",
+    "wf_seg_mult": 1.4688,
+    "npz_ref_mult": 1.5107,
+    "npz_ref_key": "magic__main__oos",
+    "diff": -0.0419,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2024,
+    "signal": "冠军B_经营现金净余率",
+    "wf_seg_mult": 1.3113,
+    "npz_ref_mult": 1.365,
+    "npz_ref_key": "cash__main__oos",
+    "diff": -0.0537,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2024,
+    "signal": "冠军C_价值现金合成",
+    "wf_seg_mult": 1.484,
+    "npz_ref_mult": 1.4837,
+    "npz_ref_key": "combo__main__oos",
+    "diff": 0.0004,
+    "pass_001": true,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2025,
+    "signal": "冠军A_神奇公式",
+    "wf_seg_mult": 1.1951,
+    "npz_ref_mult": 1.2189,
+    "npz_ref_key": "magic__main__oos",
+    "diff": -0.0238,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2025,
+    "signal": "冠军B_经营现金净余率",
+    "wf_seg_mult": 1.171,
+    "npz_ref_mult": 1.0433,
+    "npz_ref_key": "cash__main__oos",
+    "diff": 0.1277,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2025,
+    "signal": "冠军C_价值现金合成",
+    "wf_seg_mult": 1.164,
+    "npz_ref_mult": 1.1472,
+    "npz_ref_key": "combo__main__oos",
+    "diff": 0.0169,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2026,
+    "signal": "冠军A_神奇公式",
+    "wf_seg_mult": 0.9771,
+    "npz_ref_mult": 0.9941,
+    "npz_ref_key": "magic__main__oos",
+    "diff": -0.017,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2026,
+    "signal": "冠军B_经营现金净余率",
+    "wf_seg_mult": 0.9883,
+    "npz_ref_mult": 0.9941,
+    "npz_ref_key": "cash__main__oos",
+    "diff": -0.0058,
+    "pass_001": true,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   },
+   {
+    "year": 2026,
+    "signal": "冠军C_价值现金合成",
+    "wf_seg_mult": 1.018,
+    "npz_ref_mult": 1.0583,
+    "npz_ref_key": "combo__main__oos",
+    "diff": -0.0403,
+    "pass_001": false,
+    "note": "起跑点不同：npz 为 2023 起跑连续持仓，WF 为当年独立空仓起跑"
+   }
+  ],
+  "wf_fixed_vs_npz_pass": "5/15",
+  "wf_fixed_vs_npz_note": "自检分层解读：(1) 同起点对照全部通过，切片验证 39/39，oos2023 复现 3/3 与权威 JSON 一致，证明引擎与信号实现正确；(2) 2023 年段为同起点对照，3/3 通过；(3) 2022/2024/2025/2026 年段 diff -0.0537~+0.1277，来源为结构性差异而非引擎错误：npz 参照序列是 2018 或 2023 起跑的连续持仓，hold=20 调仓网格相位与 WF 各年独立空仓起跑不同，持仓队列与成本扣减日错位；已用控制变量验证：start=2023-01-01 连续段切 2023/2024 年段与 npz 逐点一致（diff=0.0000），同一段切 2025 年 diff=+0.0098 为 end_i1 提前截断末笔盯市尾巴所致。故 ±0.01 容差只在同起点组适用，不同起点组如实标注、不硬凑",
+  "phase_evidence": {
+   "same_start_slice_2023_2024_diff": 0.0,
+   "same_start_slice_2025_diff_end_i1_truncation": 0.0098,
+   "wf_2026_first_day": "wf=0.0（空仓起跑首日无持仓）vs npz=0.01397（连续持仓中）"
+  }
+ },
+ "analysis": {
+  "n_switch": 1,
+  "selection_sequence": {
+   "2022": "冠军B_经营现金净余率",
+   "2023": "冠军B_经营现金净余率",
+   "2024": "冠军A_神奇公式",
+   "2025": "冠军A_神奇公式",
+   "2026": "冠军A_神奇公式"
+  },
+  "wf_2023_onward": {
+   "total_multiple": 1.7057,
+   "cagr": 0.158032,
+   "mdd": -0.170974,
+   "sharpe": 0.9101,
+   "daily_winrate": 0.4955,
+   "n_days": 888,
+   "years": 3.64
+  },
+  "wf_fixed_A_2023_onward": {
+   "total_multiple": 1.8704,
+   "cagr": 0.187737,
+   "mdd": -0.159287,
+   "sharpe": 1.0254,
+   "daily_winrate": 0.4966,
+   "n_days": 888,
+   "years": 3.64
+  },
+  "wf_fixed_B_2023_onward": {
+   "total_multiple": 1.5092,
+   "cagr": 0.11973,
+   "mdd": -0.166387,
+   "sharpe": 0.6882,
+   "daily_winrate": 0.4876,
+   "n_days": 888,
+   "years": 3.64
+  },
+  "wf_fixed_C_2023_onward": {
+   "total_multiple": 1.6223,
+   "cagr": 0.142186,
+   "mdd": -0.206853,
+   "sharpe": 0.8274,
+   "daily_winrate": 0.4944,
+   "n_days": 888,
+   "years": 3.64
+  },
+  "single_oos_authority": {
+   "冠军A_神奇公式": {
+    "total_multiple": 1.9911,
+    "cagr": 0.208322,
+    "mdd": -0.155232,
+    "sharpe": 1.1114,
+    "daily_winrate": 0.5101,
+    "n_days": 888,
+    "years": 3.64
+   },
+   "冠军B_经营现金净余率": {
+    "total_multiple": 1.4045,
+    "cagr": 0.09782,
+    "mdd": -0.207933,
+    "sharpe": 0.5729,
+    "daily_winrate": 0.4955,
+    "n_days": 888,
+    "years": 3.64
+   },
+   "冠军C_价值现金合成": {
+    "total_multiple": 1.6576,
+    "cagr": 0.148958,
+    "mdd": -0.206853,
+    "sharpe": 0.854,
+    "daily_winrate": 0.5113,
+    "n_days": 888,
+    "years": 3.64
+   }
+  },
+  "compare_common_window": {
+   "desc": "共同覆盖段 2023-01-01 起。WF 各年独立空仓起跑，与单点 OOS 连续持仓存在起跑摩擦，固定版与单点的差异即摩擦量级",
+   "wf_select_vs_single_magic": -0.2854,
+   "wf_fixA_vs_single_magic": -0.1207,
+   "wf_fixB_vs_single_cash": 0.1047,
+   "wf_fixC_vs_single_combo": -0.0353
+  }
+ }
+}
