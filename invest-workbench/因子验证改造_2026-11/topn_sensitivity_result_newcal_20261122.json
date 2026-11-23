@@ -1,0 +1,1661 @@
+{
+ "meta": {
+  "start": "2018-01-02",
+  "oos": "2023-01-01",
+  "topns": [
+   5,
+   10,
+   15,
+   20,
+   30
+  ],
+  "placebo_n": 200,
+  "cap": 102000,
+  "hold": 20,
+  "engine": "mark_to_market_20261122",
+  "placebo_fix": "候选域修正：逐信号独立，rand_signal 在对应真实信号 finite 集合内随机打分",
+  "mask_main": {
+   "desc": "tradeable_mask 纯板块过滤，无静态 exclude，无静态前视",
+   "n": 3391
+  },
+  "mask_pit": {
+   "desc": "main 叠加 exclude_st_pit.json（含未来信息，仅敏感性对照）",
+   "n": 2671,
+   "excluded": 821
+  },
+  "five_factors": [
+   "signal:magic/cash/combo",
+   "topn=5/10/15/20/30",
+   "mask:main|pit 双口径",
+   "cost:cost_of(topn) 逐档",
+   "exclude:main 无静态排除 / pit 曾用名剔除（含未来信息）"
+  ],
+  "note": "与旧版 topn_sensitivity_result_latest.json 的差异见脚本头部说明；旧文件保留不覆盖"
+ },
+ "data": {
+  "main": {
+   "5": {
+    "real_cost_bp": 13.733,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 0.8824,
+      "full_cagr": -0.0148,
+      "full_mdd": -0.6626,
+      "full_sharpe": 0.083,
+      "full_winrate": 0.5042,
+      "oos_mult": 1.5559,
+      "oos_mdd": -0.2496,
+      "oos_sharpe": 0.7322,
+      "oos_winrate": 0.5225,
+      "pctF": 0.31,
+      "pctO": 0.83,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.3691,
+        "p25": 0.7752,
+        "median": 1.1505,
+        "p75": 1.5954,
+        "max": 4.3812
+       },
+       "oos": {
+        "min": 0.5373,
+        "p25": 0.9499,
+        "median": 1.1635,
+        "p75": 1.4271,
+        "max": 2.7865
+       }
+      },
+      "real_over_placebo_median_oos": 1.3373,
+      "bp50": 0.6084,
+      "drop_best": 0.4816,
+      "drop_best_year": "2024",
+      "drop_worst": 1.2197,
+      "drop_worst_year": "2020",
+      "n_trades": 102,
+      "avg_picks": 4.73,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1921,
+       "2019": 0.1032,
+       "2020": -0.2766,
+       "2021": -0.1461,
+       "2022": -0.1202,
+       "2023": -0.0195,
+       "2024": 0.8322,
+       "2025": 0.1007,
+       "2026": -0.0788
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 4.4329,
+      "full_cagr": 0.1946,
+      "full_mdd": -0.3738,
+      "full_sharpe": 0.7231,
+      "full_winrate": 0.5135,
+      "oos_mult": 1.697,
+      "oos_mdd": -0.2625,
+      "oos_sharpe": 0.7029,
+      "oos_winrate": 0.4899,
+      "pctF": 0.98,
+      "pctO": 0.845,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.1721,
+        "p25": 0.9886,
+        "median": 1.402,
+        "p75": 2.0191,
+        "max": 5.808
+       },
+       "oos": {
+        "min": 0.484,
+        "p25": 0.9646,
+        "median": 1.2117,
+        "p75": 1.5392,
+        "max": 2.8366
+       }
+      },
+      "real_over_placebo_median_oos": 1.4006,
+      "bp50": 3.0581,
+      "drop_best": 2.4825,
+      "drop_best_year": "2019",
+      "drop_worst": 5.3687,
+      "drop_worst_year": "2022",
+      "n_trades": 102,
+      "avg_picks": 4.21,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.158,
+       "2019": 0.7857,
+       "2020": 0.3815,
+       "2021": 0.5074,
+       "2022": -0.1743,
+       "2023": 0.0512,
+       "2024": 0.3664,
+       "2025": 0.1768,
+       "2026": 0.0144
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 0.9777,
+      "full_cagr": -0.0027,
+      "full_mdd": -0.5686,
+      "full_sharpe": 0.1216,
+      "full_winrate": 0.4958,
+      "oos_mult": 1.7885,
+      "oos_mdd": -0.2677,
+      "oos_sharpe": 0.8993,
+      "oos_winrate": 0.5023,
+      "pctF": 0.255,
+      "pctO": 0.88,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.3171,
+        "p25": 0.9709,
+        "median": 1.3736,
+        "p75": 2.0973,
+        "max": 8.0186
+       },
+       "oos": {
+        "min": 0.588,
+        "p25": 1.0218,
+        "median": 1.2247,
+        "p75": 1.5091,
+        "max": 2.7271
+       }
+      },
+      "real_over_placebo_median_oos": 1.4604,
+      "bp50": 0.6747,
+      "drop_best": 0.6447,
+      "drop_best_year": "2024",
+      "drop_worst": 1.408,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 4.7,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.3056,
+       "2019": 0.1792,
+       "2020": -0.1125,
+       "2021": -0.1155,
+       "2022": -0.1503,
+       "2023": -0.1253,
+       "2024": 0.5165,
+       "2025": 0.2092,
+       "2026": 0.116
+      }
+     }
+    }
+   },
+   "10": {
+    "real_cost_bp": 16.628,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.2385,
+      "full_cagr": 0.0259,
+      "full_mdd": -0.4208,
+      "full_sharpe": 0.2286,
+      "full_winrate": 0.5051,
+      "oos_mult": 1.9202,
+      "oos_mdd": -0.2026,
+      "oos_sharpe": 1.0487,
+      "oos_winrate": 0.5056,
+      "pctF": 0.495,
+      "pctO": 0.98,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.4563,
+        "p25": 0.9553,
+        "median": 1.2418,
+        "p75": 1.653,
+        "max": 3.6709
+       },
+       "oos": {
+        "min": 0.5828,
+        "p25": 1.0373,
+        "median": 1.1801,
+        "p75": 1.3988,
+        "max": 2.5324
+       }
+      },
+      "real_over_placebo_median_oos": 1.6272,
+      "bp50": 0.88,
+      "drop_best": 0.7499,
+      "drop_best_year": "2024",
+      "drop_worst": 1.7306,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 9.45,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2843,
+       "2019": 0.2036,
+       "2020": -0.1579,
+       "2021": 0.0415,
+       "2022": -0.0848,
+       "2023": -0.0209,
+       "2024": 0.6515,
+       "2025": 0.1709,
+       "2026": -0.0539
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 2.5763,
+      "full_cagr": 0.1197,
+      "full_mdd": -0.3034,
+      "full_sharpe": 0.5638,
+      "full_winrate": 0.5095,
+      "oos_mult": 1.5858,
+      "oos_mdd": -0.1935,
+      "oos_sharpe": 0.696,
+      "oos_winrate": 0.4989,
+      "pctF": 0.93,
+      "pctO": 0.87,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.5843,
+        "p25": 1.1258,
+        "median": 1.4146,
+        "p75": 1.8175,
+        "max": 4.5003
+       },
+       "oos": {
+        "min": 0.6392,
+        "p25": 1.0162,
+        "median": 1.2336,
+        "p75": 1.4112,
+        "max": 2.3406
+       }
+      },
+      "real_over_placebo_median_oos": 1.2855,
+      "bp50": 1.8301,
+      "drop_best": 1.6872,
+      "drop_best_year": "2024",
+      "drop_worst": 3.0443,
+      "drop_worst_year": "2022",
+      "n_trades": 102,
+      "avg_picks": 8.74,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1093,
+       "2019": 0.4858,
+       "2020": 0.1897,
+       "2021": 0.063,
+       "2022": -0.1537,
+       "2023": 0.078,
+       "2024": 0.5269,
+       "2025": 0.0807,
+       "2026": 0.0227
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.5254,
+      "full_cagr": 0.0517,
+      "full_mdd": -0.3898,
+      "full_sharpe": 0.3271,
+      "full_winrate": 0.4978,
+      "oos_mult": 1.6012,
+      "oos_mdd": -0.2275,
+      "oos_sharpe": 0.7622,
+      "oos_winrate": 0.5,
+      "pctF": 0.485,
+      "pctO": 0.875,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6113,
+        "p25": 1.1018,
+        "median": 1.5524,
+        "p75": 2.1214,
+        "max": 3.5217
+       },
+       "oos": {
+        "min": 0.7166,
+        "p25": 1.0533,
+        "median": 1.2208,
+        "p75": 1.4271,
+        "max": 2.0751
+       }
+      },
+      "real_over_placebo_median_oos": 1.3116,
+      "bp50": 1.0846,
+      "drop_best": 0.947,
+      "drop_best_year": "2024",
+      "drop_worst": 1.8331,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 9.55,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1679,
+       "2019": 0.227,
+       "2020": -0.1135,
+       "2021": 0.0022,
+       "2022": -0.0628,
+       "2023": -0.1002,
+       "2024": 0.6108,
+       "2025": 0.1201,
+       "2026": 0.1053
+      }
+     }
+    }
+   },
+   "15": {
+    "real_cost_bp": 20.629,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.5183,
+      "full_cagr": 0.0511,
+      "full_mdd": -0.375,
+      "full_sharpe": 0.3236,
+      "full_winrate": 0.5174,
+      "oos_mult": 2.0156,
+      "oos_mdd": -0.1636,
+      "oos_sharpe": 1.1284,
+      "oos_winrate": 0.5191,
+      "pctF": 0.7,
+      "pctO": 1.0,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6302,
+        "p25": 1.0202,
+        "median": 1.2995,
+        "p75": 1.5701,
+        "max": 3.9537
+       },
+       "oos": {
+        "min": 0.6621,
+        "p25": 1.0454,
+        "median": 1.2053,
+        "p75": 1.3646,
+        "max": 2.0092
+       }
+      },
+      "real_over_placebo_median_oos": 1.6723,
+      "bp50": 1.1239,
+      "drop_best": 0.9756,
+      "drop_best_year": "2024",
+      "drop_worst": 2.0165,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 14.25,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2471,
+       "2019": 0.2306,
+       "2020": -0.1273,
+       "2021": 0.0807,
+       "2022": -0.1103,
+       "2023": 0.0715,
+       "2024": 0.5563,
+       "2025": 0.1745,
+       "2026": -0.0028
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 2.4475,
+      "full_cagr": 0.1128,
+      "full_mdd": -0.3115,
+      "full_sharpe": 0.5567,
+      "full_winrate": 0.5076,
+      "oos_mult": 1.5599,
+      "oos_mdd": -0.1937,
+      "oos_sharpe": 0.7106,
+      "oos_winrate": 0.4865,
+      "pctF": 0.93,
+      "pctO": 0.91,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6399,
+        "p25": 1.175,
+        "median": 1.4366,
+        "p75": 1.8113,
+        "max": 3.2626
+       },
+       "oos": {
+        "min": 0.7691,
+        "p25": 1.0539,
+        "median": 1.2032,
+        "p75": 1.3837,
+        "max": 1.997
+       }
+      },
+      "real_over_placebo_median_oos": 1.2965,
+      "bp50": 1.8116,
+      "drop_best": 1.675,
+      "drop_best_year": "2019",
+      "drop_worst": 2.8812,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 13.03,
+      "gate": {
+       "result": "PASS",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1505,
+       "2019": 0.4612,
+       "2020": 0.1381,
+       "2021": 0.1029,
+       "2022": -0.0937,
+       "2023": 0.0435,
+       "2024": 0.4568,
+       "2025": 0.0904,
+       "2026": 0.0458
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.6377,
+      "full_cagr": 0.0607,
+      "full_mdd": -0.3167,
+      "full_sharpe": 0.3654,
+      "full_winrate": 0.5076,
+      "oos_mult": 1.6161,
+      "oos_mdd": -0.2222,
+      "oos_sharpe": 0.7955,
+      "oos_winrate": 0.5011,
+      "pctF": 0.615,
+      "pctO": 0.96,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6207,
+        "p25": 1.166,
+        "median": 1.5034,
+        "p75": 1.8805,
+        "max": 2.8381
+       },
+       "oos": {
+        "min": 0.7948,
+        "p25": 1.0617,
+        "median": 1.1931,
+        "p75": 1.3596,
+        "max": 1.8494
+       }
+      },
+      "real_over_placebo_median_oos": 1.3545,
+      "bp50": 1.2128,
+      "drop_best": 1.0468,
+      "drop_best_year": "2024",
+      "drop_worst": 1.9722,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 14.09,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1696,
+       "2019": 0.2661,
+       "2020": -0.0733,
+       "2021": -0.0441,
+       "2022": -0.0054,
+       "2023": -0.0685,
+       "2024": 0.5644,
+       "2025": 0.1191,
+       "2026": 0.084
+      }
+     }
+    }
+   },
+   "20": {
+    "real_cost_bp": 24.826,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.5011,
+      "full_cagr": 0.0497,
+      "full_mdd": -0.3723,
+      "full_sharpe": 0.3196,
+      "full_winrate": 0.511,
+      "oos_mult": 1.9911,
+      "oos_mdd": -0.1552,
+      "oos_sharpe": 1.1114,
+      "oos_winrate": 0.5101,
+      "pctF": 0.695,
+      "pctO": 1.0,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.5728,
+        "p25": 1.0313,
+        "median": 1.2682,
+        "p75": 1.548,
+        "max": 3.0474
+       },
+       "oos": {
+        "min": 0.7878,
+        "p25": 1.0425,
+        "median": 1.1831,
+        "p75": 1.3274,
+        "max": 1.9087
+       }
+      },
+      "real_over_placebo_median_oos": 1.6829,
+      "bp50": 1.1601,
+      "drop_best": 0.9732,
+      "drop_best_year": "2024",
+      "drop_worst": 1.885,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 19.02,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2037,
+       "2019": 0.2036,
+       "2020": -0.0959,
+       "2021": -0.0078,
+       "2022": -0.087,
+       "2023": 0.0604,
+       "2024": 0.5425,
+       "2025": 0.1469,
+       "2026": 0.0193
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 1.863,
+      "full_cagr": 0.0771,
+      "full_mdd": -0.3088,
+      "full_sharpe": 0.4311,
+      "full_winrate": 0.5061,
+      "oos_mult": 1.4045,
+      "oos_mdd": -0.2079,
+      "oos_sharpe": 0.5729,
+      "oos_winrate": 0.4955,
+      "pctF": 0.87,
+      "pctO": 0.855,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.5868,
+        "p25": 1.1398,
+        "median": 1.4096,
+        "p75": 1.6566,
+        "max": 2.7168
+       },
+       "oos": {
+        "min": 0.7839,
+        "p25": 1.0734,
+        "median": 1.1789,
+        "p75": 1.3153,
+        "max": 1.86
+       }
+      },
+      "real_over_placebo_median_oos": 1.1914,
+      "bp50": 1.4394,
+      "drop_best": 1.2813,
+      "drop_best_year": "2019",
+      "drop_worst": 2.2643,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 17.37,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1772,
+       "2019": 0.454,
+       "2020": 0.1398,
+       "2021": 0.0737,
+       "2022": -0.1258,
+       "2023": -0.0187,
+       "2024": 0.363,
+       "2025": 0.0595,
+       "2026": 0.0272
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.7272,
+      "full_cagr": 0.0674,
+      "full_mdd": -0.3179,
+      "full_sharpe": 0.397,
+      "full_winrate": 0.5047,
+      "oos_mult": 1.6576,
+      "oos_mdd": -0.2069,
+      "oos_sharpe": 0.854,
+      "oos_winrate": 0.5113,
+      "pctF": 0.775,
+      "pctO": 0.98,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6766,
+        "p25": 1.1379,
+        "median": 1.4442,
+        "p75": 1.6995,
+        "max": 2.9501
+       },
+       "oos": {
+        "min": 0.714,
+        "p25": 1.0668,
+        "median": 1.173,
+        "p75": 1.315,
+        "max": 1.7943
+       }
+      },
+      "real_over_placebo_median_oos": 1.4131,
+      "bp50": 1.3349,
+      "drop_best": 1.1172,
+      "drop_best_year": "2024",
+      "drop_worst": 2.0445,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 18.64,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1552,
+       "2019": 0.258,
+       "2020": -0.0319,
+       "2021": -0.0173,
+       "2022": 0.0193,
+       "2023": -0.072,
+       "2024": 0.5459,
+       "2025": 0.1073,
+       "2026": 0.055
+      }
+     }
+    }
+   },
+   "30": {
+    "real_cost_bp": 33.432,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.3159,
+      "full_cagr": 0.0333,
+      "full_mdd": -0.3669,
+      "full_sharpe": 0.2567,
+      "full_winrate": 0.5081,
+      "oos_mult": 1.7792,
+      "oos_mdd": -0.1658,
+      "oos_sharpe": 0.9698,
+      "oos_winrate": 0.5068,
+      "pctF": 0.66,
+      "pctO": 1.0,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.7181,
+        "p25": 1.0191,
+        "median": 1.1974,
+        "p75": 1.4169,
+        "max": 2.3854
+       },
+       "oos": {
+        "min": 0.7986,
+        "p25": 1.0582,
+        "median": 1.1493,
+        "p75": 1.2388,
+        "max": 1.5967
+       }
+      },
+      "real_over_placebo_median_oos": 1.5481,
+      "bp50": 1.1105,
+      "drop_best": 0.8862,
+      "drop_best_year": "2024",
+      "drop_worst": 1.6493,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 28.42,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2022,
+       "2019": 0.194,
+       "2020": -0.1025,
+       "2021": 0.0294,
+       "2022": -0.102,
+       "2023": 0.0227,
+       "2024": 0.4849,
+       "2025": 0.103,
+       "2026": -0.0061
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 1.4497,
+      "full_cagr": 0.0453,
+      "full_mdd": -0.3299,
+      "full_sharpe": 0.3067,
+      "full_winrate": 0.489,
+      "oos_mult": 1.3592,
+      "oos_mdd": -0.2086,
+      "oos_sharpe": 0.5298,
+      "oos_winrate": 0.4977,
+      "pctF": 0.745,
+      "pctO": 0.895,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.5789,
+        "p25": 1.1047,
+        "median": 1.2753,
+        "p75": 1.4524,
+        "max": 2.2987
+       },
+       "oos": {
+        "min": 0.8412,
+        "p25": 1.0458,
+        "median": 1.1349,
+        "p75": 1.2615,
+        "max": 1.7052
+       }
+      },
+      "real_over_placebo_median_oos": 1.1976,
+      "bp50": 1.2233,
+      "drop_best": 1.0596,
+      "drop_best_year": "2019",
+      "drop_worst": 1.837,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 26.1,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2108,
+       "2019": 0.3681,
+       "2020": 0.0891,
+       "2021": 0.011,
+       "2022": -0.1529,
+       "2023": 0.0184,
+       "2024": 0.3398,
+       "2025": 0.0536,
+       "2026": 0.0015
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.8102,
+      "full_cagr": 0.0734,
+      "full_mdd": -0.2594,
+      "full_sharpe": 0.4267,
+      "full_winrate": 0.511,
+      "oos_mult": 1.5859,
+      "oos_mdd": -0.1488,
+      "oos_sharpe": 0.8193,
+      "oos_winrate": 0.5158,
+      "pctF": 0.93,
+      "pctO": 1.0,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.8536,
+        "p25": 1.1521,
+        "median": 1.3221,
+        "p75": 1.5255,
+        "max": 2.3891
+       },
+       "oos": {
+        "min": 0.7787,
+        "p25": 1.0425,
+        "median": 1.1305,
+        "p75": 1.24,
+        "max": 1.5853
+       }
+      },
+      "real_over_placebo_median_oos": 1.4029,
+      "bp50": 1.5277,
+      "drop_best": 1.2454,
+      "drop_best_year": "2024",
+      "drop_worst": 2.1664,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 27.57,
+      "gate": {
+       "result": "PASS",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1644,
+       "2019": 0.3452,
+       "2020": -0.0518,
+       "2021": 0.0265,
+       "2022": -0.0188,
+       "2023": 0.0039,
+       "2024": 0.4535,
+       "2025": 0.125,
+       "2026": 0.0272
+      }
+     }
+    }
+   }
+  },
+  "pit": {
+   "5": {
+    "real_cost_bp": 13.733,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.1909,
+      "full_cagr": 0.0211,
+      "full_mdd": -0.4993,
+      "full_sharpe": 0.2114,
+      "full_winrate": 0.5086,
+      "oos_mult": 1.6795,
+      "oos_mdd": -0.2496,
+      "oos_sharpe": 0.809,
+      "oos_winrate": 0.518,
+      "pctF": 0.44,
+      "pctO": 0.855,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.3064,
+        "p25": 0.9125,
+        "median": 1.3194,
+        "p75": 1.8894,
+        "max": 5.5627
+       },
+       "oos": {
+        "min": 0.3939,
+        "p25": 0.9893,
+        "median": 1.2019,
+        "p75": 1.5326,
+        "max": 2.6436
+       }
+      },
+      "real_over_placebo_median_oos": 1.3974,
+      "bp50": 0.8215,
+      "drop_best": 0.7507,
+      "drop_best_year": "2024",
+      "drop_worst": 1.4528,
+      "drop_worst_year": "2022",
+      "n_trades": 102,
+      "avg_picks": 4.75,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1282,
+       "2019": 0.1018,
+       "2020": -0.0842,
+       "2021": -0.0093,
+       "2022": -0.1802,
+       "2023": -0.0336,
+       "2024": 0.5865,
+       "2025": 0.1802,
+       "2026": -0.0788
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 3.904,
+      "full_cagr": 0.1766,
+      "full_mdd": -0.3737,
+      "full_sharpe": 0.7032,
+      "full_winrate": 0.5051,
+      "oos_mult": 1.8321,
+      "oos_mdd": -0.2587,
+      "oos_sharpe": 0.799,
+      "oos_winrate": 0.491,
+      "pctF": 0.95,
+      "pctO": 0.865,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.313,
+        "p25": 1.0231,
+        "median": 1.6665,
+        "p75": 2.3489,
+        "max": 6.6881
+       },
+       "oos": {
+        "min": 0.5187,
+        "p25": 0.9452,
+        "median": 1.2716,
+        "p75": 1.5638,
+        "max": 3.2931
+       }
+      },
+      "real_over_placebo_median_oos": 1.4407,
+      "bp50": 2.6927,
+      "drop_best": 2.0673,
+      "drop_best_year": "2019",
+      "drop_worst": 5.5566,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 4.76,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2974,
+       "2019": 0.8884,
+       "2020": 0.6415,
+       "2021": 0.0129,
+       "2022": -0.0268,
+       "2023": 0.0216,
+       "2024": 0.491,
+       "2025": 0.1768,
+       "2026": 0.0144
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.7182,
+      "full_cagr": 0.0668,
+      "full_mdd": -0.3239,
+      "full_sharpe": 0.3752,
+      "full_winrate": 0.4963,
+      "oos_mult": 1.7416,
+      "oos_mdd": -0.2861,
+      "oos_sharpe": 0.854,
+      "oos_winrate": 0.5011,
+      "pctF": 0.61,
+      "pctO": 0.85,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.3178,
+        "p25": 1.0411,
+        "median": 1.4891,
+        "p75": 2.1793,
+        "max": 6.6605
+       },
+       "oos": {
+        "min": 0.6117,
+        "p25": 0.9809,
+        "median": 1.2174,
+        "p75": 1.5511,
+        "max": 2.7837
+       }
+      },
+      "real_over_placebo_median_oos": 1.4306,
+      "bp50": 1.1862,
+      "drop_best": 1.133,
+      "drop_best_year": "2024",
+      "drop_worst": 2.1758,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 4.76,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2103,
+       "2019": 0.2907,
+       "2020": -0.0823,
+       "2021": -0.0942,
+       "2022": 0.1062,
+       "2023": -0.1043,
+       "2024": 0.5165,
+       "2025": 0.2092,
+       "2026": 0.116
+      }
+     }
+    }
+   },
+   "10": {
+    "real_cost_bp": 16.628,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.5258,
+      "full_cagr": 0.0518,
+      "full_mdd": -0.3733,
+      "full_sharpe": 0.3242,
+      "full_winrate": 0.5086,
+      "oos_mult": 1.715,
+      "oos_mdd": -0.2088,
+      "oos_sharpe": 0.8464,
+      "oos_winrate": 0.5056,
+      "pctF": 0.52,
+      "pctO": 0.94,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.4705,
+        "p25": 1.0979,
+        "median": 1.4884,
+        "p75": 1.858,
+        "max": 4.2697
+       },
+       "oos": {
+        "min": 0.5514,
+        "p25": 1.0358,
+        "median": 1.2515,
+        "p75": 1.4144,
+        "max": 2.2747
+       }
+      },
+      "real_over_placebo_median_oos": 1.3704,
+      "bp50": 1.0844,
+      "drop_best": 1.0445,
+      "drop_best_year": "2024",
+      "drop_worst": 1.854,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 9.51,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.177,
+       "2019": 0.226,
+       "2020": -0.0772,
+       "2021": 0.0794,
+       "2022": -0.1488,
+       "2023": 0.0475,
+       "2024": 0.4608,
+       "2025": 0.1893,
+       "2026": -0.02
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 2.4022,
+      "full_cagr": 0.1103,
+      "full_mdd": -0.3233,
+      "full_sharpe": 0.5342,
+      "full_winrate": 0.5017,
+      "oos_mult": 1.6363,
+      "oos_mdd": -0.1935,
+      "oos_sharpe": 0.7498,
+      "oos_winrate": 0.5045,
+      "pctF": 0.84,
+      "pctO": 0.885,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.7288,
+        "p25": 1.252,
+        "median": 1.6531,
+        "p75": 2.0411,
+        "max": 5.0154
+       },
+       "oos": {
+        "min": 0.6715,
+        "p25": 1.0737,
+        "median": 1.2637,
+        "p75": 1.5135,
+        "max": 2.3251
+       }
+      },
+      "real_over_placebo_median_oos": 1.2948,
+      "bp50": 1.7064,
+      "drop_best": 1.5146,
+      "drop_best_year": "2019",
+      "drop_worst": 3.3443,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 9.28,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2817,
+       "2019": 0.5861,
+       "2020": 0.3311,
+       "2021": -0.0727,
+       "2022": -0.0417,
+       "2023": 0.041,
+       "2024": 0.5193,
+       "2025": 0.0906,
+       "2026": 0.0336
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.6626,
+      "full_cagr": 0.0626,
+      "full_mdd": -0.3087,
+      "full_sharpe": 0.3671,
+      "full_winrate": 0.4968,
+      "oos_mult": 1.5772,
+      "oos_mdd": -0.2308,
+      "oos_sharpe": 0.742,
+      "oos_winrate": 0.5011,
+      "pctF": 0.56,
+      "pctO": 0.85,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.4133,
+        "p25": 1.2578,
+        "median": 1.607,
+        "p75": 2.0798,
+        "max": 4.06
+       },
+       "oos": {
+        "min": 0.7134,
+        "p25": 1.042,
+        "median": 1.228,
+        "p75": 1.4328,
+        "max": 2.1798
+       }
+      },
+      "real_over_placebo_median_oos": 1.2844,
+      "bp50": 1.1823,
+      "drop_best": 1.1045,
+      "drop_best_year": "2024",
+      "drop_worst": 1.9511,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 9.62,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1479,
+       "2019": 0.2944,
+       "2020": -0.0775,
+       "2021": -0.039,
+       "2022": 0.0199,
+       "2023": -0.1054,
+       "2024": 0.5053,
+       "2025": 0.1201,
+       "2026": 0.1053
+      }
+     }
+    }
+   },
+   "15": {
+    "real_cost_bp": 20.629,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.4691,
+      "full_cagr": 0.047,
+      "full_mdd": -0.3355,
+      "full_sharpe": 0.3083,
+      "full_winrate": 0.5051,
+      "oos_mult": 1.8976,
+      "oos_mdd": -0.1648,
+      "oos_sharpe": 1.0068,
+      "oos_winrate": 0.5056,
+      "pctF": 0.485,
+      "pctO": 0.995,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.673,
+        "p25": 1.1415,
+        "median": 1.4785,
+        "p75": 1.7502,
+        "max": 3.1305
+       },
+       "oos": {
+        "min": 0.7231,
+        "p25": 1.0838,
+        "median": 1.2349,
+        "p75": 1.3936,
+        "max": 1.957
+       }
+      },
+      "real_over_placebo_median_oos": 1.5366,
+      "bp50": 1.0878,
+      "drop_best": 1.0142,
+      "drop_best_year": "2024",
+      "drop_worst": 1.8177,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 14.34,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1918,
+       "2019": 0.2282,
+       "2020": -0.1225,
+       "2021": -0.0355,
+       "2022": -0.0428,
+       "2023": 0.0857,
+       "2024": 0.4485,
+       "2025": 0.1596,
+       "2026": 0.0018
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 2.0689,
+      "full_cagr": 0.0907,
+      "full_mdd": -0.3071,
+      "full_sharpe": 0.4774,
+      "full_winrate": 0.4914,
+      "oos_mult": 1.558,
+      "oos_mdd": -0.1908,
+      "oos_sharpe": 0.7147,
+      "oos_winrate": 0.5011,
+      "pctF": 0.82,
+      "pctO": 0.87,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6236,
+        "p25": 1.2235,
+        "median": 1.5833,
+        "p75": 1.9656,
+        "max": 3.2461
+       },
+       "oos": {
+        "min": 0.8031,
+        "p25": 1.1057,
+        "median": 1.2264,
+        "p75": 1.4402,
+        "max": 2.0939
+       }
+      },
+      "real_over_placebo_median_oos": 1.2704,
+      "bp50": 1.5312,
+      "drop_best": 1.3907,
+      "drop_best_year": "2019",
+      "drop_worst": 2.7296,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 13.87,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.242,
+       "2019": 0.4877,
+       "2020": 0.3067,
+       "2021": -0.0277,
+       "2022": -0.1353,
+       "2023": 0.0012,
+       "2024": 0.4643,
+       "2025": 0.0961,
+       "2026": 0.0394
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.8453,
+      "full_cagr": 0.0759,
+      "full_mdd": -0.2761,
+      "full_sharpe": 0.423,
+      "full_winrate": 0.5002,
+      "oos_mult": 1.6212,
+      "oos_mdd": -0.2234,
+      "oos_sharpe": 0.7884,
+      "oos_winrate": 0.5034,
+      "pctF": 0.685,
+      "pctO": 0.94,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.5616,
+        "p25": 1.218,
+        "median": 1.6227,
+        "p75": 1.9509,
+        "max": 3.3974
+       },
+       "oos": {
+        "min": 0.7461,
+        "p25": 1.0635,
+        "median": 1.2086,
+        "p75": 1.3761,
+        "max": 1.9495
+       }
+      },
+      "real_over_placebo_median_oos": 1.3414,
+      "bp50": 1.3666,
+      "drop_best": 1.2409,
+      "drop_best_year": "2024",
+      "drop_worst": 2.1917,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 14.15,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.158,
+       "2019": 0.3644,
+       "2020": -0.0399,
+       "2021": -0.0266,
+       "2022": 0.06,
+       "2023": -0.091,
+       "2024": 0.4871,
+       "2025": 0.1064,
+       "2026": 0.084
+      }
+     }
+    }
+   },
+   "20": {
+    "real_cost_bp": 24.826,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.5302,
+      "full_cagr": 0.0521,
+      "full_mdd": -0.3603,
+      "full_sharpe": 0.3283,
+      "full_winrate": 0.5047,
+      "oos_mult": 1.8105,
+      "oos_mdd": -0.1598,
+      "oos_sharpe": 0.9516,
+      "oos_winrate": 0.4899,
+      "pctF": 0.62,
+      "pctO": 1.0,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.7055,
+        "p25": 1.1423,
+        "median": 1.4181,
+        "p75": 1.6771,
+        "max": 2.6086
+       },
+       "oos": {
+        "min": 0.7988,
+        "p25": 1.0742,
+        "median": 1.2024,
+        "p75": 1.351,
+        "max": 1.7901
+       }
+      },
+      "real_over_placebo_median_oos": 1.5057,
+      "bp50": 1.1827,
+      "drop_best": 1.0746,
+      "drop_best_year": "2024",
+      "drop_worst": 1.8242,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 19.08,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1612,
+       "2019": 0.196,
+       "2020": -0.0854,
+       "2021": 0.0091,
+       "2022": -0.0457,
+       "2023": 0.0425,
+       "2024": 0.424,
+       "2025": 0.1326,
+       "2026": 0.0299
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 1.7679,
+      "full_cagr": 0.0704,
+      "full_mdd": -0.2944,
+      "full_sharpe": 0.4035,
+      "full_winrate": 0.4919,
+      "oos_mult": 1.4359,
+      "oos_mdd": -0.2064,
+      "oos_sharpe": 0.6026,
+      "oos_winrate": 0.5,
+      "pctF": 0.75,
+      "pctO": 0.82,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.6935,
+        "p25": 1.2803,
+        "median": 1.5218,
+        "p75": 1.7669,
+        "max": 3.6045
+       },
+       "oos": {
+        "min": 0.7883,
+        "p25": 1.0743,
+        "median": 1.2057,
+        "p75": 1.3714,
+        "max": 2.0115
+       }
+      },
+      "real_over_placebo_median_oos": 1.1909,
+      "bp50": 1.3659,
+      "drop_best": 1.2083,
+      "drop_best_year": "2019",
+      "drop_worst": 2.2669,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 18.47,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2201,
+       "2019": 0.4632,
+       "2020": 0.2092,
+       "2021": -0.0195,
+       "2022": -0.1451,
+       "2023": 0.01,
+       "2024": 0.3841,
+       "2025": 0.063,
+       "2026": 0.0287
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.7739,
+      "full_cagr": 0.0709,
+      "full_mdd": -0.2976,
+      "full_sharpe": 0.4088,
+      "full_winrate": 0.5032,
+      "oos_mult": 1.5993,
+      "oos_mdd": -0.2156,
+      "oos_sharpe": 0.792,
+      "oos_winrate": 0.5113,
+      "pctF": 0.66,
+      "pctO": 0.97,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.7173,
+        "p25": 1.2883,
+        "median": 1.5578,
+        "p75": 1.9066,
+        "max": 2.8554
+       },
+       "oos": {
+        "min": 0.7732,
+        "p25": 1.057,
+        "median": 1.1941,
+        "p75": 1.3234,
+        "max": 1.8416
+       }
+      },
+      "real_over_placebo_median_oos": 1.3393,
+      "bp50": 1.3711,
+      "drop_best": 1.1745,
+      "drop_best_year": "2024",
+      "drop_worst": 2.1199,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 18.64,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1632,
+       "2019": 0.3072,
+       "2020": -0.0339,
+       "2021": 0.0178,
+       "2022": 0.0174,
+       "2023": -0.0789,
+       "2024": 0.5104,
+       "2025": 0.1043,
+       "2026": 0.055
+      }
+     }
+    }
+   },
+   "30": {
+    "real_cost_bp": 33.432,
+    "placebo_n": 200,
+    "strats": {
+     "A_神奇公式": {
+      "full_mult": 1.3783,
+      "full_cagr": 0.0391,
+      "full_mdd": -0.3542,
+      "full_sharpe": 0.2798,
+      "full_winrate": 0.5037,
+      "oos_mult": 1.5842,
+      "oos_mdd": -0.18,
+      "oos_sharpe": 0.7852,
+      "oos_winrate": 0.4966,
+      "pctF": 0.58,
+      "pctO": 0.98,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.7762,
+        "p25": 1.1384,
+        "median": 1.294,
+        "p75": 1.5259,
+        "max": 2.5535
+       },
+       "oos": {
+        "min": 0.8267,
+        "p25": 1.0788,
+        "median": 1.1688,
+        "p75": 1.2641,
+        "max": 1.6583
+       }
+      },
+      "real_over_placebo_median_oos": 1.3555,
+      "bp50": 1.1633,
+      "drop_best": 1.0051,
+      "drop_best_year": "2024",
+      "drop_worst": 1.6188,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 28.66,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1486,
+       "2019": 0.2167,
+       "2020": -0.0851,
+       "2021": 0.073,
+       "2022": -0.0822,
+       "2023": -0.0276,
+       "2024": 0.3713,
+       "2025": 0.1144,
+       "2026": -0.0062
+      }
+     },
+     "B_现金净余率": {
+      "full_mult": 1.3905,
+      "full_cagr": 0.0402,
+      "full_mdd": -0.3157,
+      "full_sharpe": 0.2857,
+      "full_winrate": 0.4973,
+      "oos_mult": 1.3281,
+      "oos_mdd": -0.2102,
+      "oos_sharpe": 0.5024,
+      "oos_winrate": 0.5045,
+      "pctF": 0.455,
+      "pctO": 0.825,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.7794,
+        "p25": 1.2123,
+        "median": 1.4258,
+        "p75": 1.6604,
+        "max": 2.9555
+       },
+       "oos": {
+        "min": 0.8932,
+        "p25": 1.0732,
+        "median": 1.161,
+        "p75": 1.2689,
+        "max": 1.6692
+       }
+      },
+      "real_over_placebo_median_oos": 1.144,
+      "bp50": 1.1733,
+      "drop_best": 0.9876,
+      "drop_best_year": "2019",
+      "drop_worst": 1.7786,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 27.39,
+      "gate": {
+       "result": "FAIL",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.2182,
+       "2019": 0.4079,
+       "2020": 0.1124,
+       "2021": -0.055,
+       "2022": -0.1743,
+       "2023": 0.0078,
+       "2024": 0.352,
+       "2025": 0.0428,
+       "2026": 0.0243
+      }
+     },
+     "C_价值现金合成": {
+      "full_mult": 1.951,
+      "full_cagr": 0.0831,
+      "full_mdd": -0.241,
+      "full_sharpe": 0.4668,
+      "full_winrate": 0.5095,
+      "oos_mult": 1.5659,
+      "oos_mdd": -0.1488,
+      "oos_sharpe": 0.785,
+      "oos_winrate": 0.5101,
+      "pctF": 0.92,
+      "pctO": 0.985,
+      "placebo_baseline": {
+       "full": {
+        "min": 0.8186,
+        "p25": 1.2103,
+        "median": 1.4521,
+        "p75": 1.6864,
+        "max": 2.439
+       },
+       "oos": {
+        "min": 0.8228,
+        "p25": 1.0623,
+        "median": 1.1568,
+        "p75": 1.2572,
+        "max": 1.7405
+       }
+      },
+      "real_over_placebo_median_oos": 1.3536,
+      "bp50": 1.6467,
+      "drop_best": 1.3548,
+      "drop_best_year": "2024",
+      "drop_worst": 2.2813,
+      "drop_worst_year": "2018",
+      "n_trades": 102,
+      "avg_picks": 27.68,
+      "gate": {
+       "result": "PASS",
+       "strict_result": "FAIL"
+      },
+      "yearly": {
+       "2018": -0.1448,
+       "2019": 0.418,
+       "2020": -0.023,
+       "2021": 0.0458,
+       "2022": -0.0264,
+       "2023": -0.0033,
+       "2024": 0.44,
+       "2025": 0.0983,
+       "2026": 0.026
+      }
+     }
+    }
+   }
+  }
+ }
+}
